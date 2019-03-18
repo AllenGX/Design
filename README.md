@@ -1,1 +1,1 @@
-{\rtf1}
+GAME Start
