@@ -2,7 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class attack : MonoBehaviour {
+@"
+测试攻击动画
+"
+
+
+public class Attack : MonoBehaviour {
 
 
 	public GameObject gameobj;
