@@ -31,17 +31,17 @@ public class Goods:MonoBehaviour{
 
 }
 
-//物品: 装bei
+//物品: 装备
 public class Equipment:Goods{
-	protected string equipmentName;	//装bei名称
+	protected string equipmentName;	//装备名称
 	protected int specialAttack;	//特攻
 	protected int physicsAttack;  	//物攻
 	protected int speed;  			//速度
 	protected int physicsDefense;	//物防
 	protected int specialDefense;	//特防
 	protected int blood;			//血量
-	protected int blue;				//lan量
-	protected int lv;				//装bei等ji
+	protected int blue;				//蓝量
+	protected int lv;				//装备等级
 
 	public  Equipment(	int specialAttack,
 		int physicsAttack,
@@ -60,7 +60,7 @@ public class Equipment:Goods{
 		this.lv = lv;
 	}
 
-	//装bei后更新属性
+	//装备后更新属性
 	public void Use(Person p){
 		p.SetBlood (p.GetBlood()+this.blood);
 		p.SetBlue (p.GetBlue()+this.blue);
@@ -72,7 +72,7 @@ public class Equipment:Goods{
 		this.number -= 1;
 	}
 
-	//卸下装bei
+	//卸下装备
 	public void Discharge(Person p){
 		p.SetBlood (p.GetBlood()-this.blood);
 		p.SetBlue (p.GetBlue()-this.blue);
@@ -89,10 +89,10 @@ public class Equipment:Goods{
 	//打孔
 
 
-	//后xu内容。。。
+	//后续内容。。。
 
 	//get,set
-	//装bei名称
+	//装备名称
 	public string GetEquipmentName(){
 		return this.equipmentName;
 	}
@@ -148,7 +148,7 @@ public class Equipment:Goods{
 		this.blood = blood;
 	}
 
-	//装bei等ji
+	//装备等级
 	public int GetLv(){
 		return this.lv;
 	}
@@ -156,7 +156,7 @@ public class Equipment:Goods{
 		this.lv = lv;
 	}
 
-	//lan量
+	//蓝量
 	public int GetBlue(){
 		return this.blue;
 	}

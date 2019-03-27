@@ -1,19 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Skill:MonoBehaviour{
-	// 1000:无法行dong
+	// 1000:无法行动
 	// 1001:普攻
 	// 1002:防御
 	//。。。。
-	protected int skillType;			//技能lei型  0 友方  1  di方
+	protected int skillType;			//技能类型  0 友方  1  di方
 	protected int skillID;			//技能ID
 	protected int power;			//技能加成
 	protected float multiple;		//倍率
-	protected int costBlue;			//技能耗lan
+	protected int costBlue;			//技能耗蓝
 	protected string skillName;		//技能名称
-	protected int targetNumber;		//目biao数目
-	public Skill(string skillname,int skillID,int costBlue,int power,float multiple){
+	protected int targetNumber;		//目标数目
+	public Skill(string skillName,int skillID,int costBlue,int power,float multiple){
 		this.skillName = skillName;
 		this.skillID = skillID;
 		this.costBlue = costBlue;
@@ -22,7 +23,8 @@ public class Skill:MonoBehaviour{
 	}
 
 	//技能施放
-	public void Use(Person me,Person[] targets){
+	public void Use(Person me, List<Person> targets)
+    {
 		//待添加
 		// if id=1000...
 		// else if id =1001 ...
@@ -32,29 +34,29 @@ public class Skill:MonoBehaviour{
 
 	//技能效果
 	//加血
-	public void AddBlood(Person me,Person[] targets){
+	public void AddBlood(Person me, List<Person> targets){
 		//待添加
 	}
 	//加增益buff
-	public void AddGainBuff(Person me,Person[] targets){
+	public void AddGainBuff(Person me, List<Person> targets){
 		//待添加
 	}
 	//复活
-	public void Resurgence(Person me,Person[] targets){
+	public void Resurgence(Person me, List<Person> targets){
 		//待添加
 	}
 	//造成injury
-	public void Injury(Person me,Person[] targets){
+	public void Injury(Person me, List<Person> targets){
 		//待添加
 	}
 	//加sun益debuff
-	public void AddDeBuff(Person me,Person[] targets){
+	public void AddDeBuff(Person me, List<Person> targets){
 		//待添加
 	}
 		
 	//get、set
 	//技能名称
-	public int GetSkillName(){
+	public string GetSkillName(){
 		return this.skillName;
 	}
 	public void SetSkillName(string skillName){
@@ -69,7 +71,7 @@ public class Skill:MonoBehaviour{
 		this.skillID = skillID;
 	}
 
-	//耗lan
+	//耗蓝
 	public int GetCostBlue(){
 		return this.costBlue;
 	}
@@ -93,7 +95,7 @@ public class Skill:MonoBehaviour{
 		this.multiple = multiple;
 	}
 
-	//目biao数目
+	//目标数目
 	public int GetTargetNumber(){
 		return this.targetNumber;
 	}
@@ -101,7 +103,7 @@ public class Skill:MonoBehaviour{
 		this.targetNumber = targetNumber;
 	}
 
-	//技能lei型
+	//技能类型
 	public int GetSkillType(){
 		return this.skillType;
 	}

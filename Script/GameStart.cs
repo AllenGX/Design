@@ -14,6 +14,7 @@ public class GameStart : MonoBehaviour
 	private List<Person> speedList;
 	private List<SkillUseStruct> orderList;
 
+    //初始化物体
 	public void Init(){
 		Person p1=new Person(1,100,20,20,21,10,10,1,11,3,2,2,1,4,2);
 		Person p2=new Person(2,100,20,21,21,10,10,1,11,3,2,2,1,4,2);
@@ -25,13 +26,30 @@ public class GameStart : MonoBehaviour
 		Person p5=new Person(5,100,20,12,21,10,10,1,11,3,2,2,1,4,2);
 		Person p6=new Person(6,100,20,22,21,10,10,1,11,3,2,2,1,4,2);
 		enemyList = new List<Person>{ p4, p5, p6 };
-		allList= new List<Person>{ p1,p2,p3,p4, p5, p6 };
-		speedList = allList.Sort (compareSpeed);
-	}
+        speedList = new List<Person>{ p1,p2,p3,p4, p5, p6 };
+        speedList.Sort(CompareSpeed);
 
+    }
 
+    //比较器用于速度排序
+    public int CompareSpeed(Person a, Person b)
+    {
+        if (a.GetSpeed() > b.GetSpeed())
+        {
+            return 1;
+        }
+        else if (a.GetSpeed() == b.GetSpeed())
+        {
+            return 0;
+        }
+        else
+        {
+            return -1;
+        }
+    }
 
-	public List<Person> PlayerAlivePersonNumber(int flag,List<Person> playerList,List<Person> enemyList,List<Person> allList){
+    //活着的人物数量
+    public List<Person> PlayerAlivePersonNumber(int flag,List<Person> playerList,List<Person> enemyList,List<Person> allList){
 		List<Person> p = new List<Person>{ };
 		if (flag == 0) {
 			foreach (var person in allList) {
@@ -56,15 +74,17 @@ public class GameStart : MonoBehaviour
 	}
 
 
+    //判断是否是敌人
 	public bool IsEnemy(Person p, List<Person> enemyList){
 		foreach (var person in enemyList) {
-			if (person.GetID == p.GetID ()) {
+			if (person.GetID() == p.GetID ()) {
 				return true;
 			}
 		}
 		return false;
 	}
 
+    //地到随机数量的人物列表
 	public List<Person> GetRandomList(List<Person> p ,int cnt){
 		List<Person> person = new List<Person>{ };
 		if (p.Count <= cnt) {
@@ -79,7 +99,8 @@ public class GameStart : MonoBehaviour
 		return person;
 	}
 
-	public List<SkillUseStruct> RandomOrder(List<Person> allList,List<Person> playerList,List<Person> enemyList){
+    //随机分配指令
+    public List<SkillUseStruct> RandomOrder(List<Person> allList,List<Person> playerList,List<Person> enemyList){
 		List<SkillUseStruct> orderList = new List<SkillUseStruct>{ };
 		List<Person> enemyAliveList = PlayerAlivePersonNumber (-1, allList, playerList, enemyList);
 		List<Person> playerAliveList = PlayerAlivePersonNumber (1, allList, playerList, enemyList);
@@ -89,8 +110,8 @@ public class GameStart : MonoBehaviour
 			int skillID=Random.Range(0,skillList.Count()-1);
 			Skill skill = skillList [skillID];
 			int targetNumber = skill.GetTargetNumber ();
-			int skillType=skill.GetType();
-			List<Person> targetList;
+			int skillType=skill.GetSkillType();
+            List<Person> targetList;
 
 			if (IsEnemy (person, enemyList)) {
 				if (skillType == 1) {
@@ -112,19 +133,12 @@ public class GameStart : MonoBehaviour
 		return orderList;
 	}
 
-	public void GetInput(){
+    //获取输入
+    public void GetInput(){
 		
 	}
 		
-	private int compareSpeed(Person a,Person b){
-		if (a.GetSpeed () > b.GetSpeed ()) {
-			return 1;
-		} else if (a.GetSpeed () == b.GetSpeed ()) {
-			return 0;
-		} else {
-			return -1;
-		}
-	}
+
 
 
 }

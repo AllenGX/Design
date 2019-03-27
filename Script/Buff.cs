@@ -4,7 +4,7 @@ using System.Collections;
 //buff
 class Buff:MonoBehaviour{
 	protected int buffID;//buff 号
-	protected int time; // during time
+	protected int time; // 生效时间
 	protected bool isEffective;	//是否生效
 	public Buff(int time,bool isEffective,int buffID){
 		this.time = time;
@@ -12,7 +12,7 @@ class Buff:MonoBehaviour{
 		this.buffID = buffID;
 	}
 
-	//造成shang害
+	//造成伤害
 	public void Damage(Person p){
 	
 	}
@@ -22,9 +22,9 @@ class Buff:MonoBehaviour{
 
 	}
 
-	//get,set
-	// during time
-	public int GetTime(){
+    //get,set
+    //  生效时间
+    public int GetTime(){
 		return this.time;
 	}
 	public void SetTime(int time){
@@ -56,7 +56,7 @@ class Paralysis:Buff{
 
 	}
 
-	//造成shang害
+	//造成伤害
 	public void Damage(Person p){
 
 	}

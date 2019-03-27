@@ -12,18 +12,18 @@ public class Person:MonoBehaviour{
 	private int physicsDefense;				//物防
 	private int specialDefense;				//特防
 	private int blood;						//血量
-	private int blue;						//lan量
-	private int lv;							//等ji
-	private int currentExperience;			//当前jing,yan
-	private int experienceMax;				//jing,yan上限
-	private int specialAttackGrowth;		//特攻成zhang
-	private int physicsAttackGrowth;  		//物攻成zhang
-	private int speedGrowth;  				//速度成zhang
-	private int physicsDefenseGrowth;		//物防成zhang
-	private int specialDefenseGrowth;		//特防成zhang
-	private int bloodGrowth;				//血量成zhang
+	private int blue;						//蓝量
+	private int lv;							//等级
+	private int currentExperience;			//当前级经验
+	private int experienceMax;				//级经验上限
+	private int specialAttackGrowth;		//特攻成长
+	private int physicsAttackGrowth;  		//物攻成长
+	private int speedGrowth;  				//速度成长
+	private int physicsDefenseGrowth;		//物防成长
+	private int specialDefenseGrowth;		//特防成长
+	private int bloodGrowth;				//血量成长
 
-	private Dictionary<string, Equipment> inventory; //装bei,lan
+	private Dictionary<string, Equipment> inventory; //装备,蓝
 	// head , leftHand , rightHand , leftFoot , rightFoot , chest 胸部...
 	// 数据 {{"head",equipment1},{"leftHand",equipment1},{"rightHand",equipment1},{"leftFoot",equipment1},{"rightFoot",equipment1}....}
 
@@ -70,15 +70,15 @@ public class Person:MonoBehaviour{
 		this.specialDefenseGrowth = specialDefenseGrowth;
 		this.lv = lv;
 		this.currentExperience = currentExperience;
-		this.experienceMax =  CalculateExperienceMax();		//jing,yan上限公式待定....
+		this.experienceMax =  CalculateExperienceMax();		//级经验上限公式待定....
 
 		// 添加技能
 		// 普攻
-		this.skills.Add (new Skill ("普通攻击",10001));
+		this.skills.Add (new Skill ("普通攻击",10001,0,10,1.0f));
 		// 防御
-		this.skills.Add (new Skill ("防御",10002));
+		this.skills.Add (new Skill ("防御",10002,0,0,0f));
 
-		//初始化装bei
+		//初始化装备
 		this.inventory = new Dictionary<string, Equipment> {
 			{ "head",null },
 			{ "leftHand",null },
@@ -90,13 +90,14 @@ public class Person:MonoBehaviour{
 		//待添加...
 	}
 
-	//ji,算当前jing,yan上限
-	public void CalculateExperienceMax(){
-		//公式待定
-		//....
+	//级,算当前级经验上限
+	public int CalculateExperienceMax(){
+        //公式待定
+        //....
+        return 1;
 	}
 
-	//升ji
+	//升级
 	public void LvUp(){
 		//提升属性
 		this.blood += this.bloodGrowth;
@@ -105,10 +106,10 @@ public class Person:MonoBehaviour{
 		this.physicsDefense += this.physicsDefenseGrowth;
 		this.specialDefense += this.specialDefenseGrowth;
 		this.speed += this.speedGrowth;
-		// jing,yan 扣除
+		// 级经验 扣除
 		this.currentExperience -= this.experienceMax;
 		this.lv += 1;
-		this.experienceMax = CalculateExperienceMax();//ji,算当前jing,yan上限
+		this.experienceMax = CalculateExperienceMax();//级,算当前级经验上限
 
 		//其他huo得物品:
 		// 新技能
@@ -133,7 +134,7 @@ public class Person:MonoBehaviour{
 	}
 
 	//施放技能（普攻、防御都是技能）
-	public void UseSkill(int skillID,Person[] targets){
+	public void UseSkill(int skillID, List<Person> targets){
 		Skill skill = GetSkill (skillID);
 		if (skill != null) {
 			//施放技能
@@ -233,15 +234,15 @@ public class Person:MonoBehaviour{
 		this.blood = blood;
 	}
 
-	//装bei、lan
+	//装备栏
 	public Dictionary<string, Equipment> GetInventory(){
 		return this.inventory;
 	}
-	//装bei物品
+	//装备物品
 	public void SetInventory(string pos,Equipment eq){
-		//等ji达biao
+		//等级达标
 		if (eq.GetLv () <= this.lv) {
-			//存在gai部位装bei槽
+			//存在该部位装备槽
 			if (this.inventory.ContainsKey (pos)) {
 				this.inventory [pos] = eq;
 				//更改属性
@@ -253,9 +254,9 @@ public class Person:MonoBehaviour{
 			print ("SetInventory-----> lv is low");
 		}
 	}
-	//移除装bei
+	//移除装备
 	public Equipment RemoveInventory(string pos){
-		//存在gai部位装bei槽
+		//存在该部位装备槽
 		if (this.inventory.ContainsKey (pos)) {
 			Equipment eq = this.inventory [pos];
 			//更改属性
@@ -268,7 +269,7 @@ public class Person:MonoBehaviour{
 		}
 	}
 
-	// 等ji
+	// 等级
 	public int GetLv(){
 		return this.lv;
 	}
@@ -276,7 +277,7 @@ public class Person:MonoBehaviour{
 		this.lv = lv;
 	}
 
-	// 当前jing,yan
+	// 当前级经验
 	public int GetCurrentExperience(){
 		return this.currentExperience;
 	}
@@ -284,7 +285,7 @@ public class Person:MonoBehaviour{
 		this.currentExperience = currentExperience;
 	}
 
-	// jing,yan上限
+	// 级经验上限
 	public int GetExperienceMax(){
 		return this.experienceMax;
 	}
@@ -292,7 +293,7 @@ public class Person:MonoBehaviour{
 		this.experienceMax = experienceMax;
 	}
 
-	//特攻成zhang
+	//特攻成长
 	public int GetSpecialAttackGrowth(){
 		return this.specialAttackGrowth;
 	}
@@ -300,7 +301,7 @@ public class Person:MonoBehaviour{
 		this.specialAttackGrowth = specialAttackGrowth;
 	}
 
-	//物攻成zhang
+	//物攻成长
 	public int GetPhysicsAttackGrowth(){
 		return this.physicsAttackGrowth;
 	}
@@ -308,7 +309,7 @@ public class Person:MonoBehaviour{
 		this.physicsAttackGrowth = physicsAttackGrowth;
 	}
 
-	//速度成zhang
+	//速度成长
 	public int GetSpeedGrowth(){
 		return this.speedGrowth;
 	}
@@ -316,7 +317,7 @@ public class Person:MonoBehaviour{
 		this.speedGrowth = speedGrowth;
 	}
 
-	//特防成zhang
+	//特防成长
 	public int GetSpecialDefenseGrowth(){
 		return this.specialDefenseGrowth;
 	}
@@ -324,7 +325,7 @@ public class Person:MonoBehaviour{
 		this.specialDefenseGrowth = specialDefenseGrowth;
 	}
 
-	//物防成zhang
+	//物防成长
 	public int GetPhysicsDefenseGrowth(){
 		return this.physicsDefenseGrowth;
 	}
@@ -332,7 +333,7 @@ public class Person:MonoBehaviour{
 		this.physicsDefenseGrowth = physicsDefenseGrowth;
 	}
 
-	//血量成zhang
+	//血量成长
 	public int GetBloodGrowth(){
 		return this.bloodGrowth;
 	}
@@ -340,7 +341,7 @@ public class Person:MonoBehaviour{
 		this.bloodGrowth = bloodGrowth;
 	}
 
-	//lan量
+	//蓝量
 	public int GetBlue(){
 		return this.blue;
 	}
