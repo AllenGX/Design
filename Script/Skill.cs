@@ -6,11 +6,13 @@ public class Skill:MonoBehaviour{
 	// 1001:普攻
 	// 1002:防御
 	//。。。。
+	protected int skillType;			//技能lei型  0 友方  1  di方
 	protected int skillID;			//技能ID
 	protected int power;			//技能加成
 	protected float multiple;		//倍率
 	protected int costBlue;			//技能耗lan
 	protected string skillName;		//技能名称
+	protected int targetNumber;		//目biao数目
 	public Skill(string skillname,int skillID,int costBlue,int power,float multiple){
 		this.skillName = skillName;
 		this.skillID = skillID;
@@ -89,5 +91,21 @@ public class Skill:MonoBehaviour{
 	}
 	public void SetMultiple(float multiple){
 		this.multiple = multiple;
+	}
+
+	//目biao数目
+	public int GetTargetNumber(){
+		return this.targetNumber;
+	}
+	public void SetTargetNumber(int targetNumber){
+		this.targetNumber = targetNumber;
+	}
+
+	//技能lei型
+	public int GetSkillType(){
+		return this.skillType;
+	}
+	public void SetSkillType(int skillType){
+		this.skillType = skillType;
 	}
 }
