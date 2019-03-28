@@ -3,14 +3,95 @@ using System.Collections;
 
 //buff
 class Buff:MonoBehaviour{
-	protected int buffID;//buff 号
-	protected int time; // 生效时间
-	protected bool isEffective;	//是否生效
-	public Buff(int time,bool isEffective,int buffID){
-		this.time = time;
-		this.isEffective = isEffective;
-		this.buffID = buffID;
-	}
+    protected int buffID;//buff 号
+    protected int time; // 生效时间
+    protected bool isEffective; //是否生效
+
+    public Buff(int buffID, int time, bool isEffective)
+    {
+        this.buffID = buffID;
+        this.time = time;
+        this.isEffective = isEffective;
+    }
+
+    public int BuffID1
+    {
+        get
+        {
+            return buffID;
+        }
+
+        set
+        {
+            buffID = value;
+        }
+    }
+
+    public int Time1
+    {
+        get
+        {
+            return time;
+        }
+
+        set
+        {
+            time = value;
+        }
+    }
+
+    public bool IsEffective1
+    {
+        get
+        {
+            return isEffective;
+        }
+
+        set
+        {
+            isEffective = value;
+        }
+    }
+
+    protected int BuffID
+    {
+        get
+        {
+            return buffID;
+        }
+
+        set
+        {
+            buffID = value;
+        }
+    }
+
+    protected int Time
+    {
+        get
+        {
+            return time;
+        }
+
+        set
+        {
+            time = value;
+        }
+    }
+
+    protected bool IsEffective
+    {
+        get
+        {
+            return isEffective;
+        }
+
+        set
+        {
+            isEffective = value;
+        }
+    }
+
 
 	//造成伤害
 	public void Damage(Person p){
@@ -22,37 +103,15 @@ class Buff:MonoBehaviour{
 
 	}
 
-    //get,set
-    //  生效时间
-    public int GetTime(){
-		return this.time;
-	}
-	public void SetTime(int time){
-		this.time = time;
-	}
 
-	//是否生效
-	public bool GetIsEffect(){
-		return this.isEffective;
-	}
-	public void SetIsEffect(bool isEffective){
-		this.isEffective = isEffective;
-	}
-
-	//buff号
-	public int GetBuffID(){
-		return this.buffID;
-	}
-	public void SetBuffID(int buffID){
-		this.buffID = buffID;
-	}
 
 
 }
 
 //麻痹
 class Paralysis:Buff{
-	public Paralysis(int time,bool isEffective,int buffNumber):base(time,isEffective,buffNumber){	
+	public Paralysis(int time,bool isEffective,int buffNumber):base(time,buffNumber, isEffective)
+    {	
 
 	}
 

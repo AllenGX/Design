@@ -34,11 +34,11 @@ public class GameStart : MonoBehaviour
     //比较器用于速度排序
     public int CompareSpeed(Person a, Person b)
     {
-        if (a.GetSpeed() > b.GetSpeed())
+        if (a.Speed > b.Speed)
         {
             return 1;
         }
-        else if (a.GetSpeed() == b.GetSpeed())
+        else if (a.Speed == b.Speed)
         {
             return 0;
         }
@@ -77,7 +77,7 @@ public class GameStart : MonoBehaviour
     //判断是否是敌人
 	public bool IsEnemy(Person p, List<Person> enemyList){
 		foreach (var person in enemyList) {
-			if (person.GetID() == p.GetID ()) {
+			if (person.PlayerID == p.PlayerID) {
 				return true;
 			}
 		}
@@ -109,8 +109,8 @@ public class GameStart : MonoBehaviour
 			List<Skill> skillList=person.GetSkillList ();
 			int skillID=Random.Range(0,skillList.Count()-1);
 			Skill skill = skillList [skillID];
-			int targetNumber = skill.GetTargetNumber ();
-			int skillType=skill.GetSkillType();
+			int targetNumber = skill.TargetNumber;
+			int skillType=skill.SkillType;
             List<Person> targetList;
 
 			if (IsEnemy (person, enemyList)) {

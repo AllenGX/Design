@@ -3,111 +3,169 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Skill:MonoBehaviour{
-	// 1000:无法行动
-	// 1001:普攻
-	// 1002:防御
-	//。。。。
-	protected int skillType;			//技能类型  0 友方  1  di方
-	protected int skillID;			//技能ID
-	protected int power;			//技能加成
-	protected float multiple;		//倍率
-	protected int costBlue;			//技能耗蓝
-	protected string skillName;		//技能名称
-	protected int targetNumber;		//目标数目
-	public Skill(string skillName,int skillID,int costBlue,int power,float multiple){
-		this.skillName = skillName;
-		this.skillID = skillID;
-		this.costBlue = costBlue;
-		this.power = power;
-		this.multiple = multiple;
-	}
+    // 1000:无法行动
+    // 1001:普攻
+    // 1002:防御
+    //。。。。
+    private int skillType;          //技能类型  0 友方  1  di方
+    private int skillID;            //技能ID
+    private int power;              //技能加成
+    private float multiple;         //倍率
+    private int costBlue;           //技能耗蓝
+    private string skillName;       //技能名称
+    private int targetNumber;		//目标数目
+    private int attackCount;        //攻击次数
 
-	//技能施放
-	public void Use(Person me, List<Person> targets)
+    public Skill(int skillType, int skillID, int power, float multiple, int costBlue, string skillName, int targetNumber, int attackCount)
     {
-		//待添加
-		// if id=1000...
-		// else if id =1001 ...
-		// ...
-	}
+        this.skillType = skillType;
+        this.skillID = skillID;
+        this.power = power;
+        this.multiple = multiple;
+        this.costBlue = costBlue;
+        this.skillName = skillName;
+        this.targetNumber = targetNumber;
+        this.attackCount = attackCount;
+    }
+
+    //技能施放
+    public void Use(Person me, List<Person> targets)
+    {
+        //待添加
+        // if id=1000...
+        // else if id =1001 ...
+        // ...
+    }
 
 
-	//技能效果
-	//加血
-	public void AddBlood(Person me, List<Person> targets){
-		//待添加
-	}
-	//加增益buff
-	public void AddGainBuff(Person me, List<Person> targets){
-		//待添加
-	}
-	//复活
-	public void Resurgence(Person me, List<Person> targets){
-		//待添加
-	}
-	//造成injury
-	public void Injury(Person me, List<Person> targets){
-		//待添加
-	}
-	//加sun益debuff
-	public void AddDeBuff(Person me, List<Person> targets){
-		//待添加
-	}
-		
-	//get、set
-	//技能名称
-	public string GetSkillName(){
-		return this.skillName;
-	}
-	public void SetSkillName(string skillName){
-		this.skillName = skillName;
-	}
+    //技能效果
+    //加血
+    public void AddBlood(Person me, List<Person> targets)
+    {
+        //待添加
+    }
+    //加增益buff
+    public void AddGainBuff(Person me, List<Person> targets)
+    {
+        //待添加
+    }
+    //复活
+    public void Resurgence(Person me, List<Person> targets)
+    {
+        //待添加
+    }
+    //造成injury
+    public void Injury(Person me, List<Person> targets)
+    {
+        //待添加
+    }
+    //加sun益debuff
+    public void AddDeBuff(Person me, List<Person> targets)
+    {
+        //待添加
+    }
 
-	//技能ID
-	public int GetSkillID(){
-		return this.skillID;
-	}
-	public void SetSkillID(int skillID){
-		this.skillID = skillID;
-	}
+    public int SkillType
+    {
+        get
+        {
+            return skillType;
+        }
 
-	//耗蓝
-	public int GetCostBlue(){
-		return this.costBlue;
-	}
-	public void SetCostBlue(int costBlue){
-		this.costBlue = costBlue;
-	}
+        set
+        {
+            skillType = value;
+        }
+    }
 
-	//技能加成
-	public int GetPower(){
-		return this.power;
-	}
-	public void SetPower(int power){
-		this.power = power;
-	}
+    public int SkillID
+    {
+        get
+        {
+            return skillID;
+        }
 
-	//技能倍率
-	public float GetMultiple(){
-		return this.multiple;
-	}
-	public void SetMultiple(float multiple){
-		this.multiple = multiple;
-	}
+        set
+        {
+            skillID = value;
+        }
+    }
 
-	//目标数目
-	public int GetTargetNumber(){
-		return this.targetNumber;
-	}
-	public void SetTargetNumber(int targetNumber){
-		this.targetNumber = targetNumber;
-	}
+    public int Power
+    {
+        get
+        {
+            return power;
+        }
 
-	//技能类型
-	public int GetSkillType(){
-		return this.skillType;
-	}
-	public void SetSkillType(int skillType){
-		this.skillType = skillType;
-	}
+        set
+        {
+            power = value;
+        }
+    }
+
+    public float Multiple
+    {
+        get
+        {
+            return multiple;
+        }
+
+        set
+        {
+            multiple = value;
+        }
+    }
+
+    public int CostBlue
+    {
+        get
+        {
+            return costBlue;
+        }
+
+        set
+        {
+            costBlue = value;
+        }
+    }
+
+    public string SkillName
+    {
+        get
+        {
+            return skillName;
+        }
+
+        set
+        {
+            skillName = value;
+        }
+    }
+
+    public int TargetNumber
+    {
+        get
+        {
+            return targetNumber;
+        }
+
+        set
+        {
+            targetNumber = value;
+        }
+    }
+
+    public int AttackCount
+    {
+        get
+        {
+            return attackCount;
+        }
+
+        set
+        {
+            attackCount = value;
+        }
+    }
 }
