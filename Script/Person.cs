@@ -5,7 +5,7 @@ using UnityEngine;
 
 //人物
 public class Person:MonoBehaviour{
-	private int playerID;					//ID
+	private int personID;					//ID
 	private int specialAttack;				//特攻
 	private int physicsAttack;  			//物攻
 	private int speed;  					//速度
@@ -36,11 +36,11 @@ public class Person:MonoBehaviour{
 
 
     //初始化
-    public Person(int playerID,int blood, int specialAttack,int physicsAttack,int speed,int physicsDefense,int specialDefense,int lv,int currentExperience,int bloodGrowth,int specialAttackGrowth,int physicsAttackGrowth,int speedGrowth,int physicsDefenseGrowth,int specialDefenseGrowth){
+    public Person(int personID,int blood, int specialAttack,int physicsAttack,int speed,int physicsDefense,int specialDefense,int lv,int currentExperience,int bloodGrowth,int specialAttackGrowth,int physicsAttackGrowth,int speedGrowth,int physicsDefenseGrowth,int specialDefenseGrowth){
         //buffs
         this.buffs = new List<Buff> { };
 
-        this.playerID = playerID;
+        this.personID = personID;
         this.blood = blood;
         this.physicsAttack = physicsAttack;
         this.physicsAttack = physicsAttack;
@@ -59,11 +59,11 @@ public class Person:MonoBehaviour{
 
         // 添加技能
         // 普攻
-        this.skills.Add(new Skill(2, 1002, 10, 1, 0, "普攻", 1, 1));
+        this.skills.Add(new Skill(1, 1002, 10, 1, 0, "普攻", 1, 1));
         // 技能
-        this.skills.Add(new Skill(1, 1001, 100, 2, 20, "飞雷神", 2, 2));
+        this.skills.Add(new Skill(1, 1003, 100, 2, 20, "飞雷神", 2, 2));
         // 防御
-        this.skills.Add(new Skill(0,1000,0,0,0,"防御",0,0));
+        this.skills.Add(new Skill(-1,1001,0,0,0,"防御",0,0));
 
         //初始化装备
         this.inventory = new Dictionary<string, Equipment> {
@@ -75,6 +75,39 @@ public class Person:MonoBehaviour{
             { "chest",null },};
 
         //待添加...
+    }
+
+
+    public void Defend(){
+        this.AddBuff(new DefendBuff());
+    }
+
+    public void AddBuff(Buff buff){
+        int len=this.buffs.Count;
+        for(int i=0;i<len;i++){
+            if(buffs[i].BuffID==buff.BuffID){
+                buffs[i].Time+=buff.Time;
+                return;
+            }
+        }
+        this.buffs.Add(buff);
+    }
+
+    public void EffectBuff(int flag){
+        if(flag==0){
+            foreach(var buff in buffs){
+                buff.InfluenceAttribute(this);
+            }
+        }else if(flag==1){
+            foreach(var buff in buffs){
+                buff.Damage(this);
+            }
+        }else if(flag==-1){
+            foreach(var buff in buffs){
+                buff.InfluenceAttribute(this);
+                buff.Damage(this);
+            }
+        }
     }
 
     //级,算当前级经验上限
@@ -115,9 +148,9 @@ public class Person:MonoBehaviour{
     //得到技能
     public Skill GetSkill(int skillID)
     {
-        foreach (var skill in skills)
+        foreach (var skill in this.skills)
         {
-            if (skill.SkillID == skillID)
+            if (this.skills.SkillID == skillID)
             {
                 return skill;
             }
@@ -127,7 +160,7 @@ public class Person:MonoBehaviour{
     }
 
     //施放技能（普攻、防御都是技能）
-    public void UseSkill(int skillID, List<Person> targets)
+    public void UseSkill(int skillID,ref Person target)
     {
         Skill skill = GetSkill(skillID);
         if (skill != null)
@@ -441,16 +474,16 @@ public class Person:MonoBehaviour{
         }
     }
 
-    public int PlayerID
+    public int PersonID
     {
         get
         {
-            return playerID;
+            return personID;
         }
 
         set
         {
-            playerID = value;
+            personID = value;
         }
     }
 

@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 public class Skill:MonoBehaviour{
     // 1000:无法行动
-    // 1001:普攻
-    // 1002:防御
+    // 1001:防御
+    // 1002:普攻
     //。。。。
-    private int skillType;          //技能类型  0 友方  1  di方
+    private int skillType;          //技能类型  0 对友  1  对敌  -1 对己
     private int skillID;            //技能ID
     private int power;              //技能加成
     private float multiple;         //倍率
@@ -28,39 +28,37 @@ public class Skill:MonoBehaviour{
         this.attackCount = attackCount;
     }
 
-    //技能施放
-    public void Use(Person me, List<Person> targets)
+    //技能效果
+    public void Use(int casterID,ref Person target)
     {
         //待添加
         // if id=1000...
         // else if id =1001 ...
         // ...
     }
-
-
     //技能效果
     //加血
-    public void AddBlood(Person me, List<Person> targets)
+    public void AddBlood(int casterID, ref Person target)
     {
         //待添加
     }
     //加增益buff
-    public void AddGainBuff(Person me, List<Person> targets)
+    public void AddGainBuff(int casterID, ref Person target)
     {
         //待添加
     }
     //复活
-    public void Resurgence(Person me, List<Person> targets)
+    public void Resurgence(int casterID, ref Person target)
     {
         //待添加
     }
     //造成injury
-    public void Injury(Person me, List<Person> targets)
+    public void Injury(int casterID, ref Person target)
     {
         //待添加
     }
     //加sun益debuff
-    public void AddDeBuff(Person me, List<Person> targets)
+    public void AddDeBuff(int casterID, ref Person target)
     {
         //待添加
     }

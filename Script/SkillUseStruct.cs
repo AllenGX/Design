@@ -4,53 +4,53 @@ using System.Collections.Generic;
 
 public class SkillUseStruct : MonoBehaviour
 {
-    private Person me;
-    private Skill s;
-    private List<Person> targets;
+    private int casterID;
+    private  int skillID;
+    private List<int> targetsIDList;
 
-    public SkillUseStruct(Person me, Skill s, List<Person> targets)
+    public SkillUseStruct(int casterID, int skillID, List<int> targetsIDList)
     {
-        this.me = me;
-        this.s = s;
-        this.targets = targets;
+        this.casterID = mecasterID;
+        this.skillID = skillID;
+        this.targetsIDList = targetsIDList;
     }
 
-    public Person Me
+    public int CasterID
     {
         get
         {
-            return me;
+            return casterID;
         }
 
         set
         {
-            me = value;
+            casterID = value;
         }
     }
 
-    public Skill S
+    public int SkillID
     {
         get
         {
-            return s;
+            return skillID;
         }
 
         set
         {
-            s = value;
+            skillID = value;
         }
     }
 
-    public List<Person> Targets
+    public List<int> TargetsIDList
     {
         get
         {
-            return targets;
+            return targetsIDList;
         }
 
         set
         {
-            targets = value;
+            targetsIDList = value;
         }
     }
 
