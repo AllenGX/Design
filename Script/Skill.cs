@@ -16,10 +16,10 @@ public class Skill:MonoBehaviour{
     private int targetNumber;		//目标数目
     private int attackCount;        //攻击次数
 
-    public Skill(int skillType, int skillID, int power, float multiple, int costBlue, string skillName, int targetNumber, int attackCount)
+    public Skill(int power, float multiple, int costBlue, string skillName, int targetNumber, int attackCount)
     {
-        this.skillType = skillType;
-        this.skillID = skillID;
+        this.skillType = -1;
+        this.skillID = 0;
         this.power = power;
         this.multiple = multiple;
         this.costBlue = costBlue;
@@ -28,39 +28,9 @@ public class Skill:MonoBehaviour{
         this.attackCount = attackCount;
     }
 
-    //技能效果
-    public void Use(int casterID,ref Person target)
+    //技能施放
+    public void Use(ref Person caster,ref Person target)
     {
-        //待添加
-        // if id=1000...
-        // else if id =1001 ...
-        // ...
-    }
-    //技能效果
-    //加血
-    public void AddBlood(int casterID, ref Person target)
-    {
-        //待添加
-    }
-    //加增益buff
-    public void AddGainBuff(int casterID, ref Person target)
-    {
-        //待添加
-    }
-    //复活
-    public void Resurgence(int casterID, ref Person target)
-    {
-        //待添加
-    }
-    //造成injury
-    public void Injury(int casterID, ref Person target)
-    {
-        //待添加
-    }
-    //加sun益debuff
-    public void AddDeBuff(int casterID, ref Person target)
-    {
-        //待添加
     }
 
     public int SkillType
@@ -165,5 +135,18 @@ public class Skill:MonoBehaviour{
         {
             attackCount = value;
         }
+    }
+}
+
+public class NormalAttackSkill:Skill{
+    public NormalAttackSkill(int power, float multiple, int costBlue, string skillName, int targetNumber, int attackCount):base(power,multiple,costBlue,skillName,targetNumber,attackCount){
+        this.SkillID=1;
+        this.SkillType=1;
+    }
+
+    //技能施放
+    public void Use(ref Person caster,ref Person target)
+    {
+        int injury=Math.Max((caster.PhysicsAttack-(int)0.3*target.PhysicsDefense),1);
     }
 }

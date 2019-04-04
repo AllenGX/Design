@@ -12,7 +12,9 @@ public class Person:MonoBehaviour{
 	private int physicsDefense;				//物防
 	private int specialDefense;				//特防
 	private int blood;						//血量
+    private int bloodMax;                   //血量上限
 	private int blue;						//蓝量
+    private int blueMax;                    //蓝量上限
 	private int lv;							//等级
 	private int currentExperience;			//当前级经验
 	private int experienceMax;				//级经验上限
@@ -22,6 +24,9 @@ public class Person:MonoBehaviour{
 	private int physicsDefenseGrowth;		//物防成长
 	private int specialDefenseGrowth;		//特防成长
 	private int bloodGrowth;                //血量成长
+    private int blueGrowth;                 //蓝量成长
+
+    private bool attackIsOk=true;                 //是否能进行攻击
 
 
     private Dictionary<string, Equipment> inventory; //装备,蓝
@@ -36,18 +41,22 @@ public class Person:MonoBehaviour{
 
 
     //初始化
-    public Person(int personID,int blood, int specialAttack,int physicsAttack,int speed,int physicsDefense,int specialDefense,int lv,int currentExperience,int bloodGrowth,int specialAttackGrowth,int physicsAttackGrowth,int speedGrowth,int physicsDefenseGrowth,int specialDefenseGrowth){
+    public Person(int personID,int blood,int blue, int specialAttack,int physicsAttack,int speed,int physicsDefense,int specialDefense,int lv,int currentExperience,int bloodGrowth,int specialAttackGrowth,int physicsAttackGrowth,int speedGrowth,int physicsDefenseGrowth,int specialDefenseGrowth,int blueGrowth){
         //buffs
         this.buffs = new List<Buff> { };
 
         this.personID = personID;
         this.blood = blood;
+        this.bloodMax=blood;
+        this.blue=blue;
+        this.blueMax=blue;
         this.physicsAttack = physicsAttack;
         this.physicsAttack = physicsAttack;
         this.speed = speed;
         this.physicsDefense = physicsDefense;
         this.specialDefense = specialDefense;
         this.bloodGrowth = bloodGrowth;
+        this.blueGrowth=blueGrowth;
         this.physicsAttackGrowth = physicsAttackGrowth;
         this.physicsAttackGrowth = physicsAttackGrowth;
         this.speedGrowth = speedGrowth;
@@ -96,16 +105,22 @@ public class Person:MonoBehaviour{
     public void EffectBuff(int flag){
         if(flag==0){
             foreach(var buff in buffs){
-                buff.InfluenceAttribute(this);
+                if(!buff.IsEffective){
+                    buff.InfluenceAttribute(this);
+                }
             }
         }else if(flag==1){
             foreach(var buff in buffs){
-                buff.Damage(this);
+                if(!buff.IsEffective){
+                    buff.Damage(this);
+                }
             }
         }else if(flag==-1){
             foreach(var buff in buffs){
-                buff.InfluenceAttribute(this);
-                buff.Damage(this);
+                if(!buff.IsEffective){
+                    buff.InfluenceAttribute(this);
+                    buff.Damage(this);
+                }
             }
         }
     }
@@ -123,6 +138,9 @@ public class Person:MonoBehaviour{
     {
         //提升属性
         this.blood += this.bloodGrowth;
+        this.bloodMax+=this.bloodGrowth;
+        this.blue+=this.blueGrowth;
+        this.blueMax+=this.blueGrowth;
         this.physicsAttack += this.physicsAttackGrowth;
         this.specialAttack += this.specialAttackGrowth;
         this.physicsDefense += this.physicsDefenseGrowth;
@@ -162,7 +180,7 @@ public class Person:MonoBehaviour{
     //施放技能（普攻、防御都是技能）
     public void UseSkill(int skillID,ref Person target)
     {
-        Skill skill = GetSkill(skillID);
+        Skill skill = this.GetSkill(skillID);
         if (skill != null)
         {
             //施放技能
@@ -344,6 +362,20 @@ public class Person:MonoBehaviour{
         }
     }
 
+
+    public int BloodMax
+    {
+        get
+        {
+            return bloodMax;
+        }
+
+        set
+        {
+            bloodMax = value;
+        }
+    }
+
     public int Blue
     {
         get
@@ -354,6 +386,32 @@ public class Person:MonoBehaviour{
         set
         {
             blue = value;
+        }
+    }
+
+    public int BlueMax
+    {
+        get
+        {
+            return blueMax;
+        }
+
+        set
+        {
+            blueMax = value;
+        }
+    }
+
+    public int BlueGrowth
+    {
+        get
+        {
+            return blueGrowth;
+        }
+
+        set
+        {
+            blueGrowth = value;
         }
     }
 
@@ -484,6 +542,19 @@ public class Person:MonoBehaviour{
         set
         {
             personID = value;
+        }
+    }
+
+    public bool AttackIsOk
+    {
+        get
+        {
+            return attackIsOk;
+        }
+
+        set
+        {
+            attackIsOk = value;
         }
     }
 

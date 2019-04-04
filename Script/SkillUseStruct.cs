@@ -8,7 +8,7 @@ public class SkillUseStruct : MonoBehaviour
     private  int skillID;
     private List<int> targetsIDList;
 
-    public SkillUseStruct(int casterID, int skillID, List<int> targetsIDList)
+    public SkillUseStruct(int casterID, int skillID,List<int> targetsIDList)
     {
         this.casterID = mecasterID;
         this.skillID = skillID;

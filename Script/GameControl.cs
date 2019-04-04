@@ -21,9 +21,10 @@ public class GameControl : MonoBehaviour
 	public int GameStart(){
 		RemoveTimer();										//清除定时器
 		RandomOrder();										//给未分配指令的对象设置指令
-		ExcuteOrderList();									//执行指令
-		orderList=new List<SkillUseStruct>{ };				//清空指令
 		gameSence.speedList.Sort(gameSence.CompareSpeed);	//按速度排序
+		ExcuteOrderList();									//执行指令
+		ReshStatus();										//刷新状态  可攻击属性设为ture 移除过期buff
+		orderList=new List<SkillUseStruct>{ };				//清空指令
 		this.resultType=gameSence.GameStatus();				//判断战斗是否结束
 		if(this.resultType!=0){
 			return this.resultType;
@@ -42,12 +43,27 @@ public class GameControl : MonoBehaviour
 		CancelInvoke();
 	}
 
+
+	//刷新属性
+	public void ReshStatus(){
+		foreach(var personID in gameSence.allDict.Keys){
+			for(int i=0;i<gameSence.allDict[personID].buffs.Count;i++){
+				//buff 时间到了移除
+				if(gameSence.allDict[personID].buffs[i].time==0){
+					gameSence.allDict[personID].buffs[i].RemoveBuff(gameSence.allDict[personID]);
+					gameSence.allDict[personID].buffs.Remove(i);
+				}
+			}
+			gameSence.allDict[personID].attackIsOk=true;
+		}
+	}
+
  //随机分配指令
  // return List<SkillUseStruct> : ｛{释放者ID ， 技能ID ， 攻击目标ID集合}，{释放者ID ， 技能ID ， 攻击目标ID集合}，....｝
     public void RandomOrder(){
-		List<int> enemyIDAliveList = gameSence.PersonAlivePersonIDList (-1);
-		List<int> playerIDAliveList = gameSence.PersonAlivePersonIDList (1);
-		List<int> targetList=new List<int>{};
+		List<int> enemyIDAliveList = gameSence.PersonAlivePersonIDList (-1);		//存活敌人ID集合
+		List<int> playerIDAliveList = gameSence.PersonAlivePersonIDList (1);		//存活玩家ID集合
+		List<int> targetIDList=new List<int>{};										//攻击目标ID集合
 
 		//为所有角色分配指令
 		foreach (var person in gameSence.allList) {
@@ -63,24 +79,24 @@ public class GameControl : MonoBehaviour
 				if (gameSence.IsEnemy(person)) {
 					//技能类型为  对敌
 					if (skillType == 1) {
-						targetList = playerIDAliveList;
+						targetIDList = playerIDAliveList;
 					} else if (skillType == 0){
-						targetList = enemyIDAliveList;
+						targetIDList = enemyIDAliveList;
 					}else if (skillType == -1){	//对己
-						targetList = new List<int>{person.PersonID};
+						targetIDList = new List<int>{person.PersonID};
 					}
 				} else {	//施法者是玩家
 					if (skillType == 1) {	//技能类型为  对敌
-						targetList = enemyIDAliveList;
+						targetIDList = enemyIDAliveList;
 					} else if (skillType == 0){
-						targetList = playerIDAliveList;
+						targetIDList = playerIDAliveList;
 					}else if (skillType == -1){
-						targetList = new List<int>{person.PersonID};
+						targetIDList = new List<int>{person.PersonID};
 					}
 				}
 				// 随机指定数个目标
-				targetList = gameSence.GetRandomList (targetList,targetNumber);
-				SkillUseStruct order = new SkillUseStruct (person.PersonID, skill.SkillID, targetList);
+				targetIDList = gameSence.GetRandomList(targetIDList,targetNumber);
+				SkillUseStruct order = new SkillUseStruct (person.PersonID, skill.SkillID, targetIDList);
 				this.orderList.Add (order);
 			}
 		}
@@ -97,7 +113,7 @@ public class GameControl : MonoBehaviour
 
 	public void ExcuteOrderList(){
 		//防御生效（效果是增加一个加防buff）
-		foreach(var order in this.orderList){
+		foreach(var order in this.orderList){	
 			if(order.SkillID==1001){
 				if(!gameSence.allDict[order.CasterID].IsDie()){
 					gameSence.allDict[order.CasterID].Defend();
@@ -128,7 +144,9 @@ public class GameControl : MonoBehaviour
 				}
 				//执行攻击
 				if(!gameSence.allDict[order.CasterID].IsDie()){
-					UseSkill(order.SkillID,order.TargetsIDList);
+					foreach(var targetID in order.TargetsIDList){
+						gameSence.allDict[order.CasterID].UseSkill(skillID,gameSence.allDict[targetID]);
+					}
 				}
 			}
 			
@@ -143,12 +161,6 @@ public class GameControl : MonoBehaviour
 			}
 		}
 		return null;
-	}
-
-	public void UseSkill(int casterID , int skillID,List<int> targetIDList){
-		foreach(var targetID in targetIDList){
-			gameSence.allDict[casterID].UseSkill(skillID,gameSence.allDict[targetID]);
-		}
 	}
 
     //获取输入

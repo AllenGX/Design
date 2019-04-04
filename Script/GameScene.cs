@@ -194,7 +194,7 @@ public class GameScene : MonoBehaviour
 	// params List<int> ： 	需要随机的对象ID 集合
 	// params int ： 		需要随机的对象 数量
 	// return List<int> :	随机后的对象ID 集合
-	public List<int> GetRandomList(List<int> p ,int cnt){
+	public List<int> GetRandomList(ref List<int> p ,int cnt){
 		List<int> person = new List<int>{ };
 		if (p.Count <= cnt) {
 			person = p; 
