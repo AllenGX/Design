@@ -1,15 +1,84 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
+
+public class BuffFactory : MonoBehaviour {
+    public BuffFactory() {
+    }
+
+    public Buff CreateBuff(int time,int buffType,int addition, bool isContinue) {
+        Buff buff = null;
+        if (buffType == 1)
+        {
+            //time = 1
+            buff = new ParalysisBuff(time, buffType);    //麻痹buff
+        }
+        else if (buffType == 2) {
+            //time = 1
+            //addition=10
+            buff = new DefendBuff(time, addition, buffType);    //防御buff
+        }
+        else if (buffType == 3)
+        {
+            //time = 2
+            //addition=6
+            buff = new FireBuff(time, addition, buffType);     //燃烧buff
+        }
+        else if (buffType == 4)
+        {
+            if (isContinue)
+            {
+                //time = 3
+                //addition=10
+                buff = new CureBloodBuff(time, addition, isContinue, buffType);    //回血buff持续
+            }
+            else {
+                //time = 1
+                //addition=30
+                buff = new CureBloodBuff(time, addition, isContinue, buffType);      //回血buff不持续
+            }
+        }
+        else if (buffType == 5)
+        {
+            if (isContinue)
+            {
+                //time = 3
+                //addition=10
+                buff = new CureBlueBuff(time, addition, isContinue, buffType);     //回蓝buff持续       
+            }
+            else
+            {
+                //time = 1
+                //addition=30
+                buff = new CureBlueBuff(time, addition, isContinue, buffType);       //回蓝buff不持续
+            }
+        }
+        else if (buffType == 6)
+        {
+            //time = 1
+            //addition=10
+            buff = new SpeedBuff(time, addition, buffType);                        //速度buff
+        }
+        return buff;
+
+    }
+
+}
+
+
+
+
+
 //buff
-class Buff:MonoBehaviour{
+public class Buff:MonoBehaviour{
     protected int buffID;   //buff 号
     protected int time;     // 生效时间
     protected bool isEffective; //是否生效
 
-    public Buff(int time)
+    public Buff(int time,int buffID)
     {
-        this.buffID = 0;
+        this.buffID = buffID;
         this.time = time;
         this.isEffective = false;
     }
@@ -54,33 +123,32 @@ class Buff:MonoBehaviour{
     }
 
 	//造成伤害
-	public void Damage(ref Person p){
+	public void Damage(Person p){
 	}
 
 	//影响属性
-	public void InfluenceAttribute(ref Person p){
+	public void InfluenceAttribute(Person p){
 	}
 
     //buff 结束后回到原状态
-    public void RemoveBuff(ref Person p){
+    public void RemoveBuff(Person p){
     }
 
 }
 
 //麻痹
-class ParalysisBuff:Buff{
-	public ParalysisBuff(int time):base(time)
+public class ParalysisBuff:Buff{
+	public ParalysisBuff(int time, int buffID) :base(time, buffID)
     {	
-        this.buffID = 1;
-
 	}
 	//不能攻击
-	public void InfluenceAttribute(ref Person p){
+	public void InfluenceAttribute(Person p){
         p.AttackIsOk=false;
+        time--;
 	}
 
     //buff 结束后回到原状态
-    public void RemoveBuff(ref Person p){
+    public void RemoveBuff(Person p){
         p.AttackIsOk=true;
     }
 }
@@ -88,22 +156,24 @@ class ParalysisBuff:Buff{
 //其他buff待添加
 
 // 防御
-class DefendBuff:Buff{
-	public DefendBuff(int time,int addition):base(time)
+public class DefendBuff:Buff{
+
+    private int addition;
+
+	public DefendBuff(int time,int addition, int buffID) :base(time, buffID)
     {	
-        this.buffID = 2;
         this.time=1;
         this.addition=addition;
 	}
 	//影响属性
-	public void InfluenceAttribute(ref Person p){
+	public void InfluenceAttribute(Person p){
         p.PhysicsDefense+=p.Lv*addition;
         p.SpecialDefense+=p.Lv*addition;
         this.isEffective=true;
         this.time--;
 	}
 
-    public void RemoveBuff(ref Person p){
+    public void RemoveBuff(Person p){
         p.PhysicsDefense-=p.Lv*addition;
         p.SpecialDefense-=p.Lv*addition;
     }
@@ -111,90 +181,93 @@ class DefendBuff:Buff{
 }
 
 //燃烧
-class FireBuff:Buff{
-   public FireBuff(int time ):base(time)
+public class FireBuff:Buff{
+    private int addition;
+
+    public FireBuff(int time , int addition, int buffID) :base(time, buffID)
     {	
-        this.buffID =3;
-	}
+        this.addition = addition;
+    }
 
     //造成伤害
-	public void Damage(ref Person p){
-        if(p.Blood>60*p.Lv){
-            p.Blood-=p.Lv*60;
+	public void Damage(Person p){
+        if(p.Blood> addition * p.Lv){
+            p.Blood-=p.Lv* addition;
         }else{
             p.Blood=0;
         }
+        this.isEffective = true;
         this.time--;
 	}
 }
 
 //回血
-class CureBloodBuff:Buff{
-   public CureBloodBuff(int time,int addition,bool isContinue):base(time)
+public class CureBloodBuff:Buff{
+    private int addition;
+    private bool isContinue;
+
+    public CureBloodBuff(int time,int addition,bool isContinue, int buffID) :base(time, buffID)
     {	
-        this.buffID =4;
         this.addition=addition;
         this.isContinue=isContinue;
 	}
 
     //造成伤害
-	public void Damage(ref Person p){
+	public void Damage(Person p){
         if(p.Blood+addition*p.Lv>=p.BloodMax){
             p.Blood=p.BloodMax;
         }else{
-            p.Blood+=10*p.Lv;
+            p.Blood+= addition * p.Lv;
         }
+        this.isEffective = true;
         this.time--;
-         if(this.isContinue){
+        if(this.isContinue){
             this.isEffective=false;     //每回合生效
-        }else{
-            this.isEffective=true;
         }
 	}
 }
 
 //回蓝
-class CureBlueBuff:Buff{
-   public CureBlueBuff(int time,int addition,bool isContinue):base(time)
+public class CureBlueBuff:Buff{
+    private int addition;
+    private bool isContinue;
+    public CureBlueBuff(int time,int addition,bool isContinue, int buffID) :base(time, buffID)
     {	
-        this.buffID =4;
         this.addition=addition;
         this.isContinue=isContinue;
 	}
 
     //造成伤害
-	public void Damage(ref Person p){
+	public void Damage(Person p){
         if(p.Blue+addition*p.Lv>=p.BlueMax){
             p.Blue=p.BloodMax;
         }else{
-            p.Blue+=10*p.Lv;
+            p.Blue+= addition * p.Lv;
         }
+        this.isEffective = true;
         this.time--;
         if(this.isContinue){
             this.isEffective=false;     //每回合生效
-        }else{
-            this.isEffective=true;
         }
 	}
 }
 
 //速度buff
-class SpeedBuff:Buff{
-    	public SpeedBuff(int time,int addition):base(time)
+public class SpeedBuff:Buff{
+    private int addition;
+    public SpeedBuff(int time,int addition, int buffID) :base(time, buffID)
     {	
-        this.buffID = 2;
-        this.time=1;
         this.addition=addition;
 	}
 	//影响属性
-	public void InfluenceAttribute(ref Person p){
+	public void InfluenceAttribute(Person p){
         p.Speed+=p.Lv*addition;
         this.isEffective=true;
         this.time--;
         
 	}
 
-    public void RemoveBuff(ref Person p){
+    public void RemoveBuff(Person p){
         p.Speed-=p.Lv*addition;
     }
 }

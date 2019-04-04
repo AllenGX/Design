@@ -5,7 +5,11 @@ using UnityEngine;
 
 //人物
 public class Person:MonoBehaviour{
-	private int personID;					//ID
+
+
+    public List<Buff> buffs;       //buff
+                                   // 数据 {buff1,buff2,buff3....}
+    private int personID;					//ID
 	private int specialAttack;				//特攻
 	private int physicsAttack;  			//物攻
 	private int speed;  					//速度
@@ -25,6 +29,7 @@ public class Person:MonoBehaviour{
 	private int specialDefenseGrowth;		//特防成长
 	private int bloodGrowth;                //血量成长
     private int blueGrowth;                 //蓝量成长
+    private BuffFactory buffFactory;        //buff工厂
 
     private bool attackIsOk=true;                 //是否能进行攻击
 
@@ -36,8 +41,6 @@ public class Person:MonoBehaviour{
     private List<Skill> skills;     //技能列表
                                     // 数据 {skill1,skill2,skill3...}
 
-    private List<Buff> buffs;       //buff
-                                    // 数据 {buff1,buff2,buff3....}
 
 
     //初始化
@@ -65,7 +68,7 @@ public class Person:MonoBehaviour{
         this.lv = lv;
         this.currentExperience = currentExperience;
         this.experienceMax = CalculateExperienceMax();      //级经验上限公式待定....
-
+        this.buffFactory = new BuffFactory();
         // 添加技能
         // 普攻
         this.skills.Add(new Skill(1, 1002, 10, 1, 0, "普攻", 1, 1));
@@ -88,7 +91,7 @@ public class Person:MonoBehaviour{
 
 
     public void Defend(){
-        this.AddBuff(new DefendBuff());
+        this.AddBuff(this.buffFactory.CreateBuff(1,10,2,false));
     }
 
     public void AddBuff(Buff buff){
@@ -168,7 +171,7 @@ public class Person:MonoBehaviour{
     {
         foreach (var skill in this.skills)
         {
-            if (this.skills.SkillID == skillID)
+            if (skill.SkillID == skillID)
             {
                 return skill;
             }
@@ -178,13 +181,13 @@ public class Person:MonoBehaviour{
     }
 
     //施放技能（普攻、防御都是技能）
-    public void UseSkill(int skillID,ref Person target)
+    public void UseSkill(int skillID,Person target)
     {
         Skill skill = this.GetSkill(skillID);
         if (skill != null)
         {
             //施放技能
-            skill.Use(this, targets);
+            skill.Use(this,target);
         }
         else
         {

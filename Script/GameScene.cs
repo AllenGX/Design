@@ -21,15 +21,13 @@ public class GameScene : MonoBehaviour
 
     //初始化物体
 	public void Init(){
-		Person p1=new Person(1,100,20,20,21,10,10,1,11,3,2,2,1,4,2);
-		Person p2=new Person(2,100,20,21,21,10,10,1,11,3,2,2,1,4,2);
-		Person p3=new Person(3,100,20,10,21,10,10,1,11,3,2,2,1,4,2);
+        Person p1 = new Person(1, 100, 20, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1);
+        Person p2 =new Person(2, 100, 20, 20, 30, 12, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1);
+		Person p3=new Person(3, 100, 20, 20, 30, 51, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1);
 		playerList = new List<Person>{ p1, p2, p3 };
-
-
-		Person p4=new Person(4,100,20,11,21,10,10,1,11,3,2,2,1,4,2);
-		Person p5=new Person(5,100,20,12,21,10,10,1,11,3,2,2,1,4,2);
-		Person p6=new Person(6,100,20,22,21,10,10,1,11,3,2,2,1,4,2);
+		Person p4=new Person(4, 100, 20, 20, 30, 21, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1);
+		Person p5=new Person(5, 100, 20, 20, 30, 35, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1);
+		Person p6=new Person(6, 100, 20, 20, 30, 31, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1);
 		enemyList = new List<Person>{ p4, p5, p6 };
 		allList=new List<Person>{ p1,p2,p3,p4, p5, p6 };
 		allDict = new Dictionary<int, Person>{{p1.PersonID,p1},{p2.PersonID,p2},{p3.PersonID,p3},{p4.PersonID,p4},{p5.PersonID,p5},{p6.PersonID,p6}};
@@ -194,7 +192,7 @@ public class GameScene : MonoBehaviour
 	// params List<int> ： 	需要随机的对象ID 集合
 	// params int ： 		需要随机的对象 数量
 	// return List<int> :	随机后的对象ID 集合
-	public List<int> GetRandomList(ref List<int> p ,int cnt){
+	public List<int> GetRandomList(List<int> p ,int cnt){
 		List<int> person = new List<int>{ };
 		if (p.Count <= cnt) {
 			person = p; 
@@ -267,7 +265,7 @@ public class GameScene : MonoBehaviour
 
 			//用未被选择对象替换死亡对象
 			for(int i=0;i<diePersonNumber;i++){
-				int replaceNumber=GetRandomList.Range(0,noSelectIDList.Count-1);
+				int replaceNumber=Random.Range(0,noSelectIDList.Count-1);
 				int replaceID=noSelectIDList[replaceNumber];
 				noSelectIDList.Remove(replaceID);
 				replaceTargetIDList.Add(replaceID);

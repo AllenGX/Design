@@ -7,19 +7,6 @@ public class BackPack:MonoBehaviour{
 	private int capacity=50;
 	private Goods[] goods=new Goods[50];
 
-    public int Capacity
-    {
-        get
-        {
-            return capacity;
-        }
-
-        set
-        {
-            capacity = value;
-        }
-    }
-
 
     //背包物品
     public Goods[] GetGoods()
@@ -61,7 +48,18 @@ public class BackPack:MonoBehaviour{
 
 	}
 
+    public int Capacity
+    {
+        get
+        {
+            return capacity;
+        }
 
+        set
+        {
+            capacity = value;
+        }
+    }
 
 }
 

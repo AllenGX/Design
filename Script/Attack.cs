@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-@"
-测试攻击动画
-"
+//@"
+//测试攻击动画
+//"
 
 
 public class Attack : MonoBehaviour {

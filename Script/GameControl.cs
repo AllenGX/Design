@@ -30,11 +30,12 @@ public class GameControl : MonoBehaviour
 			return this.resultType;
 		}
 		InvokeRepeating("GameStart", 30, 30F);				//30S后再次调用自身
-		this.round++;										//回合数+1
+		this.round++;                                       //回合数+1
 
-		//发送下一轮操作指令对象
-		//List<int> operationalPlayerIDList=gameSence.OperationalPlayerIDList();
-		//int operationalPlayerNumber=gameSence.OperationalPlayerNumber();
+        //发送下一轮操作指令对象
+        //List<int> operationalPlayerIDList=gameSence.OperationalPlayerIDList();
+        //int operationalPlayerNumber=gameSence.OperationalPlayerNumber();
+        return 0;
 	}
 
 
@@ -49,12 +50,12 @@ public class GameControl : MonoBehaviour
 		foreach(var personID in gameSence.allDict.Keys){
 			for(int i=0;i<gameSence.allDict[personID].buffs.Count;i++){
 				//buff 时间到了移除
-				if(gameSence.allDict[personID].buffs[i].time==0){
+				if(gameSence.allDict[personID].buffs[i].Time==0){
 					gameSence.allDict[personID].buffs[i].RemoveBuff(gameSence.allDict[personID]);
-					gameSence.allDict[personID].buffs.Remove(i);
+					gameSence.allDict[personID].buffs.RemoveAt(i);
 				}
 			}
-			gameSence.allDict[personID].attackIsOk=true;
+			gameSence.allDict[personID].AttackIsOk=true;
 		}
 	}
 
@@ -95,7 +96,7 @@ public class GameControl : MonoBehaviour
 					}
 				}
 				// 随机指定数个目标
-				targetIDList = gameSence.GetRandomList(targetIDList,targetNumber);
+				targetIDList = gameSence.GetRandomList(targetIDList, targetNumber);
 				SkillUseStruct order = new SkillUseStruct (person.PersonID, skill.SkillID, targetIDList);
 				this.orderList.Add (order);
 			}
@@ -130,12 +131,12 @@ public class GameControl : MonoBehaviour
 
 		//对象按照速度执行指令
 		//自身影响状态buff生效
-		foreach(var personID in gameSence.speedList){
-			if(!gameSence.allDict[personID].IsDie()){
+		foreach(var person in gameSence.speedList){
+			if(!gameSence.allDict[person.PersonID].IsDie()){
 				//优先判定状态buff
-				gameSence.allDict[personID].EffectBuff(1);
+				gameSence.allDict[person.PersonID].EffectBuff(1);
 			}
-			SkillUseStruct order=GetOrder(personID);
+			SkillUseStruct order=GetOrder(person.PersonID);
 			//执行指令
 			if(order!=null){
 				//执行目标集合存在死者	从新选定对象
@@ -145,7 +146,7 @@ public class GameControl : MonoBehaviour
 				//执行攻击
 				if(!gameSence.allDict[order.CasterID].IsDie()){
 					foreach(var targetID in order.TargetsIDList){
-						gameSence.allDict[order.CasterID].UseSkill(skillID,gameSence.allDict[targetID]);
+						gameSence.allDict[order.CasterID].UseSkill(order.SkillID,gameSence.allDict[targetID]);
 					}
 				}
 			}
