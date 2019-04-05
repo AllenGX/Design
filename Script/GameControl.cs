@@ -2,35 +2,37 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class GameControl : MonoBehaviour
-{
-
-
-	private int round;
+public class GameControl{
+    private int round;
 	private int resultType;
 	private GameScene gameSence;
 	private List<SkillUseStruct> orderList=new List<SkillUseStruct>{ };
 
-	public GameControl(){
+	public GameControl()
+    {
 		this.round=1;		//第一回合
 		this.resultType=0;	//游戏未结束
 		this.gameSence=new GameScene();	//创建场景
-	}
+}
 
 
-	public int GameStart(){
-		RemoveTimer();										//清除定时器
-		RandomOrder();										//给未分配指令的对象设置指令
-		gameSence.speedList.Sort(gameSence.CompareSpeed);	//按速度排序
-		ExcuteOrderList();									//执行指令
+	public int GameStart(ref float startTime)
+    {
+        startTime = Time.time;
+        //RemoveTimer();								    //清除定时器
+        RandomOrder();                                      //给未分配指令的对象设置指令
+        gameSence.speedList.Sort(gameSence.CompareSpeed);   //按速度排序
+        ExcuteOrderList();									//执行指令
 		ReshStatus();										//刷新状态  可攻击属性设为ture 移除过期buff
 		orderList=new List<SkillUseStruct>{ };				//清空指令
 		this.resultType=gameSence.GameStatus();				//判断战斗是否结束
 		if(this.resultType!=0){
 			return this.resultType;
 		}
-		InvokeRepeating("GameStart", 30, 30F);				//30S后再次调用自身
+		//InvokeRepeating("GameStart", 30, 30F);				//30S后再次调用自身
 		this.round++;                                       //回合数+1
+        startTime = Time.time;
+        Debug.Log("this.startTime:" + startTime);
 
         //发送下一轮操作指令对象
         //List<int> operationalPlayerIDList=gameSence.OperationalPlayerIDList();
@@ -38,15 +40,34 @@ public class GameControl : MonoBehaviour
         return 0;
 	}
 
-
-	public void RemoveTimer(){
+    public void RemoveTimer(){
 		//销毁定时
-		CancelInvoke();
+		//CancelInvoke();
 	}
 
 
-	//刷新属性
-	public void ReshStatus(){
+    public void PrintPersonInfo() {
+        foreach (var person in gameSence.allDict.Values)
+        {
+            Debug.Log("person:  " + person.PersonID + "   " + person.Blood + "  " + person.Blue);
+        }
+    }
+
+
+    public void PrintOrderInfo()
+    {
+        foreach (var order in this.orderList)
+        {
+            Debug.Log("order:  " + order.SkillID + "   " + order.CasterID + "  " );
+            foreach(var targetID in order.TargetsIDList)
+            {
+                Debug.Log("targetID:  " + targetID);
+            }
+        }
+    }
+
+    //刷新属性
+    public void ReshStatus(){
 		foreach(var personID in gameSence.allDict.Keys){
 			for(int i=0;i<gameSence.allDict[personID].buffs.Count;i++){
 				//buff 时间到了移除
@@ -65,9 +86,8 @@ public class GameControl : MonoBehaviour
 		List<int> enemyIDAliveList = gameSence.PersonAlivePersonIDList (-1);		//存活敌人ID集合
 		List<int> playerIDAliveList = gameSence.PersonAlivePersonIDList (1);		//存活玩家ID集合
 		List<int> targetIDList=new List<int>{};										//攻击目标ID集合
-
-		//为所有角色分配指令
-		foreach (var person in gameSence.allList) {
+        //为所有角色分配指令
+        foreach (var person in gameSence.allList) {
 			//如果还没有指令
 			if(IsNotOrder(person.PersonID)){
 				List<Skill> skillList=person.GetSkillList();
@@ -101,8 +121,9 @@ public class GameControl : MonoBehaviour
 				this.orderList.Add (order);
 			}
 		}
-	}
+    }
 
+    // 判断是否有指令
 	public bool IsNotOrder(int personID){
 		foreach(var order in this.orderList){
 			if(order.CasterID==personID){
@@ -112,6 +133,8 @@ public class GameControl : MonoBehaviour
 		return true;
 	}
 
+
+    //执行指令列表
 	public void ExcuteOrderList(){
 		//防御生效（效果是增加一个加防buff）
 		foreach(var order in this.orderList){	
@@ -128,10 +151,9 @@ public class GameControl : MonoBehaviour
 				gameSence.allDict[order.CasterID].EffectBuff(0);
 			}
 		}
-
-		//对象按照速度执行指令
-		//自身影响状态buff生效
-		foreach(var person in gameSence.speedList){
+        //对象按照速度执行指令
+        //自身影响状态buff生效
+        foreach (var person in gameSence.speedList){
 			if(!gameSence.allDict[person.PersonID].IsDie()){
 				//优先判定状态buff
 				gameSence.allDict[person.PersonID].EffectBuff(1);
@@ -150,11 +172,10 @@ public class GameControl : MonoBehaviour
 					}
 				}
 			}
-			
-		}
+        }
+    }
 
-	}
-
+    // 得到一条指令
 	public SkillUseStruct GetOrder(int personID){
 		foreach(var order in this.orderList){
 			if(order.CasterID==personID){

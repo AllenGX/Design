@@ -4,11 +4,10 @@ using UnityEngine;
 
 
 //人物
-public class Person:MonoBehaviour{
+public class Person{
 
 
-    public List<Buff> buffs;       //buff
-                                   // 数据 {buff1,buff2,buff3....}
+    public List<Buff> buffs;                //buff 数据 {buff1,buff2,buff3....}
     private int personID;					//ID
 	private int specialAttack;				//特攻
 	private int physicsAttack;  			//物攻
@@ -29,9 +28,9 @@ public class Person:MonoBehaviour{
 	private int specialDefenseGrowth;		//特防成长
 	private int bloodGrowth;                //血量成长
     private int blueGrowth;                 //蓝量成长
-    private BuffFactory buffFactory;        //buff工厂
-
-    private bool attackIsOk=true;                 //是否能进行攻击
+    public BuffFactory buffFactory;         //buff工厂
+    public SkillFactory skillFactory;       //技能工厂
+    private bool attackIsOk=true;           //是否能进行攻击
 
 
     private Dictionary<string, Equipment> inventory; //装备,蓝
@@ -47,7 +46,7 @@ public class Person:MonoBehaviour{
     public Person(int personID,int blood,int blue, int specialAttack,int physicsAttack,int speed,int physicsDefense,int specialDefense,int lv,int currentExperience,int bloodGrowth,int specialAttackGrowth,int physicsAttackGrowth,int speedGrowth,int physicsDefenseGrowth,int specialDefenseGrowth,int blueGrowth){
         //buffs
         this.buffs = new List<Buff> { };
-
+        this.skills = new List<Skill> { };
         this.personID = personID;
         this.blood = blood;
         this.bloodMax=blood;
@@ -69,13 +68,11 @@ public class Person:MonoBehaviour{
         this.currentExperience = currentExperience;
         this.experienceMax = CalculateExperienceMax();      //级经验上限公式待定....
         this.buffFactory = new BuffFactory();
+        this.skillFactory = new SkillFactory();
         // 添加技能
-        // 普攻
-        this.skills.Add(new Skill(1, 1002, 10, 1, 0, "普攻", 1, 1));
-        // 技能
-        this.skills.Add(new Skill(1, 1003, 100, 2, 20, "飞雷神", 2, 2));
-        // 防御
-        this.skills.Add(new Skill(-1,1001,0,0,0,"防御",0,0));
+        this.skills.Add(this.skillFactory.CreateSkill("普通攻击"));
+        this.skills.Add(this.skillFactory.CreateSkill("无操作"));
+
 
         //初始化装备
         this.inventory = new Dictionary<string, Equipment> {
@@ -91,7 +88,7 @@ public class Person:MonoBehaviour{
 
 
     public void Defend(){
-        this.AddBuff(this.buffFactory.CreateBuff(1,10,2,false));
+        this.AddBuff(this.buffFactory.CreateBuff("防御"));
     }
 
     public void AddBuff(Buff buff){
@@ -176,7 +173,8 @@ public class Person:MonoBehaviour{
                 return skill;
             }
         }
-        print("GetSkill----> no skill");
+        
+        Debug.Log("GetSkill----> no skill");
         return null;
     }
 
@@ -191,7 +189,7 @@ public class Person:MonoBehaviour{
         }
         else
         {
-            print("UseSkill-----> no skill");
+            Debug.Log("UseSkill-----> no skill");
         }
     }
 
@@ -218,7 +216,7 @@ public class Person:MonoBehaviour{
                 return;
             }
         }
-        print("RemoveSkill-----> fail");
+        Debug.Log("RemoveSkill-----> fail");
         return;
     }
 
@@ -257,12 +255,12 @@ public class Person:MonoBehaviour{
             }
             else
             {
-                print("SetInventory-----> no 装备槽");
+                Debug.Log("SetInventory-----> no 装备槽");
             }
         }
         else
         {
-            print("SetInventory-----> lv is low");
+            Debug.Log("SetInventory-----> lv is low");
         }
     }
     //移除装备
@@ -279,7 +277,7 @@ public class Person:MonoBehaviour{
         }
         else
         {
-            print("RemoveInventory-----> no 装备物品");
+            Debug.Log("RemoveInventory-----> no 装备物品");
             return null;
         }
     }

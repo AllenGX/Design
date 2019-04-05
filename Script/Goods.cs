@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Goods:MonoBehaviour{
+public class Goods{
 	protected int number;         //数量
     protected int goodID;         //ID
 
@@ -11,7 +11,7 @@ public class Goods:MonoBehaviour{
         this.goodID = goodID;
     }
 
-    public void Use(Person p)
+    public virtual void Use(Person p)
     {
 
     }
@@ -69,7 +69,7 @@ public class Equipment:Goods{
     }
 
     //装备后更新属性
-    public void Use(Person p)
+    public override void Use(Person p)
     {
         p.Blood= p.Blood + this.blood;
         p.Blue=p.Blue + this.blue;

@@ -2,15 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class SkillUseStruct : MonoBehaviour
-{
+public class SkillUseStruct{
     private int casterID;
     private  int skillID;
     private List<int> targetsIDList;
 
     public SkillUseStruct(int casterID, int skillID,List<int> targetsIDList)
     {
-        this.casterID = mecasterID;
+        this.casterID = casterID;
         this.skillID = skillID;
         this.targetsIDList = targetsIDList;
     }

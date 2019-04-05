@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class BackPack:MonoBehaviour{
+public class BackPack{
 	//背包容量
 	private int capacity=50;
 	private Goods[] goods=new Goods[50];
@@ -40,7 +40,7 @@ public class BackPack:MonoBehaviour{
                 break;
             }
         }
-        print("SetGoods---->背包满了");
+        Debug.Log("SetGoods---->背包满了");
     }
 
     //数据 {good1,null,good3}
