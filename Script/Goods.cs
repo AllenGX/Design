@@ -1,166 +1,220 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Goods:MonoBehaviour{
-	protected int number; 		//数量
-	protected int ID;			//ID
-	public Goods(int number,int ID){
-		this.number = number;
-		this.ID = ID;
-	}
+public class Goods{
+	protected int number;         //数量
+    protected int goodID;         //ID
 
-	public void Use(Person p){
+    public Goods(int number, int goodID)
+    {
+        this.number = number;
+        this.goodID = goodID;
+    }
 
-	}
+    public virtual void Use(Person p)
+    {
 
-	//get,set
-	//数量
-	public int GetNumber(){
-		return this.number;
-	}
-	public void SetNumber(int number){
-		this.number = number;
-	}
-	//ID
-	public int GetID(){
-		return this.ID;
-	}
-	public void SetID(int ID){
-		this.ID = ID;
-	}
+    }
 
+    public int Number
+    {
+        get
+        {
+            return number;
+        }
+
+        set
+        {
+            number = value;
+        }
+    }
+
+    public int GoodID
+    {
+        get
+        {
+            return goodID;
+        }
+
+        set
+        {
+            goodID = value;
+        }
+    }
 }
 
-//物品: 装bei
+//物品: 装备
 public class Equipment:Goods{
-	protected string equipmentName;	//装bei名称
-	protected int specialAttack;	//特攻
-	protected int physicsAttack;  	//物攻
-	protected int speed;  			//速度
-	protected int physicsDefense;	//物防
-	protected int specialDefense;	//特防
-	protected int blood;			//血量
-	protected int blue;				//lan量
-	protected int lv;				//装bei等ji
+    protected string equipmentName;     //装备名称
+    protected int specialAttack;        //特攻
+    protected int physicsAttack;        //物攻
+    protected int speed;                //速度
+    protected int physicsDefense;       //物防
+    protected int specialDefense;       //特防
+    protected int blood;                //血量
+    protected int blue;                 //蓝量
+    protected int lv;                   //装备等级
 
-	public  Equipment(	int specialAttack,
-		int physicsAttack,
-		int speed,
-		int physicsDefense,
-		int specialDefense,
-		int blood,
-		int lv,
-		int equipmentID):base(1,equipmentID){
-		this.blood = blood;
-		this.physicsAttack = physicsAttack;
-		this.physicsDefense = physicsDefense;
-		this.speed = speed;
-		this.specialAttack = specialAttack;
-		this.specialDefense = specialDefense;
-		this.lv = lv;
-	}
+    public Equipment(string equipmentName, int specialAttack, int physicsAttack, int speed, int physicsDefense, int specialDefense, int blood, int blue, int lv, int number, int iD) :base(number,iD)
+    {
+        this.equipmentName = equipmentName;
+        this.specialAttack = specialAttack;
+        this.physicsAttack = physicsAttack;
+        this.speed = speed;
+        this.physicsDefense = physicsDefense;
+        this.specialDefense = specialDefense;
+        this.blood = blood;
+        this.blue = blue;
+        this.lv = lv;
+    }
 
-	//装bei后更新属性
-	public void Use(Person p){
-		p.SetBlood (p.GetBlood()+this.blood);
-		p.SetBlue (p.GetBlue()+this.blue);
-		p.SetPhysicsAttack (p.GetPhysicsAttack()+this.physicsAttack);
-		p.SetPhysicsDefense (p.GetPhysicsDefense()+this.physicsDefense);
-		p.SetSpecialAttack (p.GetSpecialAttack()+this.specialAttack);
-		p.SetSpecialDefense (p.GetSpecialDefense()+this.specialDefense);
-		p.SetSpeed (p.GetSpeed () + this.speed);
-		this.number -= 1;
-	}
+    //装备后更新属性
+    public override void Use(Person p)
+    {
+        p.Blood= p.Blood + this.blood;
+        p.Blue=p.Blue + this.blue;
+        p.PhysicsAttack=p.PhysicsAttack + this.physicsAttack;
+        p.PhysicsDefense=p.PhysicsDefense + this.physicsDefense;
+        p.SpecialAttack=p.SpecialAttack + this.specialAttack;
+        p.SpecialDefense=p.SpecialDefense + this.specialDefense;
+        p.Speed=p.Speed + this.speed;
+        this.number -= 1;
+    }
 
-	//卸下装bei
-	public void Discharge(Person p){
-		p.SetBlood (p.GetBlood()-this.blood);
-		p.SetBlue (p.GetBlue()-this.blue);
-		p.SetPhysicsAttack (p.GetPhysicsAttack()-this.physicsAttack);
-		p.SetPhysicsDefense (p.GetPhysicsDefense()-this.physicsDefense);
-		p.SetSpecialAttack (p.GetSpecialAttack()-this.specialAttack);
-		p.SetSpecialDefense (p.GetSpecialDefense()-this.specialDefense);
-		p.SetSpeed (p.GetSpeed () - this.speed);
-		this.number += 1;
-	}
+    //卸下装备
+    public void Discharge(Person p)
+    {
+        p.Blood = p.Blood - this.blood;
+        p.Blue = p.Blue - this.blue;
+        p.PhysicsAttack = p.PhysicsAttack - this.physicsAttack;
+        p.PhysicsDefense = p.PhysicsDefense - this.physicsDefense;
+        p.SpecialAttack = p.SpecialAttack - this.specialAttack;
+        p.SpecialDefense = p.SpecialDefense - this.specialDefense;
+        p.Speed = p.Speed - this.speed;
+        this.number += 1;
+    }
 
-	//分解
+    //分解
 
-	//打孔
+    //打孔
 
 
-	//后xu内容。。。
+    //后续内容。。。
 
-	//get,set
-	//装bei名称
-	public string GetEquipmentName(){
-		return this.equipmentName;
-	}
-	public void SetEquipmentName(string equipmentName){
-		this.equipmentName = equipmentName;
-	}
+    public string EquipmentName
+    {
+        get
+        {
+            return equipmentName;
+        }
 
-	//特攻
-	public int GetSpecialAttack(){
-		return this.specialAttack;
-	}
-	public void SetSpecialAttack(int specialAttack){
-		this.specialAttack = specialAttack;
-	}
+        set
+        {
+            equipmentName = value;
+        }
+    }
 
-	//物攻
-	public int GetPhysicsAttack(){
-		return this.physicsAttack;
-	}
-	public void SetPhysicsAttack(int physicsAttack){
-		this.physicsAttack = physicsAttack;
-	}
-		
-	//速度
-	public int GetSpeed(){
-		return this.speed;
-	}
-	public void SetSpeed(int speed){
-		this.speed = speed;
-	}
+    public int SpecialAttack
+    {
+        get
+        {
+            return specialAttack;
+        }
 
-	//物防
-	public int GetPhysicsDefense(){
-		return this.physicsDefense;
-	}
-	public void SetPhysicsDefense(int physicsDefense){
-		this.physicsDefense = physicsDefense;
-	}
+        set
+        {
+            specialAttack = value;
+        }
+    }
 
-	//特防
-	public int GetSpecialDefense(){
-		return this.specialDefense;
-	}
-	public void SetSpecialDefense(int specialDefense){
-		this.specialDefense = specialDefense;
-	}
+    public int PhysicsAttack
+    {
+        get
+        {
+            return physicsAttack;
+        }
 
-	//血量
-	public int GetBlood(){
-		return this.blood;
-	}
-	public void SetBlood(int blood){
-		this.blood = blood;
-	}
+        set
+        {
+            physicsAttack = value;
+        }
+    }
 
-	//装bei等ji
-	public int GetLv(){
-		return this.lv;
-	}
-	public void SetLv(int lv){
-		this.lv = lv;
-	}
+    public int Speed
+    {
+        get
+        {
+            return speed;
+        }
 
-	//lan量
-	public int GetBlue(){
-		return this.blue;
-	}
-	public void SetBlue(int blue){
-		this.blue = blue;
-	}
+        set
+        {
+            speed = value;
+        }
+    }
+
+    public int PhysicsDefense
+    {
+        get
+        {
+            return physicsDefense;
+        }
+
+        set
+        {
+            physicsDefense = value;
+        }
+    }
+
+    public int SpecialDefense
+    {
+        get
+        {
+            return specialDefense;
+        }
+
+        set
+        {
+            specialDefense = value;
+        }
+    }
+
+    public int Blood
+    {
+        get
+        {
+            return blood;
+        }
+
+        set
+        {
+            blood = value;
+        }
+    }
+
+    public int Blue
+    {
+        get
+        {
+            return blue;
+        }
+
+        set
+        {
+            blue = value;
+        }
+    }
+
+    public int Lv
+    {
+        get
+        {
+            return lv;
+        }
+
+        set
+        {
+            lv = value;
+        }
+    }
 }
