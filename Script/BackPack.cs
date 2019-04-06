@@ -3,50 +3,150 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class BackPack{
-	//背包容量
-	private int capacity=50;
-	private Goods[] goods=new Goods[50];
+	private int capacity;       //背包容量
+    private Good[] goods;       //物品数组
+    private int useItemIndex;   //使用道具下标
 
+    //数据 {good1,null,good3}
+    public BackPack()
+    {
+        this.capacity = 50;
+        this.goods = new Good[50];
+    }
 
     //背包物品
-    public Goods[] GetGoods()
+    public Good[] GetGoods()
     {
         return this.goods;
     }
-    //添加物品
-    public void SetGoods(Goods g)
-    {
-        //已存在数量+1
-        for (int i = 0; i < this.Capacity; i++)
-        {
-            if (this.goods[i] != null)
-            {
-                //背包以及存在同种物品并且不是武器
-                if (this.goods[i].GoodID == g.GoodID && !(g is Equipment))
-                {
-                    this.goods[i].Number = this.goods[i].Number + g.Number;
-                    break;
-                }
-            }
-        }
 
-        //不存在
-        for (int i = 0; i < this.Capacity; i++)
+    //获得背包的空位
+    public int BackPackVacancy()
+    {
+        int vacancyIndex = -1;
+        for (int i = 0; i <= this.capacity; i++)
         {
             if (this.goods[i] == null)
             {
-                //背包以及存在同种物品并且不是武器
-                this.goods[i] = g;
+                vacancyIndex = i;
                 break;
             }
         }
-        Debug.Log("SetGoods---->背包满了");
+        return vacancyIndex;
     }
 
-    //数据 {good1,null,good3}
-    public BackPack(){
+    //使用物品 战斗状态下
+    public void UseGood(Person caster,Person target)
+    {
+        //是装备
+        if (this.goods[this.useItemIndex] is Equipment)
+        {
+            Debug.Log("UseGood 严重警告（本不该发生） 装备无法使用！！");
+        }
+        else if (this.goods[this.useItemIndex] is Product)
+        {   //是道具
+            target.UseProduct((Product)this.goods[this.useItemIndex],target);
+        }
+        Refresh();
+    }
 
-	}
+    //使用物品 非战斗状态下
+    public void UseGood(Person target)
+    {
+        //是装备
+        if(this.goods[this.useItemIndex] is Equipment)
+        {
+            Equipment eq = target.SetInventory((Equipment)this.goods[this.useItemIndex]);
+            this.goods[this.useItemIndex] = null;
+            if (eq != null)
+            {
+                bool ok=SetGoods(eq);
+                if (!ok)
+                {
+                    Debug.Log("UseGood 严重警告（本不该发生） 物品栏满了！！");
+                }
+            }
+        }
+        else if (this.goods[this.useItemIndex] is Product)
+        {   //是道具
+            target.UseProduct((Product)this.goods[this.useItemIndex]);
+        }
+        Refresh();
+    }
+
+    //刷新背包
+    public void Refresh()
+    {
+        for(int i = 0; i < this.capacity; i++)
+        {
+            if (this.goods[i].GoodNumber <= 0)
+            {
+                this.goods[i] = null;
+            }
+        }
+    }
+
+    //添加物品
+    public bool SetGoods(Good g)
+    {
+        bool result = false;
+        int appendIndex = -1;
+        //物品是道具
+        if (g is Product)
+        {
+            for (int i = 0; i < this.capacity; i++)
+            {
+                //已存在  并且没达到单个数量上限
+                if (this.goods[i].GoodID==g.GoodID && this.goods[i].GoodNumber< this.goods[i].GoodLimitedNumber)
+                {
+                    //获得后也不超过上限
+                    if(this.goods[i].GoodNumber+g.GoodNumber<= this.goods[i].GoodLimitedNumber)
+                    {
+                        this.goods[i].GoodNumber = this.goods[i].GoodNumber + g.GoodNumber;
+                    }
+                    else
+                    {   //获得后超过上限
+                        appendIndex = BackPackVacancy();
+                        if (appendIndex == -1)
+                        {
+                            Debug.Log("SetGoods---->背包满了");
+                            return false;   //失败
+                        }
+                        else
+                        {
+                            // 添加后重新取一格放置多的剩余物品
+                            g.GoodNumber = g.GoodNumber + this.goods[i].GoodNumber - this.goods[i].GoodLimitedNumber;
+                            this.goods[i].GoodNumber = this.goods[i].GoodLimitedNumber;
+                            this.goods[appendIndex] = g;
+                            return true;    //成功
+                        }
+                    } 
+                }
+            }
+        }
+        else
+        {   //是装备 或者 没有同类物品在背包的道具
+            appendIndex = BackPackVacancy();
+            if (appendIndex == -1)
+            {
+                Debug.Log("SetGoods---->背包满了");
+                return result;
+            }
+            else
+            {
+                // 添加
+                this.goods[appendIndex] = g;
+                return true;
+            }
+        }
+        return result;
+    }
+
+    //丢弃物品
+    public void RemoveGood()
+    {
+        this.goods[useItemIndex] = null;
+    }
 
     public int Capacity
     {
@@ -61,5 +161,30 @@ public class BackPack{
         }
     }
 
+    public Good[] Goods
+    {
+        get
+        {
+            return goods;
+        }
+
+        set
+        {
+            goods = value;
+        }
+    }
+
+    public int UseItemIndex
+    {
+        get
+        {
+            return useItemIndex;
+        }
+
+        set
+        {
+            useItemIndex = value;
+        }
+    }
 }
 
