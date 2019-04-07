@@ -6,11 +6,12 @@ public class GameControl{
     private int round;
 	private int resultType;
 	private GameScene gameSence;
-	private List<SkillUseStruct> orderList=new List<SkillUseStruct>{ };
+	private List<Order> orderList;
 
 	public GameControl()
     {
-		this.round=1;		//第一回合
+        this.orderList = new List<Order> { }; //初始化指令列表
+        this.round=1;		//第一回合
 		this.resultType=0;	//游戏未结束
 		this.gameSence=new GameScene();	//创建场景
 }
@@ -24,10 +25,11 @@ public class GameControl{
         gameSence.speedList.Sort(gameSence.CompareSpeed);   //按速度排序
         ExcuteOrderList();									//执行指令
 		ReshStatus();										//刷新状态  可攻击属性设为ture 移除过期buff
-		orderList=new List<SkillUseStruct>{ };				//清空指令
+		orderList=new List<Order> { };				        //清空指令
 		this.resultType=gameSence.GameStatus();				//判断战斗是否结束
 		if(this.resultType!=0){
-			return this.resultType;
+            RemoveAllBuff();
+            return this.resultType;
 		}
 		//InvokeRepeating("GameStart", 30, 30F);				//30S后再次调用自身
 		this.round++;                                       //回合数+1
@@ -46,23 +48,20 @@ public class GameControl{
 	}
 
 
+    //打印人物信息
     public void PrintPersonInfo() {
-        foreach (var person in gameSence.allDict.Values)
+        foreach (var person in gameSence.playerList)
         {
             Debug.Log("person:  " + person.PersonID + "   " + person.Blood + "  " + person.Blue);
         }
     }
 
-
+    //打印指令信息
     public void PrintOrderInfo()
     {
         foreach (var order in this.orderList)
         {
-            Debug.Log("order:  " + order.SkillID + "   " + order.CasterID + "  " );
-            foreach(var targetID in order.TargetsIDList)
-            {
-                Debug.Log("targetID:  " + targetID);
-            }
+            order.PrintInfo();
         }
     }
 
@@ -79,6 +78,18 @@ public class GameControl{
 			gameSence.allDict[personID].AttackIsOk=true;
 		}
 	}
+
+    //战斗结束后清除所有玩家buff
+    public void RemoveAllBuff()
+    {
+        for (int i = 0; i < gameSence.playerList.Count; i++)
+        {
+            for (int j = 0; j < gameSence.playerList[i].buffs.Count;j++)
+            {
+                gameSence.playerList[i].buffs[j].RemoveBuff(gameSence.playerList[i]);
+            }
+        }
+    }
 
  //随机分配指令
  // return List<SkillUseStruct> : ｛{释放者ID ， 技能ID ， 攻击目标ID集合}，{释放者ID ， 技能ID ， 攻击目标ID集合}，....｝
@@ -138,11 +149,16 @@ public class GameControl{
 	public void ExcuteOrderList(){
 		//防御生效（效果是增加一个加防buff）
 		foreach(var order in this.orderList){	
-			if(order.SkillID==1001){
-				if(!gameSence.allDict[order.CasterID].IsDie()){
-					gameSence.allDict[order.CasterID].Defend();
-				}
-			}
+			if(order is SkillUseStruct)
+            {
+                if (((SkillUseStruct)order).SkillID == 1001)
+                {
+                    if (!gameSence.allDict[order.CasterID].IsDie())
+                    {
+                        gameSence.allDict[order.CasterID].Defend();
+                    }
+                }
+            }
 		}
 
 		//影响属性的buff优先生效
@@ -158,7 +174,7 @@ public class GameControl{
 				//优先判定状态buff
 				gameSence.allDict[person.PersonID].EffectBuff(1);
 			}
-			SkillUseStruct order=GetOrder(person.PersonID);
+            Order order =GetOrder(person.PersonID);
 			//执行指令
 			if(order!=null){
 				//执行目标集合存在死者	从新选定对象
@@ -168,7 +184,13 @@ public class GameControl{
 				//执行攻击
 				if(!gameSence.allDict[order.CasterID].IsDie()){
 					foreach(var targetID in order.TargetsIDList){
-						gameSence.allDict[order.CasterID].UseSkill(order.SkillID,gameSence.allDict[targetID]);
+						if(order is SkillUseStruct) //如果是技能  便施放
+                        {
+                            gameSence.allDict[order.CasterID].UseSkill(((SkillUseStruct)order).SkillID, gameSence.allDict[targetID]);
+                        }else if (order is ProductUseStruct)      //使用道具
+                        {
+                            gameSence.allDict[order.CasterID].UseSkill(((ProductUseStruct)order).ProductID, gameSence.allDict[targetID]);
+                        }
 					}
 				}
 			}
@@ -176,7 +198,7 @@ public class GameControl{
     }
 
     // 得到一条指令
-	public SkillUseStruct GetOrder(int personID){
+	public Order GetOrder(int personID){
 		foreach(var order in this.orderList){
 			if(order.CasterID==personID){
 				return order;
@@ -216,6 +238,32 @@ public class GameControl{
         set
         {
             resultType = value;
+        }
+    }
+
+    public GameScene GameSence
+    {
+        get
+        {
+            return gameSence;
+        }
+
+        set
+        {
+            gameSence = value;
+        }
+    }
+
+    public List<Order> OrderList
+    {
+        get
+        {
+            return orderList;
+        }
+
+        set
+        {
+            orderList = value;
         }
     }
 }

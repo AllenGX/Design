@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class BackPack{
+    private int money;          //金钱数量
 	private int capacity;       //背包容量
     private Good[] goods;       //物品数组
     private int useItemIndex;   //使用道具下标
@@ -184,6 +185,19 @@ public class BackPack{
         set
         {
             useItemIndex = value;
+        }
+    }
+
+    public int Money
+    {
+        get
+        {
+            return money;
+        }
+
+        set
+        {
+            money = value;
         }
     }
 }

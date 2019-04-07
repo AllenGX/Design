@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Good{
     private int goodID;             //ID
@@ -61,6 +62,133 @@ public class Good{
         {
             goodLimitedNumber = value;
         }
+    }
+}
+
+//装备ID    类名         装备名称       部位       特攻      物攻      速度      物防      特防     血量      蓝量      装备等级        装备信息
+//5001    Chael_de_fer     铁盔         Head        0         0         0        30         0       100         0           1               ...
+//5002    GhostSword      伏魔刀       Weapon       0         80        10       10         0        50         0           1
+//5003     BladeMail       刃甲         Top         0         20        0        100        0       100         0           1
+//5004   GoldenCrowCuish 金乌腿甲     Bottom        0         0         10       60         0        30         0           1
+//5005  SilverWristbands 白银护腕      Armor        0         20        5        10         0        10         0           1
+//5006    CedarwoodRing  杉木戒指    Accessorie     0         0         0        30         30       30         30          1  
+//5007    PsionicScarf   灵能头巾      Head         0         5         10       5          0        10         0           1
+//5008    LightSaber      光剑        Weapon        0         30        15       0          0        50         0           1
+//5009 ColouredGlazeVest 琉璃背心      Top          0         0         10       30         30       40         20          1
+//5010  SpiritWindPants   灵风裤      Bottom        0         0         20       20         0        20         0           1
+//5011 RubyKneeProtector 红宝石护膝    Armor        0         5         15       10         0        10         0           1
+//5012   AmberEssence    琥珀精华   Accessorie      0         0         30       0          0         0         0           1
+//5013   ArchmagesHat   大法师之帽     Head         50        0         0        0          0         0         100         1
+//5014    FireDorje      火灵杖       Weapon        100       0         0        0          0         0         30          1
+//5015   WisdomCloak     智慧披风      Top          10        0         0        0          20        30        30          1
+//5016    SilkPants      蚕丝裤      Bottom         0         0         0        60         60        0         0           1
+//5017   SirenCloak     魔女斗篷      Armor         0         0         0        0          0         80        80          1
+//5018    StoneSage     贤者之石    Accessorie      10        10        10       10         10        10        10          1
+
+
+//武器工厂
+public class EquipmentFactory{
+    private Dictionary<string, int> equipmentDict;  //武器字典
+    public EquipmentFactory()
+    {
+        equipmentDict = new Dictionary<string, int>
+        {
+            { "铁盔",5001},
+            { "伏魔刀",5002},
+            { "刃甲",5003},
+            { "金乌腿甲",5004},
+            { "白银护腕",5005},
+            { "杉木戒指",5006},
+            { "灵能头巾",5007},
+            { "光剑",5008},
+            { "琉璃背心",5009},
+            { "灵风裤",5010},
+            { "红宝石护膝",5011},
+            { "琥珀精华",5012},
+            { "大法师之帽",5013},
+            { "火灵杖",5014},
+            { "智慧披风",5015},
+            { "蚕丝裤",5016},
+            { "魔女斗篷",5017},
+            { "贤者之石",5018},
+        };
+    }
+    public Equipment CreateEquipment(string equipmentName)
+    {
+        Equipment eq = null;
+        if (this.equipmentDict[equipmentName] == 5001)
+        {   //铁盔
+            eq = new Chael_de_fer();
+        }
+        else if (this.equipmentDict[equipmentName] == 5002)
+        {   //伏魔刀
+            eq = new GhostSword();
+        }
+        else if (this.equipmentDict[equipmentName] == 5003)
+        {   //刃甲
+            eq = new BladeMail();
+        }
+        else if (this.equipmentDict[equipmentName] == 5004)
+        {   //金乌腿甲
+            eq = new GoldenCrowCuish();
+        }
+        else if (this.equipmentDict[equipmentName] == 5005)
+        {   //白银护腕
+            eq = new SilverWristbands();
+        }
+        else if (this.equipmentDict[equipmentName] == 5006)
+        {   //杉木戒指
+            eq = new CedarwoodRing();
+        }
+        else if (this.equipmentDict[equipmentName] == 5007)
+        {   //灵能头巾
+            eq = new PsionicScarf();
+        }
+        else if (this.equipmentDict[equipmentName] == 5008)
+        {   //光剑
+            eq = new LightSaber();
+        }
+        else if (this.equipmentDict[equipmentName] == 5009)
+        {   //琉璃背心
+            eq = new ColouredGlazeVest();
+        }
+        else if (this.equipmentDict[equipmentName] == 5010)
+        {   //灵风裤
+            eq = new SpiritWindPants();
+        }
+        else if (this.equipmentDict[equipmentName] == 5011)
+        {   //红宝石护膝
+            eq = new RubyKneeProtector();
+        }
+        else if (this.equipmentDict[equipmentName] == 5012)
+        {   //琥珀精华
+            eq = new AmberEssence();
+        }
+        else if (this.equipmentDict[equipmentName] == 5013)
+        {   //大法师之帽
+            eq = new ArchmagesHat();
+        }
+        else if (this.equipmentDict[equipmentName] == 5014)
+        {   //火灵杖
+            eq = new FireDorje();
+        }
+        else if (this.equipmentDict[equipmentName] == 5015)
+        {   //智慧披风
+            eq = new WisdomCloak();
+        }
+        else if (this.equipmentDict[equipmentName] == 5016)
+        {   //蚕丝裤
+            eq = new SilkPants();
+        }
+        else if (this.equipmentDict[equipmentName] == 5017)
+        {   //魔女斗篷
+            eq = new SirenCloak();
+        }
+        else if (this.equipmentDict[equipmentName] == 5018)
+        {   //贤者之石
+            eq = new StoneSage();
+        }
+        return eq;
     }
 }
 
@@ -293,34 +421,558 @@ public class Equipment:Good{
     
 }
 
-public class DDD : Equipment
+//男一头饰
+public class Chael_de_fer : Equipment
 {
-    public DDD()
+    public Chael_de_fer()
     {
         this.GoodNumber = 1;
-        this.GoodID = -1;
-        this.EquipmentName = "装备基类";
+        this.GoodID = 5001;
+        this.EquipmentName = "铁盔";
         this.SpecialAttack = 0;
+        this.PhysicsAttack = 0;
+        this.Speed = 0;
+        this.PhysicsDefense = 30;
+        this.SpecialDefense = 0;
+        this.Blood = 100;
+        this.Blue = 0;
+        this.Lv = 1;
+        this.Position = "Head";
+        this.EquipmentInfo = @" 【装备名称】: 铁盔
+                                【装备等级】: 1
+                                【部位】: Head
+                                【物防】: +30
+                                【血量】: +100";
+    }
+}
+
+//男一武器
+public class GhostSword : Equipment
+{
+    public GhostSword()
+    {
+        this.GoodNumber = 1;
+        this.GoodID = 5002;
+        this.EquipmentName = "伏魔刀";
+        this.SpecialAttack = 0;
+        this.PhysicsAttack = 80;
+        this.Speed = 10;
+        this.PhysicsDefense = 10;
+        this.SpecialDefense = 0;
+        this.Blood = 50;
+        this.Blue = 0;
+        this.Lv = 1;
+        this.Position = "Weapon";
+        this.EquipmentInfo = @" 【装备名称】: 伏魔刀
+                                【装备等级】: 1
+                                【部位】: Weapon
+                                【物攻】: +80
+                                【速度】: +10
+                                【物防】: +10
+                                【血量】: +50";
+    }
+}
+
+//男一上装
+public class BladeMail : Equipment
+{
+    public BladeMail()
+    {
+        this.GoodNumber = 1;
+        this.GoodID = 5003;
+        this.EquipmentName = "刃甲";
+        this.SpecialAttack = 0;
+        this.PhysicsAttack = 20;
+        this.Speed = 0;
+        this.PhysicsDefense = 100;
+        this.SpecialDefense = 0;
+        this.Blood = 100;
+        this.Blue = 0;
+        this.Lv = 1;
+        this.Position = "Top";
+        this.EquipmentInfo = @" 【装备名称】: 刃甲
+                                【装备等级】: 1
+                                【部位】: Top
+                                【物攻】: +20
+                                【物防】: +100
+                                【血量】: +100";
+    }
+}
+
+//男一下装
+public class GoldenCrowCuish: Equipment
+{
+    public GoldenCrowCuish()
+    {
+        this.GoodNumber = 1;
+        this.GoodID = 5004;
+        this.EquipmentName = "金乌腿甲";
+        this.SpecialAttack = 0;
+        this.PhysicsAttack = 0;
+        this.Speed = 10;
+        this.PhysicsDefense = 60;
+        this.SpecialDefense = 0;
+        this.Blood = 30;
+        this.Blue = 0;
+        this.Lv = 1;
+        this.Position = "Bottom";
+        this.EquipmentInfo = @" 【装备名称】: 金乌腿甲
+                                【装备等级】: 1
+                                【部位】: Bottom
+                                【速度】: +10
+                                【物防】: +60
+                                【血量】: +30";
+    }
+}
+
+//男主一防具
+public class SilverWristbands : Equipment
+{
+    public SilverWristbands()
+    {
+        this.GoodNumber = 1;
+        this.GoodID = 5005;
+        this.EquipmentName = "白银护腕";
+        this.SpecialAttack = 0;
+        this.PhysicsAttack = 20;
+        this.Speed = 5;
+        this.PhysicsDefense = 10;
+        this.SpecialDefense = 0;
+        this.Blood = 10;
+        this.Blue = 0;
+        this.Lv = 1;
+        this.Position = "Armor";
+        this.EquipmentInfo = @" 【装备名称】: 白银护腕
+                                【装备等级】: 1
+                                【部位】: Armor
+                                【物攻】: +20
+                                【速度】: +5
+                                【物防】: +10
+                                【血量】: +10";
+    }
+}
+
+//男一饰品
+public class CedarwoodRing : Equipment
+{
+    public CedarwoodRing()
+    {
+        this.GoodNumber = 1;
+        this.GoodID = 5006;
+        this.EquipmentName = "杉木戒指";
+        this.SpecialAttack = 0;
+        this.PhysicsAttack = 0;
+        this.Speed = 0;
+        this.PhysicsDefense = 30;
+        this.SpecialDefense = 30;
+        this.Blood = 30;
+        this.Blue = 30;
+        this.Lv = 1;
+        this.Position = "Accessorie";
+        this.EquipmentInfo = @" 【装备名称】: 杉木戒指
+                                【装备等级】: 1
+                                【部位】: Accessorie
+                                【物防】: +30
+                                【法防】: +30
+                                【血量】: +30
+                                【蓝量】: +30";
+    }
+}
+
+//女一头饰
+public class PsionicScarf : Equipment
+{
+    public PsionicScarf()
+    {
+        this.GoodNumber = 1;
+        this.GoodID = 5007;
+        this.EquipmentName = "灵能头巾";
+        this.SpecialAttack = 0;
+        this.PhysicsAttack = 5;
+        this.Speed = 10;
+        this.PhysicsDefense = 5;
+        this.SpecialDefense = 0;
+        this.Blood = 10;
+        this.Blue = 0;
+        this.Lv = 1;
+        this.Position = "Head";
+        this.EquipmentInfo = @" 【装备名称】: 灵能头巾
+                                【装备等级】: 1
+                                【部位】: Head
+                                【物攻】: +5
+                                【速度】: +10
+                                【物防】: +5
+                                【血量】: +10";
+    }
+}
+
+//女一武器
+public class LightSaber : Equipment
+{
+    public LightSaber()
+    {
+        this.GoodNumber = 1;
+        this.GoodID = 5008;
+        this.EquipmentName = "光剑";
+        this.SpecialAttack = 0;
+        this.PhysicsAttack = 30;
+        this.Speed = 15;
+        this.PhysicsDefense = 0;
+        this.SpecialDefense = 0;
+        this.Blood = 50;
+        this.Blue = 0;
+        this.Lv = 1;
+        this.Position = "Weapon";
+        this.EquipmentInfo = @" 【装备名称】: 光剑
+                                【装备等级】: 1
+                                【部位】: Weapon
+                                【物攻】: +30
+                                【速度】: +15
+                                【血量】: +50";
+    }
+}
+
+//女一上装
+public class ColouredGlazeVest : Equipment
+{
+    public ColouredGlazeVest()
+    {
+        this.GoodNumber = 1;
+        this.GoodID = 5009;
+        this.EquipmentName = "琉璃背心";
+        this.SpecialAttack = 0;
+        this.PhysicsAttack = 00;
+        this.Speed = 10;
+        this.PhysicsDefense = 30;
+        this.SpecialDefense = 30;
+        this.Blood = 40;
+        this.Blue = 20;
+        this.Lv = 1;
+        this.Position = "Top";
+        this.EquipmentInfo = @" 【装备名称】: 琉璃背心
+                                【装备等级】: 1
+                                【部位】: Top
+                                【速度】: +10
+                                【物防】: +30
+                                【法防】: +30
+                                【血量】: +40
+                                【蓝量】: +20";
+    }
+}
+
+//女一下装
+public class SpiritWindPants : Equipment
+{
+    public SpiritWindPants()
+    {
+        this.GoodNumber = 1;
+        this.GoodID = 5010;
+        this.EquipmentName = "灵风裤";
+        this.SpecialAttack = 0;
+        this.PhysicsAttack = 0;
+        this.Speed = 20;
+        this.PhysicsDefense = 20;
+        this.SpecialDefense = 0;
+        this.Blood = 30;
+        this.Blue = 0;
+        this.Lv = 1;
+        this.Position = "Bottom";
+        this.EquipmentInfo = @" 【装备名称】: 灵风裤
+                                【装备等级】: 1
+                                【部位】: Bottom
+                                【速度】: +20
+                                【物防】: +20
+                                【血量】: +30";
+    }
+}
+
+//女一防具
+public class RubyKneeProtector : Equipment
+{
+    public RubyKneeProtector()
+    {
+        this.GoodNumber = 1;
+        this.GoodID = 5011;
+        this.EquipmentName = "红宝石护膝";
+        this.SpecialAttack = 0;
+        this.PhysicsAttack = 5;
+        this.Speed = 15;
+        this.PhysicsDefense = 10;
+        this.SpecialDefense = 0;
+        this.Blood = 10;
+        this.Blue = 0;
+        this.Lv = 1;
+        this.Position = "Armor";
+        this.EquipmentInfo = @" 【装备名称】: 红宝石护膝
+                                【装备等级】: 1
+                                【部位】: Armor
+                                【物攻】: +5
+                                【速度】: +15
+                                【物防】: +10
+                                【血量】: +10";
+    }
+}
+
+//女一饰品
+public class AmberEssence : Equipment
+{
+    public AmberEssence()
+    {
+        this.GoodNumber = 1;
+        this.GoodID = 5012;
+        this.EquipmentName = "琥珀精华";
+        this.SpecialAttack = 0;
+        this.PhysicsAttack = 0;
+        this.Speed = 30;
+        this.PhysicsDefense =0;
+        this.SpecialDefense = 0;
+        this.Blood = 0;
+        this.Blue = 0;
+        this.Lv = 1;
+        this.Position = "Accessorie";
+        this.EquipmentInfo = @" 【装备名称】: 琥珀精华
+                                【装备等级】: 1
+                                【部位】: Accessorie
+                                【速度】: +30";
+    }
+}
+
+//女二头饰
+public class ArchmagesHat : Equipment
+{
+    public ArchmagesHat()
+    {
+        this.GoodNumber = 1;
+        this.GoodID = 5013;
+        this.EquipmentName = "大法师之帽";
+        this.SpecialAttack = 50;
         this.PhysicsAttack = 0;
         this.Speed = 0;
         this.PhysicsDefense = 0;
         this.SpecialDefense = 0;
         this.Blood = 0;
+        this.Blue = 100;
+        this.Lv = 1;
+        this.Position = "Head";
+        this.EquipmentInfo = @" 【装备名称】: 大法师之帽
+                                【装备等级】: 1
+                                【部位】: Head
+                                【特攻】: +50
+                                【蓝量】: +100";
+    }
+}
+
+//女二武器
+public class FireDorje : Equipment
+{
+    public FireDorje()
+    {
+        this.GoodNumber = 1;
+        this.GoodID = 5014;
+        this.EquipmentName = "火灵杖";
+        this.SpecialAttack = 100;
+        this.PhysicsAttack = 0;
+        this.Speed = 0;
+        this.PhysicsDefense = 0;
+        this.SpecialDefense = 0;
+        this.Blood = 0;
+        this.Blue = 30;
+        this.Lv = 1;
+        this.Position = "Weapon";
+        this.EquipmentInfo = @" 【装备名称】: 火灵杖
+                                【装备等级】: 1
+                                【部位】: Weapon
+                                【特攻】: +100
+                                【蓝量】: +30";
+    }
+}
+
+//女二上装
+public class WisdomCloak : Equipment
+{
+    public WisdomCloak()
+    {
+        this.GoodNumber = 1;
+        this.GoodID = 5015;
+        this.EquipmentName = "智慧披风";
+        this.SpecialAttack = 10;
+        this.PhysicsAttack = 0;
+        this.Speed = 0;
+        this.PhysicsDefense = 0;
+        this.SpecialDefense = 20;
+        this.Blood = 30;
+        this.Blue = 30;
+        this.Lv = 1;
+        this.Position = "Top";
+        this.EquipmentInfo = @" 【装备名称】: 智慧披风
+                                【装备等级】: 1
+                                【部位】: Top
+                                【特攻】: +10
+                                【特防】: +20
+                                【血量】: +30
+                                【蓝量】: +30";
+    }
+}
+
+//女二下装
+public class SilkPants : Equipment
+{
+    public SilkPants()
+    {
+        this.GoodNumber = 1;
+        this.GoodID = 5016;
+        this.EquipmentName = "蚕丝裤";
+        this.SpecialAttack = 0;
+        this.PhysicsAttack = 0;
+        this.Speed = 00;
+        this.PhysicsDefense = 60;
+        this.SpecialDefense = 60;
+        this.Blood = 0;
         this.Blue = 0;
-        this.Lv = 0;
-        this.Position = "无";
-        this.EquipmentInfo = "无";
+        this.Lv = 1;
+        this.Position = "Bottom";
+        this.EquipmentInfo = @" 【装备名称】: 蚕丝裤
+                                【装备等级】: 1
+                                【部位】: Bottom
+                                【物防】: +60
+                                【特防】: +60";
+    }
+}
+
+//女二防具
+public class SirenCloak : Equipment
+{
+    public SirenCloak()
+    {
+        this.GoodNumber = 1;
+        this.GoodID = 5017;
+        this.EquipmentName = "魔女斗篷";
+        this.SpecialAttack = 0;
+        this.PhysicsAttack = 00;
+        this.Speed = 0;
+        this.PhysicsDefense = 0;
+        this.SpecialDefense = 0;
+        this.Blood = 80;
+        this.Blue = 80;
+        this.Lv = 1;
+        this.Position = "Armor";
+        this.EquipmentInfo = @" 【装备名称】: 魔女斗篷
+                                【装备等级】: 1
+                                【部位】: Armor
+                                【血量】: +80
+                                【蓝量】: +80";
+    }
+}
+
+//女二饰品
+public class StoneSage : Equipment
+{
+    public StoneSage()
+    {
+        this.GoodNumber = 1;
+        this.GoodID = 5018;
+        this.EquipmentName = "贤者之石";
+        this.SpecialAttack = 10;
+        this.PhysicsAttack = 10;
+        this.Speed = 10;
+        this.PhysicsDefense = 10;
+        this.SpecialDefense = 10;
+        this.Blood = 10;
+        this.Blue = 10;
+        this.Lv = 1;
+        this.Position = "Accessorie";
+        this.EquipmentInfo = @" 【装备名称】: 贤者之石
+                                【装备等级】: 1
+                                【部位】: Accessorie
+                                【特攻】: +10
+                                【物攻】: +10
+                                【速度】: +10
+                                【物防】: +10
+                                【特防】: +10
+                                【血量】: +10
+                                【蓝量】: +10";
+    }
+}
+
+//待添加。。。
+
+
+//道具ID    类名                道具名称       堆叠上限      目标数量        道具信息
+//6001     FleshPill            血气丸          50              1            为人物回复30%最大生命值
+//6002     SparklingDew         凝神露          50              1            为人物回复30%最大魔法值
+//6003     RecoveryPotion       恢复药水        50              1            每回合为人物回复15%最大生命值，持续3回合
+//6004     ConcentrateGather    凝神聚气散      50              1            每回合为人物回复15%最大魔法值，持续3回合
+//6005     ToughPotions         坚韧药水        50              1            双抗提升50，持续2回合
+//6006     Amethyst             神行符          50              1            速度20，持续2回合
+//6007     CourageHorn          勇气号角        50              1            双攻50，持续2回合
+
+//道具工厂
+public class ProductFactory
+{
+    private Dictionary<string, int> productDict;
+    public ProductFactory()
+    {
+        productDict = new Dictionary<string, int>
+        {
+            {"血气丸" ,6001},
+            {"凝神露" ,6002},
+            {"恢复药水" ,6003},
+            {"凝神聚气散" ,6004},
+            {"坚韧药水" ,6005},
+            {"神行符" ,6006},
+            {"勇气号角" ,6007},
+        };
+    }
+
+    public Product CreateProduct(string productName, int number)
+    {
+        Product p = null;
+        if (this.productDict[productName] == 6001)
+        { //血气丸
+            p = new FleshPill(number);
+        }
+        else if (this.productDict[productName] == 6002)
+        { //凝神露
+            p = new SparklingDew(number);
+        }
+        else if (this.productDict[productName] == 6003)
+        { //恢复药水
+            p = new RecoveryPotion(number);
+        }
+        else if (this.productDict[productName] == 6004)
+        { //凝神聚气散
+            p = new ConcentrateGather(number);
+        }
+        else if (this.productDict[productName] == 6005)
+        { //坚韧药水
+            p = new ToughPotions(number);
+        }
+        else if (this.productDict[productName] == 6006)
+        { //神行符
+            p = new Amethyst(number);
+        }
+        else if (this.productDict[productName] == 6007)
+        { //勇气号角
+            p = new CourageHorn(number);
+        }
+        return p;
     }
 }
 
 public class Product : Good
 {
-    private string productName;
-    private string productInfo;
+    private string productName;         //道具名称
+    private string productInfo;         //道具信息
+    private int targetNumber;		    //目标数目
 
     public Product()
     {
-
+        this.GoodID = -2;
+        this.GoodNumber = 0;
+        this.GoodLimitedNumber = 0;
+        this.productName = "道具基类";
+        this.productInfo = "无";
+        this.targetNumber = 1;
     }
 
 
@@ -348,24 +1000,229 @@ public class Product : Good
         {
             productInfo = value;
         }
-    } 
-}
-
-public class GGGG : Product
-{
-    public GGGG()
-    {
-
     }
 
+    public int TargetNumber
+    {
+        get
+        {
+            return targetNumber;
+        }
+
+        set
+        {
+            targetNumber = value;
+        }
+    }
+}
+
+//血气丸
+public class FleshPill : Product
+{
+    public FleshPill(int goodNumber)
+    {
+        this.GoodID = 6001;
+        this.TargetNumber = 1;
+        this.GoodNumber = goodNumber;
+        this.GoodLimitedNumber = 50;
+        this.ProductName = "血气丸";
+        this.ProductInfo = @"【道具名称】: 血气丸
+                             【道具效果】: 为人物回复30%最大生命值 ";
+
+    }
 
     public override void UseItem(Person target)
     {
         //对应的效果
+        int cureBlood = (int)(target.BloodMax * 0.3);
+        if(cureBlood + target.Blood > target.BloodMax)
+        {
+            target.Blood = target.BloodMax;
+        }
+        else
+        {
+            target.Blood += cureBlood;
+        }
+        this.GoodNumber--;
     }
 
     public override void Use(Person caster, Person target)
     {
-        base.Use(caster, target);
+        UseItem(target);
+        this.GoodNumber--;
     }
 }
+
+//凝神露
+public class SparklingDew : Product
+{
+    public SparklingDew(int goodNumber)
+    {
+        this.GoodID = 6002;
+        this.TargetNumber = 1;
+        this.GoodNumber = goodNumber;
+        this.GoodLimitedNumber = 50;
+        this.ProductName = "凝神露";
+        this.ProductInfo = @"【道具名称】: 凝神露
+                             【道具效果】: 为人物回复30%最大魔法值 ";
+
+    }
+
+    public override void UseItem(Person target)
+    {
+        //对应的效果
+        int cureBlue = (int)(target.BlueMax * 0.3);
+        if (cureBlue + target.Blue > target.BlueMax)
+        {
+            target.Blue = target.BlueMax;
+        }
+        else
+        {
+            target.Blue += cureBlue;
+        }
+        this.GoodNumber--;
+    }
+
+    public override void Use(Person caster, Person target)
+    {
+        UseItem(target);
+        this.GoodNumber--;
+    }
+}
+
+//恢复药水
+public class RecoveryPotion : Product
+{
+    public RecoveryPotion(int goodNumber)
+    {
+        this.GoodID = 6003;
+        this.TargetNumber = 1;
+        this.GoodNumber = goodNumber;
+        this.GoodLimitedNumber = 50;
+        this.ProductName = "恢复药水";
+        this.ProductInfo = @"【道具名称】: 恢复药水
+                             【道具效果】: 每回合为人物回复15%最大生命值，持续3回合 ";
+
+    }
+
+    public override void UseItem(Person target)
+    {
+        Debug.Log("非战斗下无法使用");
+    }
+
+    public override void Use(Person caster, Person target)
+    {
+        target.AddBuff(target.buffFactory.CreateBuff("恢复药水buff-生命恢复"));
+        this.GoodNumber--;
+    }
+}
+
+//凝神聚气散
+public class ConcentrateGather : Product
+{
+    public ConcentrateGather(int goodNumber)
+    {
+        this.GoodID = 6004;
+        this.TargetNumber = 1;
+        this.GoodNumber = goodNumber;
+        this.GoodLimitedNumber = 50;
+        this.ProductName = "凝神聚气散";
+        this.ProductInfo = @"【道具名称】: 凝神聚气散
+                             【道具效果】: 每回合为人物回复15%最大魔法值，持续3回合 ";
+
+    }
+
+    public override void UseItem(Person target)
+    {
+        Debug.Log("非战斗下无法使用");
+    }
+
+    public override void Use(Person caster, Person target)
+    {
+        target.AddBuff(target.buffFactory.CreateBuff("凝神聚气散buff-魔法恢复"));
+        this.GoodNumber--;
+    }
+}
+
+//坚韧药水
+public class ToughPotions : Product
+{
+    public ToughPotions(int goodNumber)
+    {
+        this.GoodID = 6005;
+        this.TargetNumber = 1;
+        this.GoodNumber = goodNumber;
+        this.GoodLimitedNumber = 50;
+        this.ProductName = "坚韧药水";
+        this.ProductInfo = @"【道具名称】: 坚韧药水
+                             【道具效果】: 双抗提升50，持续2回合 ";
+
+    }
+
+    public override void UseItem(Person target)
+    {
+        Debug.Log("非战斗下无法使用");
+    }
+
+    public override void Use(Person caster, Person target)
+    {
+        target.AddBuff(target.buffFactory.CreateBuff("坚韧药水buff-双抗提升"));
+        this.GoodNumber--;
+    }
+}
+
+//神行符
+public class Amethyst : Product
+{
+    public Amethyst(int goodNumber)
+    {
+        this.GoodID = 6006;
+        this.TargetNumber = 1;
+        this.GoodNumber = goodNumber;
+        this.GoodLimitedNumber = 50;
+        this.ProductName = "神行符";
+        this.ProductInfo = @"【道具名称】: 神行符
+                             【道具效果】: 速度20，持续2回合 ";
+
+    }
+
+    public override void UseItem(Person target)
+    {
+        Debug.Log("非战斗下无法使用");
+    }
+
+    public override void Use(Person caster, Person target)
+    {
+        target.AddBuff(target.buffFactory.CreateBuff("神行符buff-速度提升"));
+        this.GoodNumber--;
+    }
+}
+
+//勇气号角
+public class CourageHorn : Product
+{
+    public CourageHorn(int goodNumber)
+    {
+        this.GoodID = 6007;
+        this.TargetNumber = 1;
+        this.GoodNumber = goodNumber;
+        this.GoodLimitedNumber = 50;
+        this.ProductName = "勇气号角";
+        this.ProductInfo = @"【道具名称】: 勇气号角
+                             【道具效果】: 双攻50，持续2回合 ";
+
+    }
+
+    public override void UseItem(Person target)
+    {
+        Debug.Log("非战斗下无法使用");
+    }
+
+    public override void Use(Person caster, Person target)
+    {
+        target.AddBuff(target.buffFactory.CreateBuff("勇气号角buff-双攻提升"));
+        this.GoodNumber--;
+    }
+}
+
+//待添加。。。
