@@ -110,6 +110,7 @@ public class Buff{
     private string buffInfo;        // buff信息
     private int buffDamage;         // buff伤害
     private int fixedBuffdamage;    // buff固定伤害
+    private string imagePath;       // buff 图标
 
     public Buff()
     {
@@ -212,7 +213,21 @@ public class Buff{
             fixedBuffdamage = value;
         }
     }
-    
+
+    public string ImagePath
+    {
+        get
+        {
+            return imagePath;
+        }
+
+        set
+        {
+            imagePath = value;
+        }
+    }
+
+
 
     //造成伤害
     public virtual void Damage(Person p){
@@ -238,6 +253,7 @@ public class DefenesOrderBuff:Buff{
         this.IsEffective = false;
         this.FixedBuffdamage = 0;
         this.BuffName = "防御";
+        this.ImagePath = "Res/buff/1.png";
         this.BuffInfo = @"【名称】: 防御
                           【效果】: 本回合双防+10*LV";
     }
@@ -274,6 +290,7 @@ public class UnlimitedBladeWorksSkill_Buff_LowSpeed : Buff
         this.BuffDamage = 10;
         this.IsEffective = false;
         this.FixedBuffdamage = 0;
+        this.ImagePath = "Res/buff/100.png";
         this.BuffName = "无限剑制buff-减速";
         this.BuffInfo = @"【名称】: 无限剑制buff-减速
                           【效果】: 本回合减速10*LV";
@@ -309,6 +326,7 @@ public class FirestormSkill_Buff_Firing : Buff
         this.BuffDamage = 5;
         this.IsEffective = false;
         this.FixedBuffdamage = 50;
+        this.ImagePath = "Res/buff/101.png";
         this.BuffName = "烈焰风暴buff-灼烧";
         this.BuffInfo = @"【名称】: 烈焰风暴buff-灼烧
                           【效果】: 灼烧伤害,持续两回合";
@@ -352,6 +370,7 @@ public class UnknowDieSkill_Buff_Dizziness : Buff
         this.BuffDamage = 0;
         this.IsEffective = false;
         this.FixedBuffdamage = 0;
+        this.ImagePath = "Res/buff/102.png";
         this.BuffName = "生死不觉buff-眩晕";
         this.BuffInfo = @"【名称】: 生死不觉buff-眩晕
                           【效果】: 眩晕，无法行动";
@@ -388,6 +407,7 @@ public class UnknowDieSkill_Buff_LowDefenes : Buff
         this.BuffDamage = 30;
         this.IsEffective = false;
         this.FixedBuffdamage = 0;
+        this.ImagePath = "Res/buff/103.png";
         this.BuffName = "生死不觉buff-防御降低";
         this.BuffInfo = @"【名称】: 生死不觉buff-防御降低
                           【效果】: 双防下降";
@@ -426,6 +446,7 @@ public class SangfroidSkill_Buff_UpDefenes : Buff
         this.BuffDamage = 20;
         this.IsEffective = false;
         this.FixedBuffdamage = 0;
+        this.ImagePath = "Res/buff/104.png";
         this.BuffName = "临危不惧buff-防御提升";
         this.BuffInfo = @"【名称】: 临危不惧buff-防御提升
                           【效果】: 双防提升";
@@ -464,6 +485,7 @@ public class FishtailingSkill_Buff_LowDefenes : Buff
         this.BuffDamage = 10;
         this.IsEffective = false;
         this.FixedBuffdamage = 0;
+        this.ImagePath = "Res/buff/105.png";
         this.BuffName = "摆尾buff-防御下降";
         this.BuffInfo = @"【名称】: 摆尾buff-防御下降
                           【效果】: 双防下降";
@@ -503,6 +525,7 @@ public class SlamSkill_Buff_Dizziness : Buff
         this.BuffDamage = 0;
         this.IsEffective = false;
         this.FixedBuffdamage = 0;
+        this.ImagePath = "Res/buff/106.png";
         this.BuffName = "野蛮冲撞buff-概率晕眩";
         this.BuffInfo = @"【名称】: 野蛮冲撞buff-概率晕眩
                           【效果】: 概率眩晕";
@@ -546,6 +569,7 @@ public class RecoveryPotion_Buff_CureBlood : Buff
         this.BuffDamage = 0;
         this.IsEffective = false;
         this.FixedBuffdamage = 15;
+        this.ImagePath = "Res/buff/201.png";
         this.BuffName = "恢复药水buff-生命恢复";
         this.BuffInfo = @"【名称】: 恢复药水buff-生命恢复
                           【效果】: 每回合回复15%最大生命值";
@@ -588,6 +612,7 @@ public class ConcentrateGather_Buff_CureBlue : Buff
         this.BuffDamage = 0;
         this.IsEffective = false;
         this.FixedBuffdamage = 15;
+        this.ImagePath = "Res/buff/202.png";
         this.BuffName = "凝神聚气散buff-魔法恢复";
         this.BuffInfo = @"【名称】: 凝神聚气散buff-魔法恢复
                           【效果】: 每回合回复15最大魔法值";
@@ -630,6 +655,7 @@ public class ToughPotions_Buff_UpDefenes : Buff
         this.BuffDamage = 0;
         this.IsEffective = false;
         this.FixedBuffdamage = 50;
+        this.ImagePath = "Res/buff/203.png";
         this.BuffName = "坚韧药水buff-双抗提升";
         this.BuffInfo = @"【名称】: 坚韧药水buff-双抗提升
                           【效果】: 提升50双抗";
@@ -668,6 +694,7 @@ public class Amethyst_Buff_UpSpeed : Buff
         this.BuffDamage = 0;
         this.IsEffective = false;
         this.FixedBuffdamage = 20;
+        this.ImagePath = "Res/buff/204.png";
         this.BuffName = "神行符buff-速度提升";
         this.BuffInfo = @"【名称】: 神行符buff-速度提升
                           【效果】: 提升20速度";
@@ -704,6 +731,7 @@ public class CourageHorn_Buff_UpAttack : Buff
         this.BuffDamage = 0;
         this.IsEffective = false;
         this.FixedBuffdamage = 50;
+        this.ImagePath = "Res/buff/205.png";
         this.BuffName = "勇气号角buff-双攻提升";
         this.BuffInfo = @"【名称】: 勇气号角buff-双攻提升
                           【效果】: 提升50双攻";
