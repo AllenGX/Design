@@ -120,6 +120,7 @@ public class Skill{
     private int targetNumber;		    //目标数目
     private int attackCount;            //攻击次数
     private string skillInfo;           //技能信息
+    private string imagePath;           //图片路径
 
     public Skill()
     {
@@ -255,6 +256,19 @@ public class Skill{
             skillInfo = value;
         }
     }
+
+    public string ImagePath
+    {
+        get
+        {
+            return imagePath;
+        }
+
+        set
+        {
+            imagePath = value;
+        }
+    }
 }
 
 //无操作
@@ -270,6 +284,7 @@ public class InactionSkill : Skill {
         this.TargetNumber = 0;
         this.AttackCount = 0;
         this.SkillInfo = "不进行任何操作";
+        this.ImagePath = "";
     }
 
     public override void Use(Person caster, Person target)
@@ -288,7 +303,8 @@ public class NormalAttackSkill:Skill{
         this.CostBlue = 0;
         this.SkillName = "普通攻击";
         this.TargetNumber = 1;
-        this.AttackCount = 1; 
+        this.AttackCount = 1;
+        this.ImagePath = "Res/skill/1001.png";
         this.SkillInfo = @"【技能名称】: 普通攻击
                            【技能蓝耗】: 0
                            【技能加成】: 1.0
@@ -325,6 +341,7 @@ public class UnlimitedBladeWorksSkill : Skill
         this.SkillName = "无限剑制";
         this.TargetNumber = 4;
         this.AttackCount = 1;
+        this.ImagePath = "Res/skill/1002.png";
         this.SkillInfo = @"【技能名称】: 无限剑制
                            【技能蓝耗】: 30
                            【技能加成】: 1.3
@@ -373,6 +390,7 @@ public class SixPulseExcaliburSkill : Skill
         this.SkillName = "六脉神剑";
         this.TargetNumber = 2;
         this.AttackCount = 1;
+        this.ImagePath = "Res/skill/1003.png";
         this.SkillInfo = @"【技能名称】: 无限剑制
                            【技能蓝耗】: 20
                            【技能加成】: 1.7
@@ -420,6 +438,7 @@ public class EightDroughtLiuheSkill : Skill
         this.SkillName = "八荒六合";
         this.TargetNumber = 1;
         this.AttackCount = 1;
+        this.ImagePath = "Res/skill/1004.png";
         this.SkillInfo = @"【技能名称】: 八荒六合
                            【技能蓝耗】: 25
                            【技能加成】: 2.5
@@ -468,6 +487,7 @@ public class BigBallFireSkill : Skill
         this.SkillName = "大火球";
         this.TargetNumber = 1;
         this.AttackCount = 1;
+        this.ImagePath = "Res/skill/1005.png";
         this.SkillInfo = @"【技能名称】: 大火球
                            【技能蓝耗】: 15
                            【技能加成】: 1.7
@@ -515,6 +535,7 @@ public class LavaBurstSkill : Skill
         this.SkillName = "岩浆爆破";
         this.TargetNumber = 1;
         this.AttackCount = 3;
+        this.ImagePath = "Res/skill/1006.png";
         this.SkillInfo = @"【技能名称】: 岩浆爆破
                            【技能蓝耗】: 60
                            【技能加成】: 1.3
@@ -562,6 +583,7 @@ public class FirestormSkill : Skill
         this.SkillName = "烈焰风暴";
         this.TargetNumber = 3;
         this.AttackCount = 1;
+        this.ImagePath = "Res/skill/1007.png";
         this.SkillInfo = @"【技能名称】: 烈焰风暴
                            【技能蓝耗】: 60
                            【技能加成】: 2
@@ -610,6 +632,7 @@ public class TransientChopSkill : Skill
         this.SkillName = "瞬劈";
         this.TargetNumber = 1;
         this.AttackCount = 1;
+        this.ImagePath = "Res/skill/1008.png";
         this.SkillInfo = @"【技能名称】: 瞬劈
                            【技能蓝耗】: 5
                            【技能加成】: 1.5
@@ -657,6 +680,7 @@ public class UnknowDieSkill : Skill
         this.SkillName = "生死不觉";
         this.TargetNumber = 1;
         this.AttackCount = 1;
+        this.ImagePath = "Res/skill/1009.png";
         this.SkillInfo = @"【技能名称】: 生死不觉
                            【技能蓝耗】: 30
                            【技能加成】: 6.0
@@ -706,6 +730,7 @@ public class SangfroidSkill : Skill
         this.SkillName = "临危不惧";
         this.TargetNumber = 1;
         this.AttackCount = 1;
+        this.ImagePath = "Res/skill/1010.png";
         this.SkillInfo = @"【技能名称】: 临危不惧
                            【技能蓝耗】: 15
                            【技能加成】: 1.2

@@ -205,6 +205,7 @@ public class Equipment:Good{
     private int lv;                   //装备等级
     private string position;          //装备部位
     private string equipmentInfo;     //装备信息
+    private string imagePath;         //图标
 
     public Equipment()
     {
@@ -418,7 +419,21 @@ public class Equipment:Good{
         }
     }
 
-    
+    public string ImagePath
+    {
+        get
+        {
+            return imagePath;
+        }
+
+        set
+        {
+            imagePath = value;
+        }
+    }
+
+
+
 }
 
 //男一头饰
@@ -438,6 +453,7 @@ public class Chael_de_fer : Equipment
         this.Blue = 0;
         this.Lv = 1;
         this.Position = "Head";
+        this.ImagePath = "Res/equipment/5001.png";
         this.EquipmentInfo = @" 【装备名称】: 铁盔
                                 【装备等级】: 1
                                 【部位】: Head
@@ -462,6 +478,7 @@ public class GhostSword : Equipment
         this.Blood = 50;
         this.Blue = 0;
         this.Lv = 1;
+        this.ImagePath = "Res/equipment/5002.png";
         this.Position = "Weapon";
         this.EquipmentInfo = @" 【装备名称】: 伏魔刀
                                 【装备等级】: 1
@@ -489,6 +506,7 @@ public class BladeMail : Equipment
         this.Blood = 100;
         this.Blue = 0;
         this.Lv = 1;
+        this.ImagePath = "Res/equipment/5003.png";
         this.Position = "Top";
         this.EquipmentInfo = @" 【装备名称】: 刃甲
                                 【装备等级】: 1
@@ -515,6 +533,7 @@ public class GoldenCrowCuish: Equipment
         this.Blood = 30;
         this.Blue = 0;
         this.Lv = 1;
+        this.ImagePath = "Res/equipment/5004.png";
         this.Position = "Bottom";
         this.EquipmentInfo = @" 【装备名称】: 金乌腿甲
                                 【装备等级】: 1
@@ -541,6 +560,7 @@ public class SilverWristbands : Equipment
         this.Blood = 10;
         this.Blue = 0;
         this.Lv = 1;
+        this.ImagePath = "Res/equipment/5005.png";
         this.Position = "Armor";
         this.EquipmentInfo = @" 【装备名称】: 白银护腕
                                 【装备等级】: 1
@@ -568,6 +588,7 @@ public class CedarwoodRing : Equipment
         this.Blood = 30;
         this.Blue = 30;
         this.Lv = 1;
+        this.ImagePath = "Res/equipment/5006.png";
         this.Position = "Accessorie";
         this.EquipmentInfo = @" 【装备名称】: 杉木戒指
                                 【装备等级】: 1
@@ -595,6 +616,7 @@ public class PsionicScarf : Equipment
         this.Blood = 10;
         this.Blue = 0;
         this.Lv = 1;
+        this.ImagePath = "Res/equipment/5007.png";
         this.Position = "Head";
         this.EquipmentInfo = @" 【装备名称】: 灵能头巾
                                 【装备等级】: 1
@@ -622,6 +644,7 @@ public class LightSaber : Equipment
         this.Blood = 50;
         this.Blue = 0;
         this.Lv = 1;
+        this.ImagePath = "Res/equipment/5008.png";
         this.Position = "Weapon";
         this.EquipmentInfo = @" 【装备名称】: 光剑
                                 【装备等级】: 1
@@ -648,6 +671,7 @@ public class ColouredGlazeVest : Equipment
         this.Blood = 40;
         this.Blue = 20;
         this.Lv = 1;
+        this.ImagePath = "Res/equipment/5009.png";
         this.Position = "Top";
         this.EquipmentInfo = @" 【装备名称】: 琉璃背心
                                 【装备等级】: 1
@@ -676,6 +700,7 @@ public class SpiritWindPants : Equipment
         this.Blood = 30;
         this.Blue = 0;
         this.Lv = 1;
+        this.ImagePath = "Res/equipment/5010.png";
         this.Position = "Bottom";
         this.EquipmentInfo = @" 【装备名称】: 灵风裤
                                 【装备等级】: 1
@@ -702,6 +727,7 @@ public class RubyKneeProtector : Equipment
         this.Blood = 10;
         this.Blue = 0;
         this.Lv = 1;
+        this.ImagePath = "Res/equipment/5011.png";
         this.Position = "Armor";
         this.EquipmentInfo = @" 【装备名称】: 红宝石护膝
                                 【装备等级】: 1
@@ -729,6 +755,7 @@ public class AmberEssence : Equipment
         this.Blood = 0;
         this.Blue = 0;
         this.Lv = 1;
+        this.ImagePath = "Res/equipment/5012.png";
         this.Position = "Accessorie";
         this.EquipmentInfo = @" 【装备名称】: 琥珀精华
                                 【装备等级】: 1
@@ -753,6 +780,7 @@ public class ArchmagesHat : Equipment
         this.Blood = 0;
         this.Blue = 100;
         this.Lv = 1;
+        this.ImagePath = "Res/equipment/5013.png";
         this.Position = "Head";
         this.EquipmentInfo = @" 【装备名称】: 大法师之帽
                                 【装备等级】: 1
@@ -778,6 +806,7 @@ public class FireDorje : Equipment
         this.Blood = 0;
         this.Blue = 30;
         this.Lv = 1;
+        this.ImagePath = "Res/equipment/5014.png";
         this.Position = "Weapon";
         this.EquipmentInfo = @" 【装备名称】: 火灵杖
                                 【装备等级】: 1
@@ -803,6 +832,7 @@ public class WisdomCloak : Equipment
         this.Blood = 30;
         this.Blue = 30;
         this.Lv = 1;
+        this.ImagePath = "Res/equipment/5015.png";
         this.Position = "Top";
         this.EquipmentInfo = @" 【装备名称】: 智慧披风
                                 【装备等级】: 1
@@ -830,6 +860,7 @@ public class SilkPants : Equipment
         this.Blood = 0;
         this.Blue = 0;
         this.Lv = 1;
+        this.ImagePath = "Res/equipment/5016.png";
         this.Position = "Bottom";
         this.EquipmentInfo = @" 【装备名称】: 蚕丝裤
                                 【装备等级】: 1
@@ -855,6 +886,7 @@ public class SirenCloak : Equipment
         this.Blood = 80;
         this.Blue = 80;
         this.Lv = 1;
+        this.ImagePath = "Res/equipment/5017.png";
         this.Position = "Armor";
         this.EquipmentInfo = @" 【装备名称】: 魔女斗篷
                                 【装备等级】: 1
@@ -880,6 +912,7 @@ public class StoneSage : Equipment
         this.Blood = 10;
         this.Blue = 10;
         this.Lv = 1;
+        this.ImagePath = "Res/equipment/5018.png";
         this.Position = "Accessorie";
         this.EquipmentInfo = @" 【装备名称】: 贤者之石
                                 【装备等级】: 1
@@ -964,6 +997,7 @@ public class Product : Good
     private string productName;         //道具名称
     private string productInfo;         //道具信息
     private int targetNumber;		    //目标数目
+    private string imagePath;           //图标
 
     public Product()
     {
@@ -1014,6 +1048,19 @@ public class Product : Good
             targetNumber = value;
         }
     }
+
+    public string ImagePath
+    {
+        get
+        {
+            return imagePath;
+        }
+
+        set
+        {
+            imagePath = value;
+        }
+    }
 }
 
 //血气丸
@@ -1025,6 +1072,7 @@ public class FleshPill : Product
         this.TargetNumber = 1;
         this.GoodNumber = goodNumber;
         this.GoodLimitedNumber = 50;
+        this.ImagePath = "Res/product/6001.png";
         this.ProductName = "血气丸";
         this.ProductInfo = @"【道具名称】: 血气丸
                              【道具效果】: 为人物回复30%最大生命值 ";
@@ -1062,6 +1110,7 @@ public class SparklingDew : Product
         this.TargetNumber = 1;
         this.GoodNumber = goodNumber;
         this.GoodLimitedNumber = 50;
+        this.ImagePath = "Res/product/6002.png";
         this.ProductName = "凝神露";
         this.ProductInfo = @"【道具名称】: 凝神露
                              【道具效果】: 为人物回复30%最大魔法值 ";
@@ -1099,6 +1148,7 @@ public class RecoveryPotion : Product
         this.TargetNumber = 1;
         this.GoodNumber = goodNumber;
         this.GoodLimitedNumber = 50;
+        this.ImagePath = "Res/product/6003.png";
         this.ProductName = "恢复药水";
         this.ProductInfo = @"【道具名称】: 恢复药水
                              【道具效果】: 每回合为人物回复15%最大生命值，持续3回合 ";
@@ -1126,6 +1176,7 @@ public class ConcentrateGather : Product
         this.TargetNumber = 1;
         this.GoodNumber = goodNumber;
         this.GoodLimitedNumber = 50;
+        this.ImagePath = "Res/product/6004.png";
         this.ProductName = "凝神聚气散";
         this.ProductInfo = @"【道具名称】: 凝神聚气散
                              【道具效果】: 每回合为人物回复15%最大魔法值，持续3回合 ";
@@ -1152,6 +1203,7 @@ public class ToughPotions : Product
         this.GoodID = 6005;
         this.TargetNumber = 1;
         this.GoodNumber = goodNumber;
+        this.ImagePath = "Res/product/6005.png";
         this.GoodLimitedNumber = 50;
         this.ProductName = "坚韧药水";
         this.ProductInfo = @"【道具名称】: 坚韧药水
@@ -1180,6 +1232,7 @@ public class Amethyst : Product
         this.TargetNumber = 1;
         this.GoodNumber = goodNumber;
         this.GoodLimitedNumber = 50;
+        this.ImagePath = "Res/product/6006.png";
         this.ProductName = "神行符";
         this.ProductInfo = @"【道具名称】: 神行符
                              【道具效果】: 速度20，持续2回合 ";
@@ -1207,6 +1260,7 @@ public class CourageHorn : Product
         this.TargetNumber = 1;
         this.GoodNumber = goodNumber;
         this.GoodLimitedNumber = 50;
+        this.ImagePath = "Res/product/6007.png";
         this.ProductName = "勇气号角";
         this.ProductInfo = @"【道具名称】: 勇气号角
                              【道具效果】: 双攻50，持续2回合 ";
