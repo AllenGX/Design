@@ -108,7 +108,7 @@ public class Buff{
     private bool isEffective;       // 是否生效
     private string buffName;        // buff名称
     private string buffInfo;        // buff信息
-    private int buffDamage;         // buff伤害
+    private int buffDamage;         // buff伤害  与   等级挂钩
     private int fixedBuffdamage;    // buff固定伤害
     private string imagePath;       // buff 图标
 
