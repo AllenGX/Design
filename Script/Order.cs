@@ -63,11 +63,13 @@ public class SkillUseStruct : Order
 
     public override void PrintInfo()
     {
+        Debug.Log("-------------------------------------------------");
         Debug.Log("order:  " + this.skillID + "   " + this.CasterID + "  ");
         foreach (var targetID in this.TargetsIDList)
         {
             Debug.Log("targetID:  " + targetID);
         }
+        Debug.Log("-------------------------------------------------");
     }
 
     public int SkillID
@@ -88,31 +90,33 @@ public class SkillUseStruct : Order
 // 道具使用指令结构
 public class ProductUseStruct : Order
 {
-    private int productID;
-    public ProductUseStruct(int casterID, int productID, List<int> targetsIDList) : base(casterID, targetsIDList)
+    private int productPos;
+    public ProductUseStruct(int casterID, int productPos, List<int> targetsIDList) : base(casterID, targetsIDList)
     {
-        this.productID = productID;
+        this.productPos = productPos;
     }
 
     public override void PrintInfo()
     {
-        Debug.Log("order:  " + this.productID + "   " + this.CasterID + "  ");
+        Debug.Log("-------------------------------------------------");
+        Debug.Log("order:  " + this.productPos + "   " + this.CasterID + "  ");
         foreach (var targetID in this.TargetsIDList)
         {
             Debug.Log("targetID:  " + targetID);
         }
+        Debug.Log("-------------------------------------------------");
     }
 
-    public int ProductID
+    public int ProductPos
     {
         get
         {
-            return productID;
+            return productPos;
         }
 
         set
         {
-            productID = value;
+            productPos = value;
         }
     }
 

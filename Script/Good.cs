@@ -14,15 +14,15 @@ public class Good{
     }
 
     //战斗中
-    public virtual void Use(Person caster,Person target)
+    public virtual int Use(Person caster,Person target)
     {
-
+        return 0;
     }
 
     //战斗外
-    public virtual void UseItem(Person p)
+    public virtual int UseItem(Person p)
     {
-
+        return 0;
     }
 
     public int GoodID
@@ -225,13 +225,14 @@ public class Equipment:Good{
     }
 
 
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
         Debug.Log("战斗中无法操作装备!!!");
+        return 0;
     }
 
     //装备后更新属性
-    public override void UseItem(Person target)
+    public override int UseItem(Person target)
     {
         target.Blood= target.Blood + this.blood;
         target.Blue= target.Blue + this.blue;
@@ -240,6 +241,7 @@ public class Equipment:Good{
         target.SpecialAttack= target.SpecialAttack + this.specialAttack;
         target.SpecialDefense= target.SpecialDefense + this.specialDefense;
         target.Speed = target.Speed + this.speed;
+        return 0;
     }
 
     //卸下装备
@@ -1079,7 +1081,7 @@ public class FleshPill : Product
 
     }
 
-    public override void UseItem(Person target)
+    public override int UseItem(Person target)
     {
         //对应的效果
         int cureBlood = (int)(target.BloodMax * 0.3);
@@ -1092,12 +1094,14 @@ public class FleshPill : Product
             target.Blood += cureBlood;
         }
         this.GoodNumber--;
+        return cureBlood;
     }
 
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
-        UseItem(target);
+        
         this.GoodNumber--;
+        return UseItem(target);
     }
 }
 
@@ -1117,7 +1121,7 @@ public class SparklingDew : Product
 
     }
 
-    public override void UseItem(Person target)
+    public override int UseItem(Person target)
     {
         //对应的效果
         int cureBlue = (int)(target.BlueMax * 0.3);
@@ -1130,12 +1134,14 @@ public class SparklingDew : Product
             target.Blue += cureBlue;
         }
         this.GoodNumber--;
+        return cureBlue;
     }
 
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
-        UseItem(target);
+        
         this.GoodNumber--;
+        return UseItem(target);
     }
 }
 
@@ -1155,15 +1161,17 @@ public class RecoveryPotion : Product
 
     }
 
-    public override void UseItem(Person target)
+    public override int UseItem(Person target)
     {
         Debug.Log("非战斗下无法使用");
+        return 0;
     }
 
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
         target.AddBuff(target.buffFactory.CreateBuff("恢复药水buff-生命恢复"));
         this.GoodNumber--;
+        return 0;
     }
 }
 
@@ -1183,15 +1191,17 @@ public class ConcentrateGather : Product
 
     }
 
-    public override void UseItem(Person target)
+    public override int UseItem(Person target)
     {
         Debug.Log("非战斗下无法使用");
+        return 0;
     }
 
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
         target.AddBuff(target.buffFactory.CreateBuff("凝神聚气散buff-魔法恢复"));
         this.GoodNumber--;
+        return 0;
     }
 }
 
@@ -1211,15 +1221,17 @@ public class ToughPotions : Product
 
     }
 
-    public override void UseItem(Person target)
+    public override int UseItem(Person target)
     {
         Debug.Log("非战斗下无法使用");
+        return 0;
     }
 
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
         target.AddBuff(target.buffFactory.CreateBuff("坚韧药水buff-双抗提升"));
         this.GoodNumber--;
+        return 0;
     }
 }
 
@@ -1239,15 +1251,17 @@ public class Amethyst : Product
 
     }
 
-    public override void UseItem(Person target)
+    public override int UseItem(Person target)
     {
         Debug.Log("非战斗下无法使用");
+        return 0;
     }
 
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
         target.AddBuff(target.buffFactory.CreateBuff("神行符buff-速度提升"));
         this.GoodNumber--;
+        return 0;
     }
 }
 
@@ -1267,15 +1281,17 @@ public class CourageHorn : Product
 
     }
 
-    public override void UseItem(Person target)
+    public override int UseItem(Person target)
     {
         Debug.Log("非战斗下无法使用");
+        return 0;
     }
 
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
         target.AddBuff(target.buffFactory.CreateBuff("勇气号角buff-双攻提升"));
         this.GoodNumber--;
+        return 0;
     }
 }
 

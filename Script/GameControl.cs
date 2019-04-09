@@ -7,18 +7,21 @@ public class GameControl{
 	private int resultType;
 	private GameScene gameSence;
 	private List<Order> orderList;
+    public List<GameInfo> gameInfo;
 
-	public GameControl()
+    public GameControl()
     {
         this.orderList = new List<Order> { }; //初始化指令列表
         this.round=1;		//第一回合
 		this.resultType=0;	//游戏未结束
 		this.gameSence=new GameScene();	//创建场景
+        this.gameInfo = new List<GameInfo> { }; //初始化战斗信息
 }
 
 
 	public int GameStart(ref float startTime)
     {
+        this.gameInfo = new List<GameInfo> { };             //初始化战斗信息
         startTime = Time.time;                              //设置计时定时调用
         RandomOrder();                                      //给未分配指令的对象设置指令
         gameSence.speedList.Sort(gameSence.CompareSpeed);   //按速度排序
@@ -30,12 +33,16 @@ public class GameControl{
             RemoveAllBuff();
             return this.resultType;
 		}
-
-		this.round++;                                       //回合数+1
+        
+        this.round++;                                       //回合数+1
         startTime = Time.time;                              // 战斗回合结束重置计时
         Debug.Log("this.startTime:" + startTime);
         return 0;
 
+        //for (int i = 0; i < this.gameInfo.Count; i++)
+        //{
+        //    this.gameInfo[i].PrintInfo();
+        //}
         //InvokeRepeating("GameStart", 30, 30F);				//30S后再次调用自身（定时器）
         //发送下一轮操作指令对象
         //List<int> operationalPlayerIDList=gameSence.OperationalPlayerIDList();
@@ -108,9 +115,9 @@ public class GameControl{
 				Skill skill = skillList [skillID];
 				int targetNumber = skill.TargetNumber;
 				int skillType=skill.SkillType;
-			
-				//施法者是敌人
-				if (gameSence.IsEnemy(person)) {
+                // 随机指定数个目标
+                //施法者是敌人
+                if (gameSence.IsEnemy(person)) {
 					//技能类型为  对敌
 					if (skillType == 1) {
 						targetIDList = playerIDAliveList;
@@ -128,7 +135,6 @@ public class GameControl{
 						targetIDList = new List<int>{person.PersonID};
 					}
 				}
-				// 随机指定数个目标
 				targetIDList = gameSence.GetRandomList(targetIDList, targetNumber);
 				SkillUseStruct order = new SkillUseStruct (person.PersonID, skill.SkillID, targetIDList);
 				this.orderList.Add (order);
@@ -211,30 +217,80 @@ public class GameControl{
         //自身影响状态buff生效
         foreach (var person in gameSence.speedList){
 			if(!gameSence.allDict[person.PersonID].IsDie()){
-				//优先判定状态buff
-				gameSence.allDict[person.PersonID].EffectBuff(1);
-			}
+                //优先判定状态buff
+                Dictionary<int, int> injury=gameSence.allDict[person.PersonID].EffectBuff(1);
+                
+                //存储buff伤害
+                //数据类型 casterPos    buffID  {{taegetPos,injury},只有一个}
+                foreach(int key in injury.Keys)
+                {
+                    List<GameInjury> gameInjuries = new List<GameInjury> { };
+                    GameInjury gameInjury = new GameInjury(this.gameSence.GetPos(person.PersonID), injury[key]);
+                    gameInjuries.Add(gameInjury);
+                    this.SaveInfo(person.PersonID, key, gameInjuries);
+                }
+                
+
+            }
             Order order =GetOrder(person.PersonID);
 			//执行指令
 			if(order!=null){
-				//执行目标集合存在死者	从新选定对象
-				if(!gameSence.IsAllAlive(order.TargetsIDList)){
+
+                int key=-1;
+                //执行目标集合存在死者	从新选定对象
+                if (!gameSence.IsAllAlive(order.TargetsIDList)){
 					order.TargetsIDList=gameSence.ReplaceMultipleTarget(order.TargetsIDList);
 				}
 				//执行攻击
 				if(!gameSence.allDict[order.CasterID].IsDie()){
-					foreach(var targetID in order.TargetsIDList){
-						if(order is SkillUseStruct) //如果是技能  便施放
+
+                    List<GameInjury> gameInjuries = new List<GameInjury> { };
+                    if (order is SkillUseStruct) //如果是技能  便施放
+                    {   
+                        Skill skill = person.GetSkill(((SkillUseStruct)order).SkillID);
+                        key = skill.SkillID;
+                        for (int i = 0; i < skill.AttackCount; i++)
                         {
-                            gameSence.allDict[order.CasterID].UseSkill(((SkillUseStruct)order).SkillID, gameSence.allDict[targetID]);
-                        }else if (order is ProductUseStruct)      //使用道具
-                        {
-                            gameSence.allDict[order.CasterID].UseSkill(((ProductUseStruct)order).ProductID, gameSence.allDict[targetID]);
+                            foreach (var targetID in order.TargetsIDList)
+                            {
+                                int injury=gameSence.allDict[order.CasterID].UseSkill(((SkillUseStruct)order).SkillID, gameSence.allDict[targetID]);
+                                if (injury != 0)
+                                {
+                                    GameInjury gameInjury = new GameInjury(this.gameSence.GetPos(targetID), injury);
+                                    gameInjuries.Add(gameInjury);
+                                }
+                            }
                         }
-					}
-				}
-			}
+                        
+                    }
+                    else if (order is ProductUseStruct)      //使用道具
+                    {
+                        key = ((ProductUseStruct)order).ProductPos;
+                        foreach (var targetID in order.TargetsIDList)
+                        {
+                            int injury=gameSence.allDict[order.CasterID].UseProduct((Product)this.gameSence.backPack.GetGood(key), gameSence.allDict[targetID]);
+                            GameInjury gameInjury = new GameInjury(this.gameSence.GetPos(targetID), injury);
+                            gameInjuries.Add(gameInjury);
+                        }    
+                    }
+                    if (key != -1)
+                    {
+                        this.SaveInfo(person.PersonID, key, gameInjuries);
+                    }
+                }
+            }
         }
+    }
+
+
+    //保存一条数据
+    public void SaveInfo(int casterID,int objID,List<GameInjury> injury)
+    {
+        GameInfo gameInfo = new GameInfo();
+        gameInfo.CasterPos =this.gameSence.GetPos(casterID);
+        gameInfo.InjuryInfo = injury;
+        gameInfo.ObjID = objID;
+        this.gameInfo.Add(gameInfo);
     }
 
     // 得到一条指令

@@ -137,8 +137,9 @@ public class Skill{
         this.skillInfo = "无";
     }
     //技能施放
-    public virtual void Use(Person caster,Person target)
+    public virtual int Use(Person caster,Person target)
     {
+        return 0;
     }
 
     public int SkillType
@@ -288,9 +289,10 @@ public class InactionSkill : Skill {
         this.ImagePath = "";
     }
 
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
         // not do anything
+        return 0;
     }
 }
 
@@ -310,9 +312,10 @@ public class DefenedSkill : Skill
         this.SkillInfo = "防御，防御提升";
         this.ImagePath = "";
     }
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
         caster.Defend();
+        return 0;
     }
 }
 
@@ -338,7 +341,7 @@ public class NormalAttackSkill:Skill{
     }
 
     //技能施放
-    public override void Use(Person caster,Person target)
+    public override int Use(Person caster,Person target)
     {   
         int injury=Mathf.Max((int)(this.Multiple* caster.PhysicsAttack - (0.3 * target.PhysicsDefense)) + this.Power, 1);
         if (target.Blood > injury) {
@@ -348,6 +351,7 @@ public class NormalAttackSkill:Skill{
         {
             target.Blood = 0;
         }
+        return -injury;
     }
 }
 
@@ -375,12 +379,13 @@ public class UnlimitedBladeWorksSkill : Skill
     }
 
     //技能施放
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
 
         if (caster.Blue < this.CostBlue)
         {
             Debug.Log("blue is not able");
+            return 0;
         }
         else
         {
@@ -395,6 +400,7 @@ public class UnlimitedBladeWorksSkill : Skill
             {
                 target.Blood = 0;
             }
+            return -injury;
         }
         
     }
@@ -406,7 +412,7 @@ public class SixPulseExcaliburSkill : Skill
     public SixPulseExcaliburSkill()
     {
         this.SkillType = 1;
-        this.SkillID = 1001;
+        this.SkillID = 1003;
         this.Power = 0;
         this.Multiple = 1.7f;
         this.CostBlue = 20;
@@ -424,12 +430,13 @@ public class SixPulseExcaliburSkill : Skill
     }
 
     //技能施放
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
 
         if (caster.Blue < this.CostBlue)
         {
             Debug.Log("blue is not able");
+            return 0;
         }
         else
         {
@@ -443,6 +450,7 @@ public class SixPulseExcaliburSkill : Skill
             {
                 target.Blood = 0;
             }
+            return -injury;
         }
 
     }
@@ -473,12 +481,13 @@ public class EightDroughtLiuheSkill : Skill
     }
 
     //技能施放
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
 
         if (caster.Blue < this.CostBlue)
         {
             Debug.Log("blue is not able");
+            return 0;
         }
         else
         {
@@ -492,6 +501,7 @@ public class EightDroughtLiuheSkill : Skill
             {
                 target.Blood = 0;
             }
+            return -injury;
         }
 
     }
@@ -521,12 +531,13 @@ public class BigBallFireSkill : Skill
     }
 
     //技能施放
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
 
         if (caster.Blue < this.CostBlue)
         {
             Debug.Log("blue is not able");
+            return 0;
         }
         else
         {
@@ -540,6 +551,7 @@ public class BigBallFireSkill : Skill
             {
                 target.Blood = 0;
             }
+            return -injury;
         }
 
     }
@@ -569,17 +581,18 @@ public class LavaBurstSkill : Skill
     }
 
     //技能施放
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
 
         if (caster.Blue < this.CostBlue)
         {
             Debug.Log("blue is not able");
+            return 0;
         }
         else
         {
             caster.Blue -= this.CostBlue;
-            int injury = Mathf.Max((int)(this.Multiple * caster.SpecialAttack - (0.3 * target.SpecialDefense)) + this.Power, 1);
+            int injury = Mathf.Max((int)((this.Multiple * caster.SpecialAttack - (0.3 * target.SpecialDefense))) + this.Power, 1);
             if (target.Blood > injury)
             {
                 target.Blood -= injury;
@@ -588,6 +601,7 @@ public class LavaBurstSkill : Skill
             {
                 target.Blood = 0;
             }
+            return -injury;
         }
 
     }
@@ -617,12 +631,13 @@ public class FirestormSkill : Skill
     }
 
     //技能施放
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
 
         if (caster.Blue < this.CostBlue)
         {
             Debug.Log("blue is not able");
+            return 0;
         }
         else
         {
@@ -637,6 +652,7 @@ public class FirestormSkill : Skill
             {
                 target.Blood = 0;
             }
+            return -injury;
         }
 
     }
@@ -666,12 +682,13 @@ public class TransientChopSkill : Skill
     }
 
     //技能施放
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
 
         if (caster.Blue < this.CostBlue)
         {
             Debug.Log("blue is not able");
+            return 0;
         }
         else
         {
@@ -685,6 +702,7 @@ public class TransientChopSkill : Skill
             {
                 target.Blood = 0;
             }
+            return -injury;
         }
 
     }
@@ -714,12 +732,13 @@ public class UnknowDieSkill : Skill
     }
 
     //技能施放
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
 
         if (caster.Blue < this.CostBlue)
         {
             Debug.Log("blue is not able");
+            return 0;
         }
         else
         {
@@ -735,6 +754,7 @@ public class UnknowDieSkill : Skill
             {
                 target.Blood = 0;
             }
+            return -injury;
         }
 
     }
@@ -764,12 +784,13 @@ public class SangfroidSkill : Skill
     }
 
     //技能施放
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
 
         if (caster.Blue < this.CostBlue)
         {
             Debug.Log("blue is not able");
+            return 0;
         }
         else
         {
@@ -784,6 +805,7 @@ public class SangfroidSkill : Skill
             {
                 target.Blood = 0;
             }
+            return -injury;
         }
 
     }
@@ -805,12 +827,13 @@ public class WorrySkill : Skill
     }
 
     //技能施放
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
 
         if (caster.Blue < this.CostBlue)
         {
             Debug.Log("blue is not able");
+            return 0;
         }
         else
         {
@@ -824,6 +847,7 @@ public class WorrySkill : Skill
             {
                 target.Blood = 0;
             }
+            return -injury;
         }
 
     }
@@ -845,12 +869,13 @@ public class FishtailingSkill : Skill
     }
 
     //技能施放
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
 
         if (caster.Blue < this.CostBlue)
         {
             Debug.Log("blue is not able");
+            return 0;
         }
         else
         {
@@ -865,6 +890,7 @@ public class FishtailingSkill : Skill
             {
                 target.Blood = 0;
             }
+            return -injury;
         }
 
     }
@@ -886,12 +912,13 @@ public class SlamSkill : Skill
     }
 
     //技能施放
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
 
         if (caster.Blue < this.CostBlue)
         {
             Debug.Log("blue is not able");
+            return 0;
         }
         else
         {
@@ -906,6 +933,7 @@ public class SlamSkill : Skill
             {
                 target.Blood = 0;
             }
+            return -injury;
         }
 
     }
