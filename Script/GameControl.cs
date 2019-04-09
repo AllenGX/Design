@@ -136,8 +136,46 @@ public class GameControl{
 		}
     }
 
+    //  获取输入
+    //	return
+    // 	1: 胜利
+    //	0：继续
+    //	-1:失败
+    //  -2:继续输入指令
+    public int GetInput(int skillID,int casterID,int targetID, ref float startTime)
+    {
+        Skill skill=gameSence.allDict[casterID].GetSkill(skillID);
+        List<int> enemyIDList= gameSence.PersonAlivePersonIDList(-1);
+        List<int> playerIDAliveList = gameSence.PersonAlivePersonIDList(1);
+        List<int> targetIDList=null;
+        enemyIDList.Remove(targetID);
+        targetIDList = gameSence.GetRandomList(enemyIDList, skill.AttackCount - 1);
+        targetIDList.Insert(0, targetID);
+        SkillUseStruct order = new SkillUseStruct(casterID, skill.SkillID, targetIDList);
+        this.orderList.Add(order);
+
+
+        for(int j = 0; j <= playerIDAliveList.Count; j++)
+        {
+            int flag = 0;
+            for (int i = 0; i < this.orderList.Count; i++)
+            {
+                if(playerIDAliveList[j]== orderList[i].CasterID)
+                {
+                    flag = 1;
+                    break;
+                }
+            }
+            if (flag == 0)  //还有指令没输入完成
+            {
+                return -2;
+            }
+        }
+        return this.GameStart(ref startTime);
+    }
+
     // 判断是否有指令
-	public bool IsNotOrder(int personID){
+    public bool IsNotOrder(int personID){
 		foreach(var order in this.orderList){
 			if(order.CasterID==personID){
 				return false;
@@ -148,12 +186,12 @@ public class GameControl{
 
 
     //执行指令列表
-	public void ExcuteOrderList(){
+    public void ExcuteOrderList(){
 		//防御生效（效果是增加一个加防buff）
 		foreach(var order in this.orderList){	
 			if(order is SkillUseStruct)
             {
-                if (((SkillUseStruct)order).SkillID == 1001)
+                if (((SkillUseStruct)order).SkillID == 0)
                 {
                     if (!gameSence.allDict[order.CasterID].IsDie())
                     {
@@ -207,11 +245,6 @@ public class GameControl{
 			}
 		}
 		return null;
-	}
-
-    //获取输入
-    public void GetInput(){
-		
 	}
 
     

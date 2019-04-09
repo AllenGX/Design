@@ -8,13 +8,16 @@ using System.Collections.Generic;
 public class GameScene{
 	  
 	public List<Person> enemyList;		//敌人集合
-	public List<Person> playerList;	//玩家集合
+	public List<Person> playerList;	    //玩家集合
 	public List<Person> allList;		//全部集合
 	public List<Person> speedList;		//速度排序集合
 	public Dictionary<int, Person> allDict;	//用来存放信息
 
+    public Dictionary<int, Person> playerPositionDict;    //  人物站位信息
+    public Dictionary<int, Person> enemyPositionDict;    //  怪物站位信息
 
-	public GameScene(){
+
+    public GameScene(){
 		Init();
 	}
 
@@ -51,6 +54,15 @@ public class GameScene{
         speedList = new List<Person>{ p1,p2,p3,p4, p5, p6 };
         speedList.Sort(CompareSpeed);	//速度排序的任务列表
 
+        playerPositionDict = new Dictionary<int, Person> { { 10, p1 }, { 11, p2 }, { 12, p3 } };
+        for (int j = 0; j < enemyList.Count; j++)
+        {
+            enemyPositionDict[j] = enemyList[j];
+        }
+        //for (int i = enemyList.Count; i < 8; i++)
+        //{
+        //    enemyPositionDict[i] = null;
+        //}
     }
 
 
