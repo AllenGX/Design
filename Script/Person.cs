@@ -32,10 +32,9 @@ public class Person{
     public SkillFactory skillFactory;       //技能工厂
     private bool attackIsOk=true;           //是否能进行攻击
 
-
-    private Dictionary<string, Equipment> inventory; //装备,蓝
-                                                     // head , leftHand , rightHand , leftFoot , rightFoot , chest 胸部...
-                                                     // 数据 {{"head",equipment1},{"leftHand",equipment1},{"rightHand",equipment1},{"leftFoot",equipment1},{"rightFoot",equipment1}....}
+    private Dictionary<string, Equipment> inventory; //装备栏
+                                                     // 头部，上装，下装，武器，防具，饰品
+                                                     // 数据 {{"Heads",equipment1},{"Top",equipment1},{"Bottom",equipment1},{"Weapon",equipment1},{"Armor",equipment1},{"Accessorie",equipment1}}
 
     private List<Skill> skills;     //技能列表
                                     // 数据 {skill1,skill2,skill3...}
@@ -76,21 +75,22 @@ public class Person{
 
         //初始化装备
         this.inventory = new Dictionary<string, Equipment> {
-            { "head",null },
-            { "leftHand",null },
-            { "rightHand",null },
-            { "leftFoot",null },
-            { "rightFoot",null },
-            { "chest",null },};
+            { "Heads",null },
+            { "Top",null },
+            { "Bottom",null },
+            { "Weapon",null },
+            { "Armor",null },
+            { "Accessorie",null },};
 
         //待添加...
     }
 
-
+    //防御
     public void Defend(){
         this.AddBuff(this.buffFactory.CreateBuff("防御"));
     }
 
+    //添加buff
     public void AddBuff(Buff buff){
         int len=this.buffs.Count;
         for(int i=0;i<len;i++){
@@ -102,6 +102,7 @@ public class Person{
         this.buffs.Add(buff);
     }
 
+    //buff生效  0 影响状态的生效  1  照成伤害的生效  -1  全生效
     public void EffectBuff(int flag){
         if(flag==0){
             foreach(var buff in buffs){
@@ -234,24 +235,32 @@ public class Person{
     }
 
 
-
     //装备栏
     public Dictionary<string, Equipment> GetInventory()
     {
         return this.inventory;
     }
-    //装备物品
-    public void SetInventory(string pos, Equipment eq)
+
+    //装备物品（战斗外）
+    public Equipment SetInventory(Equipment eq)
     {
+        Equipment equipment = null;
         //等级达标
         if (eq.Lv <= this.lv)
         {
             //存在该部位装备槽
-            if (this.inventory.ContainsKey(pos))
+            if (this.inventory.ContainsKey(eq.Position))
             {
-                this.inventory[pos] = eq;
-                //更改属性
-                eq.Use(this);
+                //已经有物品了
+                if (this.inventory[eq.Position]!=null)
+                {   //卸下
+                    Equipment wearEQ = this.inventory[eq.Position];
+                    wearEQ.Discharge(this);
+                    equipment = wearEQ;
+                }
+                //装上
+                this.inventory[eq.Position] = eq;
+                eq.UseItem(this);
             }
             else
             {
@@ -262,26 +271,39 @@ public class Person{
         {
             Debug.Log("SetInventory-----> lv is low");
         }
+        return equipment;
     }
+
     //移除装备
     public Equipment RemoveInventory(string pos)
     {
+        Equipment eq = null;
         //存在该部位装备槽
         if (this.inventory.ContainsKey(pos))
         {
-            Equipment eq = this.inventory[pos];
+             eq= this.inventory[pos];
             //更改属性
             eq.Discharge(this);
             this.inventory[pos] = null;
-            return eq;
         }
         else
         {
             Debug.Log("RemoveInventory-----> no 装备物品");
-            return null;
         }
+        return eq;
     }
 
+    //使用道具(战斗外)
+    public void UseProduct(Product p)
+    {
+        p.UseItem(this);
+    }
+
+    //使用道具(战斗时)
+    public void UseProduct(Product p,Person target)
+    {
+        p.Use(this, target);
+    }
 
 
     //属性的get，set
@@ -559,14 +581,18 @@ public class Person{
         }
     }
 
+    public Dictionary<string, Equipment> Inventory
+    {
+        get
+        {
+            return inventory;
+        }
 
+        set
+        {
+            inventory = value;
+        }
+    }
 
-
-
-
-
-
-	
-	
 
 }
