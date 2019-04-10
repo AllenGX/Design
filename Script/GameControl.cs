@@ -148,16 +148,29 @@ public class GameControl{
     //	0：继续
     //	-1:失败
     //  -2:继续输入指令
-    public int GetInput(int skillID,int casterID,int targetID, ref float startTime)
+    public int GetInput(int objID,int casterID,int targetID, ref float startTime)
     {
-        Skill skill=gameSence.allDict[casterID].GetSkill(skillID);
-        List<int> enemyIDList= gameSence.PersonAlivePersonIDList(-1);
+        List<int> enemyIDList = gameSence.PersonAlivePersonIDList(-1);
         List<int> playerIDAliveList = gameSence.PersonAlivePersonIDList(1);
-        List<int> targetIDList=null;
-        enemyIDList.Remove(targetID);
-        targetIDList = gameSence.GetRandomList(enemyIDList, skill.AttackCount - 1);
-        targetIDList.Insert(0, targetID);
-        SkillUseStruct order = new SkillUseStruct(casterID, skill.SkillID, targetIDList);
+        List<int> targetIDList = null;
+        SkillUseStruct order = null;
+        //大于等于1000的就是技能
+        if (objID >= 1000)
+        {
+            Skill skill = gameSence.allDict[casterID].GetSkill(objID);
+
+            enemyIDList.Remove(targetID);
+            targetIDList = gameSence.GetRandomList(enemyIDList, skill.AttackCount - 1);
+            targetIDList.Insert(0, targetID);
+            order = new SkillUseStruct(casterID, skill.SkillID, targetIDList);
+        }
+        else
+        {
+            //是道具
+            targetIDList.Add(targetID);
+            order = new SkillUseStruct(casterID, objID, targetIDList);
+        }
+
         this.orderList.Add(order);
 
 
@@ -196,8 +209,8 @@ public class GameControl{
 		//防御生效（效果是增加一个加防buff）
 		foreach(var order in this.orderList){	
 			if(order is SkillUseStruct)
-            {
-                if (((SkillUseStruct)order).SkillID == 0)
+            {   //1011是防御
+                if (((SkillUseStruct)order).SkillID == 1011)
                 {
                     if (!gameSence.allDict[order.CasterID].IsDie())
                     {
