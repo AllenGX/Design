@@ -16,6 +16,8 @@ public class BloodTest : MonoBehaviour {
         int injury = 30;
 
         StartCoroutine(ChangeBlood(currentBlood, injury));
+        StartCoroutine(ChangeBlood(70, injury));
+        
     }
 
     IEnumerator ChangeBlood(int currentBlood,int injury)

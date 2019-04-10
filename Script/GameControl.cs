@@ -161,7 +161,7 @@ public class GameControl{
         this.orderList.Add(order);
 
 
-        for(int j = 0; j <= playerIDAliveList.Count; j++)
+        for(int j = 0; j < playerIDAliveList.Count; j++)
         {
             int flag = 0;
             for (int i = 0; i < this.orderList.Count; i++)
