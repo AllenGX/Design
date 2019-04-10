@@ -15,6 +15,16 @@ public class BackPack{
         this.goods = new Good[50];
     }
 
+    //得到某个道具
+    public Good GetGood(int GoodPos)
+    {
+        if (this.goods[GoodPos] != null)
+        {
+            return this.goods[GoodPos];
+        }
+        return null;
+    }
+
     //获得背包的空位
     // return int : 得到空位的下标
     public int BackPackVacancy()

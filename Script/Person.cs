@@ -108,8 +108,9 @@ public class Person{
     //  0 影响状态的生效
     //  1  照成伤害的生效
     //  -1  全生效
-    public void EffectBuff(int flag){
-        if(flag==0){
+    public Dictionary<int, int> EffectBuff(int flag){
+        Dictionary<int, int> injuryInfo = new Dictionary<int, int> { };
+        if (flag==0){
             foreach(var buff in buffs){
                 if(!buff.IsEffective){
                     buff.InfluenceAttribute(this);
@@ -118,7 +119,11 @@ public class Person{
         }else if(flag==1){
             foreach(var buff in buffs){
                 if(!buff.IsEffective){
-                    buff.Damage(this);
+                    int injury = buff.Damage(this);
+                    if (injury != 0)
+                    {
+                        injuryInfo.Add(buff.BuffID, injury);
+                    }
                 }
             }
         }else if(flag==-1){
@@ -129,6 +134,7 @@ public class Person{
                 }
             }
         }
+        return injuryInfo;
     }
 
     //计算当前级经验上限
@@ -191,17 +197,19 @@ public class Person{
     //施放技能（普攻、防御都是技能）
     // 执行技能得Use方法
     //  params  skillID : 技能ID Person : 目标对象
-    public void UseSkill(int skillID,Person target)
+    public int UseSkill(int skillID,Person target)
     {
         Skill skill = this.GetSkill(skillID);
         if (skill != null)
         {
             //施放技能
-            skill.Use(this,target);
+            int injury= skill.Use(this, target);
+            return injury;
         }
         else
         {
             Debug.Log("UseSkill-----> no skill");
+            return 0;
         }
     }
 
@@ -311,9 +319,9 @@ public class Person{
     }
 
     //使用道具(战斗时)
-    public void UseProduct(Product p,Person target)
+    public int UseProduct(Product p,Person target)
     {
-        p.Use(this, target);
+        return p.Use(this, target);
     }
 
 

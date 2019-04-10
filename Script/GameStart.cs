@@ -12,6 +12,11 @@ public class GameStart : MonoBehaviour
     private float endTime;
     private GameControl gameControl;
 
+    void Awake()
+    {
+        Init();
+    }
+
     // 初始化
     public void Init() { 
         this.startTime = 0f;
@@ -31,5 +36,10 @@ public class GameStart : MonoBehaviour
             Debug.Log("startTime" + startTime);
             Debug.Log("endTime" + endTime);
         }
+    }
+
+    void Update()
+    {
+        GameBegin();
     }
 }
