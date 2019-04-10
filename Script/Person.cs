@@ -86,11 +86,13 @@ public class Person{
     }
 
     //防御
+    // 添加一个防御buff
     public void Defend(){
         this.AddBuff(this.buffFactory.CreateBuff("防御"));
     }
 
     //添加buff
+    // params Buff : 需要添加的buff
     public void AddBuff(Buff buff){
         int len=this.buffs.Count;
         for(int i=0;i<len;i++){
@@ -102,7 +104,10 @@ public class Person{
         this.buffs.Add(buff);
     }
 
-    //buff生效  0 影响状态的生效  1  照成伤害的生效  -1  全生效
+    //buff生效      
+    //  0 影响状态的生效
+    //  1  照成伤害的生效
+    //  -1  全生效
     public void EffectBuff(int flag){
         if(flag==0){
             foreach(var buff in buffs){
@@ -126,7 +131,7 @@ public class Person{
         }
     }
 
-    //级,算当前级经验上限
+    //计算当前级经验上限
     public int CalculateExperienceMax()
     {
         //公式待定
@@ -134,7 +139,9 @@ public class Person{
         return 1;
     }
 
-    //升级
+    // 升级
+    // 增加属性
+    // 结算经验
     public void LvUp()
     {
         //提升属性
@@ -165,6 +172,8 @@ public class Person{
     }
 
     //得到技能
+    // params skillID : 通过ID得到技能
+    // return Skill  : 技能对象
     public Skill GetSkill(int skillID)
     {
         foreach (var skill in this.skills)
@@ -180,6 +189,8 @@ public class Person{
     }
 
     //施放技能（普攻、防御都是技能）
+    // 执行技能得Use方法
+    //  params  skillID : 技能ID Person : 目标对象
     public void UseSkill(int skillID,Person target)
     {
         Skill skill = this.GetSkill(skillID);

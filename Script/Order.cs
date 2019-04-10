@@ -4,7 +4,10 @@ using System.Collections.Generic;
 
 
 
-
+// 技能结构
+// 施放者
+// 施法技能ID，物品ID
+// 目标列表
 public class Order{
     private  int casterID;
     private List<int> targetsIDList;
@@ -48,6 +51,8 @@ public class Order{
     }
 }
 
+
+// 技能使用指令结构
 public class SkillUseStruct : Order
 {
     private int skillID;
@@ -80,6 +85,7 @@ public class SkillUseStruct : Order
 }
 
 
+// 道具使用指令结构
 public class ProductUseStruct : Order
 {
     private int productID;

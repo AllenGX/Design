@@ -19,8 +19,7 @@ public class GameControl{
 
 	public int GameStart(ref float startTime)
     {
-        startTime = Time.time;
-        //RemoveTimer();								    //清除定时器
+        startTime = Time.time;                              //设置计时定时调用
         RandomOrder();                                      //给未分配指令的对象设置指令
         gameSence.speedList.Sort(gameSence.CompareSpeed);   //按速度排序
         ExcuteOrderList();									//执行指令
@@ -31,21 +30,22 @@ public class GameControl{
             RemoveAllBuff();
             return this.resultType;
 		}
-		//InvokeRepeating("GameStart", 30, 30F);				//30S后再次调用自身
-		this.round++;                                       //回合数+1
-        startTime = Time.time;
-        Debug.Log("this.startTime:" + startTime);
 
+		this.round++;                                       //回合数+1
+        startTime = Time.time;                              // 战斗回合结束重置计时
+        Debug.Log("this.startTime:" + startTime);
+        return 0;
+
+        //InvokeRepeating("GameStart", 30, 30F);				//30S后再次调用自身（定时器）
         //发送下一轮操作指令对象
         //List<int> operationalPlayerIDList=gameSence.OperationalPlayerIDList();
         //int operationalPlayerNumber=gameSence.OperationalPlayerNumber();
-        return 0;
-	}
+    }
 
-    public void RemoveTimer(){
-		//销毁定时
-		//CancelInvoke();
-	}
+    //   public void RemoveTimer(){
+    //	//销毁定时
+    //	//CancelInvoke();
+    //}
 
 
     //打印人物信息
@@ -66,6 +66,8 @@ public class GameControl{
     }
 
     //刷新属性
+    // 移除到时间的buff
+    // 恢复玩家可攻击状态
     public void ReshStatus(){
 		foreach(var personID in gameSence.allDict.Keys){
 			for(int i=0;i<gameSence.allDict[personID].buffs.Count;i++){
@@ -134,8 +136,46 @@ public class GameControl{
 		}
     }
 
+    //  获取输入
+    //	return
+    // 	1: 胜利
+    //	0：继续
+    //	-1:失败
+    //  -2:继续输入指令
+    public int GetInput(int skillID,int casterID,int targetID, ref float startTime)
+    {
+        Skill skill=gameSence.allDict[casterID].GetSkill(skillID);
+        List<int> enemyIDList= gameSence.PersonAlivePersonIDList(-1);
+        List<int> playerIDAliveList = gameSence.PersonAlivePersonIDList(1);
+        List<int> targetIDList=null;
+        enemyIDList.Remove(targetID);
+        targetIDList = gameSence.GetRandomList(enemyIDList, skill.AttackCount - 1);
+        targetIDList.Insert(0, targetID);
+        SkillUseStruct order = new SkillUseStruct(casterID, skill.SkillID, targetIDList);
+        this.orderList.Add(order);
+
+
+        for(int j = 0; j <= playerIDAliveList.Count; j++)
+        {
+            int flag = 0;
+            for (int i = 0; i < this.orderList.Count; i++)
+            {
+                if(playerIDAliveList[j]== orderList[i].CasterID)
+                {
+                    flag = 1;
+                    break;
+                }
+            }
+            if (flag == 0)  //还有指令没输入完成
+            {
+                return -2;
+            }
+        }
+        return this.GameStart(ref startTime);
+    }
+
     // 判断是否有指令
-	public bool IsNotOrder(int personID){
+    public bool IsNotOrder(int personID){
 		foreach(var order in this.orderList){
 			if(order.CasterID==personID){
 				return false;
@@ -146,12 +186,12 @@ public class GameControl{
 
 
     //执行指令列表
-	public void ExcuteOrderList(){
+    public void ExcuteOrderList(){
 		//防御生效（效果是增加一个加防buff）
 		foreach(var order in this.orderList){	
 			if(order is SkillUseStruct)
             {
-                if (((SkillUseStruct)order).SkillID == 1001)
+                if (((SkillUseStruct)order).SkillID == 0)
                 {
                     if (!gameSence.allDict[order.CasterID].IsDie())
                     {
@@ -205,11 +245,6 @@ public class GameControl{
 			}
 		}
 		return null;
-	}
-
-    //获取输入
-    public void GetInput(){
-		
 	}
 
     
