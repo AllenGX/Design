@@ -9,6 +9,8 @@ public class Person{
 
     public List<Buff> buffs;                //buff 数据 {buff1,buff2,buff3....}
     private int personID;					//ID
+    private string personName;              //人物名称
+    private string attackAniPath;           //战斗动画路径
 	private int specialAttack;				//特攻
 	private int physicsAttack;  			//物攻
 	private int speed;  					//速度
@@ -42,11 +44,13 @@ public class Person{
 
 
     //初始化
-    public Person(int personID,int blood,int blue, int specialAttack,int physicsAttack,int speed,int physicsDefense,int specialDefense,int lv,int currentExperience,int bloodGrowth,int specialAttackGrowth,int physicsAttackGrowth,int speedGrowth,int physicsDefenseGrowth,int specialDefenseGrowth,int blueGrowth){
+    public Person(int personID,string personName,int blood,int blue, int specialAttack,int physicsAttack,int speed,int physicsDefense,int specialDefense,int lv,int currentExperience,int bloodGrowth,int specialAttackGrowth,int physicsAttackGrowth,int speedGrowth,int physicsDefenseGrowth,int specialDefenseGrowth,int blueGrowth,string attackAniPath)
+    {
         //buffs
         this.buffs = new List<Buff> { };
         this.skills = new List<Skill> { };
         this.personID = personID;
+        this.personName = personName;
         this.blood = blood;
         this.bloodMax=blood;
         this.blue=blue;
@@ -66,6 +70,7 @@ public class Person{
         this.lv = lv;
         this.currentExperience = currentExperience;
         this.experienceMax = CalculateExperienceMax();      //级经验上限公式待定....
+        this.attackAniPath = attackAniPath;
         this.buffFactory = new BuffFactory();
         this.skillFactory = new SkillFactory();
         // 添加技能
@@ -584,6 +589,30 @@ public class Person{
         set
         {
             personID = value;
+        }
+    }
+
+    public string PersonName
+    {
+        get
+        {
+            return personName;
+        }
+        set
+        {
+            personName = value;
+        }
+    }
+
+    public string AttackAniPath
+    {
+        get
+        {
+            return attackAniPath;
+        }
+        set
+        {
+            attackAniPath = value;
         }
     }
 
