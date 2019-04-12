@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 // ID  :技能名称        方法名                          技能类型      固伤     倍率    耗蓝      攻击个数        攻击段数      buff
-//  0  :防御            DefenedSkill                       -1           0       0f      0           0               0           防御提升buff
+// 1011  :防御            DefenedSkill                       -1           0       0f      0           0               0           防御提升buff
 // 1000:无操作          InactionSkill                      -1           0       0f      0           0               0           无
 // 1001:普通攻击        NormalAttackSkill                   1           0       1f      0           1               1           无   
 // 1002:无限剑制        UnlimitedBladeWorksSkill            1           0       1.3f    30          4               1           减速buff
@@ -37,6 +37,7 @@ public class SkillFactory{
             { "瞬劈",1008},
             { "生死不觉",1009},
             { "临危不惧",1010},
+            { "防御",1011},
             // 敌方技能
             { "撕咬",3001},
             { "摆尾",3002},
@@ -302,7 +303,7 @@ public class DefenedSkill : Skill
     public DefenedSkill()
     {
         this.SkillType = -1;
-        this.SkillID = 0;
+        this.SkillID = 1011;
         this.Power = 0;
         this.Multiple = 0;
         this.CostBlue = 0;
