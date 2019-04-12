@@ -9,6 +9,8 @@ public class Person{
 
     public List<Buff> buffs;                //buff 数据 {buff1,buff2,buff3....}
     private int personID;					//ID
+    private string personName;              //人物名称
+    private string attackAniPath;           //战斗动画路径
 	private int specialAttack;				//特攻
 	private int physicsAttack;  			//物攻
 	private int speed;  					//速度
@@ -42,11 +44,13 @@ public class Person{
 
 
     //初始化
-    public Person(int personID,int blood,int blue, int specialAttack,int physicsAttack,int speed,int physicsDefense,int specialDefense,int lv,int currentExperience,int bloodGrowth,int specialAttackGrowth,int physicsAttackGrowth,int speedGrowth,int physicsDefenseGrowth,int specialDefenseGrowth,int blueGrowth){
+    public Person(int personID,string personName,int blood,int blue, int specialAttack,int physicsAttack,int speed,int physicsDefense,int specialDefense,int lv,int currentExperience,int bloodGrowth,int specialAttackGrowth,int physicsAttackGrowth,int speedGrowth,int physicsDefenseGrowth,int specialDefenseGrowth,int blueGrowth,string attackAniPath)
+    {
         //buffs
         this.buffs = new List<Buff> { };
         this.skills = new List<Skill> { };
         this.personID = personID;
+        this.personName = personName;
         this.blood = blood;
         this.bloodMax=blood;
         this.blue=blue;
@@ -66,6 +70,7 @@ public class Person{
         this.lv = lv;
         this.currentExperience = currentExperience;
         this.experienceMax = CalculateExperienceMax();      //级经验上限公式待定....
+        this.attackAniPath = attackAniPath;
         this.buffFactory = new BuffFactory();
         this.skillFactory = new SkillFactory();
         // 添加技能
@@ -86,11 +91,13 @@ public class Person{
     }
 
     //防御
+    // 添加一个防御buff
     public void Defend(){
         this.AddBuff(this.buffFactory.CreateBuff("防御"));
     }
 
     //添加buff
+    // params Buff : 需要添加的buff
     public void AddBuff(Buff buff){
         int len=this.buffs.Count;
         for(int i=0;i<len;i++){
@@ -102,9 +109,13 @@ public class Person{
         this.buffs.Add(buff);
     }
 
-    //buff生效  0 影响状态的生效  1  照成伤害的生效  -1  全生效
-    public void EffectBuff(int flag){
-        if(flag==0){
+    //buff生效      
+    //  0 影响状态的生效
+    //  1  照成伤害的生效
+    //  -1  全生效
+    public Dictionary<int, int> EffectBuff(int flag){
+        Dictionary<int, int> injuryInfo = new Dictionary<int, int> { };
+        if (flag==0){
             foreach(var buff in buffs){
                 if(!buff.IsEffective){
                     buff.InfluenceAttribute(this);
@@ -113,7 +124,11 @@ public class Person{
         }else if(flag==1){
             foreach(var buff in buffs){
                 if(!buff.IsEffective){
-                    buff.Damage(this);
+                    int injury = buff.Damage(this);
+                    if (injury != 0)
+                    {
+                        injuryInfo.Add(buff.BuffID, injury);
+                    }
                 }
             }
         }else if(flag==-1){
@@ -124,9 +139,10 @@ public class Person{
                 }
             }
         }
+        return injuryInfo;
     }
 
-    //级,算当前级经验上限
+    //计算当前级经验上限
     public int CalculateExperienceMax()
     {
         //公式待定
@@ -134,7 +150,9 @@ public class Person{
         return 1;
     }
 
-    //升级
+    // 升级
+    // 增加属性
+    // 结算经验
     public void LvUp()
     {
         //提升属性
@@ -165,6 +183,8 @@ public class Person{
     }
 
     //得到技能
+    // params skillID : 通过ID得到技能
+    // return Skill  : 技能对象
     public Skill GetSkill(int skillID)
     {
         foreach (var skill in this.skills)
@@ -180,17 +200,21 @@ public class Person{
     }
 
     //施放技能（普攻、防御都是技能）
-    public void UseSkill(int skillID,Person target)
+    // 执行技能得Use方法
+    //  params  skillID : 技能ID Person : 目标对象
+    public int UseSkill(int skillID,Person target)
     {
         Skill skill = this.GetSkill(skillID);
         if (skill != null)
         {
             //施放技能
-            skill.Use(this,target);
+            int injury= skill.Use(this, target);
+            return injury;
         }
         else
         {
             Debug.Log("UseSkill-----> no skill");
+            return 0;
         }
     }
 
@@ -300,9 +324,9 @@ public class Person{
     }
 
     //使用道具(战斗时)
-    public void UseProduct(Product p,Person target)
+    public int UseProduct(Product p,Person target)
     {
-        p.Use(this, target);
+        return p.Use(this, target);
     }
 
 
@@ -565,6 +589,30 @@ public class Person{
         set
         {
             personID = value;
+        }
+    }
+
+    public string PersonName
+    {
+        get
+        {
+            return personName;
+        }
+        set
+        {
+            personName = value;
+        }
+    }
+
+    public string AttackAniPath
+    {
+        get
+        {
+            return attackAniPath;
+        }
+        set
+        {
+            attackAniPath = value;
         }
     }
 

@@ -7,20 +7,22 @@ public class GameControl{
 	private int resultType;
 	private GameScene gameSence;
 	private List<Order> orderList;
+    public List<GameInfo> gameInfo;
 
-	public GameControl()
+    public GameControl()
     {
         this.orderList = new List<Order> { }; //初始化指令列表
         this.round=1;		//第一回合
 		this.resultType=0;	//游戏未结束
 		this.gameSence=new GameScene();	//创建场景
+        this.gameInfo = new List<GameInfo> { }; //初始化战斗信息
 }
 
 
 	public int GameStart(ref float startTime)
     {
-        startTime = Time.time;
-        //RemoveTimer();								    //清除定时器
+        this.gameInfo = new List<GameInfo> { };             //初始化战斗信息
+        startTime = Time.time;                              //设置计时定时调用
         RandomOrder();                                      //给未分配指令的对象设置指令
         gameSence.speedList.Sort(gameSence.CompareSpeed);   //按速度排序
         ExcuteOrderList();									//执行指令
@@ -31,21 +33,26 @@ public class GameControl{
             RemoveAllBuff();
             return this.resultType;
 		}
-		//InvokeRepeating("GameStart", 30, 30F);				//30S后再次调用自身
-		this.round++;                                       //回合数+1
-        startTime = Time.time;
+        
+        this.round++;                                       //回合数+1
+        startTime = Time.time;                              // 战斗回合结束重置计时
         Debug.Log("this.startTime:" + startTime);
+        return 0;
 
+        //for (int i = 0; i < this.gameInfo.Count; i++)
+        //{
+        //    this.gameInfo[i].PrintInfo();
+        //}
+        //InvokeRepeating("GameStart", 30, 30F);				//30S后再次调用自身（定时器）
         //发送下一轮操作指令对象
         //List<int> operationalPlayerIDList=gameSence.OperationalPlayerIDList();
         //int operationalPlayerNumber=gameSence.OperationalPlayerNumber();
-        return 0;
-	}
+    }
 
-    public void RemoveTimer(){
-		//销毁定时
-		//CancelInvoke();
-	}
+    //   public void RemoveTimer(){
+    //	//销毁定时
+    //	//CancelInvoke();
+    //}
 
 
     //打印人物信息
@@ -66,6 +73,8 @@ public class GameControl{
     }
 
     //刷新属性
+    // 移除到时间的buff
+    // 恢复玩家可攻击状态
     public void ReshStatus(){
 		foreach(var personID in gameSence.allDict.Keys){
 			for(int i=0;i<gameSence.allDict[personID].buffs.Count;i++){
@@ -106,9 +115,9 @@ public class GameControl{
 				Skill skill = skillList [skillID];
 				int targetNumber = skill.TargetNumber;
 				int skillType=skill.SkillType;
-			
-				//施法者是敌人
-				if (gameSence.IsEnemy(person)) {
+                // 随机指定数个目标
+                //施法者是敌人
+                if (gameSence.IsEnemy(person)) {
 					//技能类型为  对敌
 					if (skillType == 1) {
 						targetIDList = playerIDAliveList;
@@ -126,7 +135,6 @@ public class GameControl{
 						targetIDList = new List<int>{person.PersonID};
 					}
 				}
-				// 随机指定数个目标
 				targetIDList = gameSence.GetRandomList(targetIDList, targetNumber);
 				SkillUseStruct order = new SkillUseStruct (person.PersonID, skill.SkillID, targetIDList);
 				this.orderList.Add (order);
@@ -134,8 +142,60 @@ public class GameControl{
 		}
     }
 
+    //  获取输入
+    //	return
+    // 	1: 胜利
+    //	0：继续
+    //	-1:失败
+    //  -2:继续输入指令
+    public int GetInput(int objID,int casterID,int targetID, ref float startTime)
+    {
+        List<int> enemyIDList = gameSence.PersonAlivePersonIDList(-1);
+        List<int> playerIDAliveList = gameSence.PersonAlivePersonIDList(1);
+        List<int> targetIDList = null;
+        Order order = null;
+        //大于等于1000的就是技能
+        if (objID >= 1000)
+        {
+            Skill skill = gameSence.allDict[casterID].GetSkill(objID);
+
+            enemyIDList.Remove(targetID);
+            targetIDList = gameSence.GetRandomList(enemyIDList, skill.AttackCount - 1);
+            targetIDList.Insert(0, targetID);
+            order = new SkillUseStruct(casterID, skill.SkillID, targetIDList);
+        }
+        else
+        {
+            //是道具
+            targetIDList = new List<int> { };
+            targetIDList.Add(targetID);
+            order = new ProductUseStruct(casterID, objID, targetIDList);
+        }
+
+        this.orderList.Add(order);
+
+
+        for(int j = 0; j < playerIDAliveList.Count; j++)
+        {
+            int flag = 0;
+            for (int i = 0; i < this.orderList.Count; i++)
+            {
+                if(playerIDAliveList[j]== orderList[i].CasterID)
+                {
+                    flag = 1;
+                    break;
+                }
+            }
+            if (flag == 0)  //还有指令没输入完成
+            {
+                return -2;
+            }
+        }
+        return this.GameStart(ref startTime);
+    }
+
     // 判断是否有指令
-	public bool IsNotOrder(int personID){
+    public bool IsNotOrder(int personID){
 		foreach(var order in this.orderList){
 			if(order.CasterID==personID){
 				return false;
@@ -146,12 +206,12 @@ public class GameControl{
 
 
     //执行指令列表
-	public void ExcuteOrderList(){
+    public void ExcuteOrderList(){
 		//防御生效（效果是增加一个加防buff）
 		foreach(var order in this.orderList){	
 			if(order is SkillUseStruct)
-            {
-                if (((SkillUseStruct)order).SkillID == 1001)
+            {   //1011是防御
+                if (((SkillUseStruct)order).SkillID == 1011)
                 {
                     if (!gameSence.allDict[order.CasterID].IsDie())
                     {
@@ -171,30 +231,80 @@ public class GameControl{
         //自身影响状态buff生效
         foreach (var person in gameSence.speedList){
 			if(!gameSence.allDict[person.PersonID].IsDie()){
-				//优先判定状态buff
-				gameSence.allDict[person.PersonID].EffectBuff(1);
-			}
+                //优先判定状态buff
+                Dictionary<int, int> injury=gameSence.allDict[person.PersonID].EffectBuff(1);
+                
+                //存储buff伤害
+                //数据类型 casterPos    buffID  {{taegetPos,injury},只有一个}
+                foreach(int key in injury.Keys)
+                {
+                    List<GameInjury> gameInjuries = new List<GameInjury> { };
+                    GameInjury gameInjury = new GameInjury(this.gameSence.GetPos(person.PersonID), injury[key]);
+                    gameInjuries.Add(gameInjury);
+                    this.SaveInfo(person.PersonID, key, gameInjuries);
+                }
+                
+
+            }
             Order order =GetOrder(person.PersonID);
 			//执行指令
 			if(order!=null){
-				//执行目标集合存在死者	从新选定对象
-				if(!gameSence.IsAllAlive(order.TargetsIDList)){
+
+                int key=-1;
+                //执行目标集合存在死者	从新选定对象
+                if (!gameSence.IsAllAlive(order.TargetsIDList)){
 					order.TargetsIDList=gameSence.ReplaceMultipleTarget(order.TargetsIDList);
 				}
 				//执行攻击
 				if(!gameSence.allDict[order.CasterID].IsDie()){
-					foreach(var targetID in order.TargetsIDList){
-						if(order is SkillUseStruct) //如果是技能  便施放
+
+                    List<GameInjury> gameInjuries = new List<GameInjury> { };
+                    if (order is SkillUseStruct) //如果是技能  便施放
+                    {   
+                        Skill skill = person.GetSkill(((SkillUseStruct)order).SkillID);
+                        key = skill.SkillID;
+                        for (int i = 0; i < skill.AttackCount; i++)
                         {
-                            gameSence.allDict[order.CasterID].UseSkill(((SkillUseStruct)order).SkillID, gameSence.allDict[targetID]);
-                        }else if (order is ProductUseStruct)      //使用道具
-                        {
-                            gameSence.allDict[order.CasterID].UseSkill(((ProductUseStruct)order).ProductID, gameSence.allDict[targetID]);
+                            foreach (var targetID in order.TargetsIDList)
+                            {
+                                int injury=gameSence.allDict[order.CasterID].UseSkill(((SkillUseStruct)order).SkillID, gameSence.allDict[targetID]);
+                                if (injury != 0)
+                                {
+                                    GameInjury gameInjury = new GameInjury(this.gameSence.GetPos(targetID), injury);
+                                    gameInjuries.Add(gameInjury);
+                                }
+                            }
                         }
-					}
-				}
-			}
+                        
+                    }
+                    else if (order is ProductUseStruct)      //使用道具
+                    {
+                        key = ((ProductUseStruct)order).ProductPos;
+                        foreach (var targetID in order.TargetsIDList)
+                        {
+                            int injury=gameSence.allDict[order.CasterID].UseProduct((Product)this.gameSence.backPack.GetGood(key), gameSence.allDict[targetID]);
+                            GameInjury gameInjury = new GameInjury(this.gameSence.GetPos(targetID), injury);
+                            gameInjuries.Add(gameInjury);
+                        }    
+                    }
+                    if (key != -1)
+                    {
+                        this.SaveInfo(person.PersonID, key, gameInjuries);
+                    }
+                }
+            }
         }
+    }
+
+
+    //保存一条数据
+    public void SaveInfo(int casterID,int objID,List<GameInjury> injury)
+    {
+        GameInfo gameInfo = new GameInfo();
+        gameInfo.CasterPos =this.gameSence.GetPos(casterID);
+        gameInfo.InjuryInfo = injury;
+        gameInfo.ObjID = objID;
+        this.gameInfo.Add(gameInfo);
     }
 
     // 得到一条指令
@@ -205,11 +315,6 @@ public class GameControl{
 			}
 		}
 		return null;
-	}
-
-    //获取输入
-    public void GetInput(){
-		
 	}
 
     

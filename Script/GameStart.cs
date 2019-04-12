@@ -11,28 +11,35 @@ public class GameStart : MonoBehaviour
     private float startTime;
     private float endTime;
     private GameControl gameControl;
-    //定时器30秒一次循环调用
-    public void Awake() {
+
+    void Awake()
+    {
+        Init();
+    }
+
+    // 初始化
+    public void Init() { 
         this.startTime = 0f;
         this.endTime = 0f;
         this.gameControl = new GameControl();
     }
 
-
-	//游戏执行
-	public void GameExcute(){
-		//销毁定时
-		CancelInvoke();
-	}
-    void Update()
+    //执行战斗
+    // 注意 ：需要把代码加在Update()方法下
+    public void GameBegin()
     {
         this.endTime = Time.time;
-        if ((endTime - startTime) > 1)
+        if ((endTime - startTime) > 30)     // 30s调用一次
         {
             int a = this.gameControl.GameStart(ref startTime);
             print(a);
             Debug.Log("startTime" + startTime);
             Debug.Log("endTime" + endTime);
         }
+    }
+
+    void Update()
+    {
+        GameBegin();
     }
 }

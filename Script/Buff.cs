@@ -108,7 +108,7 @@ public class Buff{
     private bool isEffective;       // 是否生效
     private string buffName;        // buff名称
     private string buffInfo;        // buff信息
-    private int buffDamage;         // buff伤害
+    private int buffDamage;         // buff伤害  与   等级挂钩
     private int fixedBuffdamage;    // buff固定伤害
     private string imagePath;       // buff 图标
 
@@ -230,8 +230,9 @@ public class Buff{
 
 
     //造成伤害
-    public virtual void Damage(Person p){
-	}
+    public virtual int Damage(Person p){
+        return 0;
+    }
 
 	//影响属性
 	public virtual void InfluenceAttribute(Person p){
@@ -259,8 +260,9 @@ public class DefenesOrderBuff:Buff{
     }
 
     //造成伤害
-    public override void Damage(Person p)
+    public override int Damage(Person p)
     {
+        return 0;
     }
 
     //影响属性
@@ -297,8 +299,9 @@ public class UnlimitedBladeWorksSkill_Buff_LowSpeed : Buff
     }
 
     //造成伤害
-    public override void Damage(Person p)
+    public override int Damage(Person p)
     {
+        return 0;
     }
 
     //影响属性
@@ -333,7 +336,7 @@ public class FirestormSkill_Buff_Firing : Buff
     }
 
     //造成伤害
-    public override void Damage(Person p)
+    public override int Damage(Person p)
     {
         int injury = p.Lv * this.BuffDamage + this.FixedBuffdamage;
         if (p.Blood <= injury)
@@ -346,6 +349,8 @@ public class FirestormSkill_Buff_Firing : Buff
         }
         this.Time--;
         this.IsEffective = false;
+        
+        return -injury;
     }
 
     //影响属性
@@ -377,9 +382,9 @@ public class UnknowDieSkill_Buff_Dizziness : Buff
     }
 
     //造成伤害
-    public override void Damage(Person p)
+    public override int Damage(Person p)
     {
-           
+        return 0;
     }
 
     //影响属性
@@ -414,9 +419,9 @@ public class UnknowDieSkill_Buff_LowDefenes : Buff
     }
 
     //造成伤害
-    public override void Damage(Person p)
+    public override int Damage(Person p)
     {
-
+        return 0;
     }
 
     //影响属性
@@ -453,9 +458,9 @@ public class SangfroidSkill_Buff_UpDefenes : Buff
     }
 
     //造成伤害
-    public override void Damage(Person p)
+    public override int Damage(Person p)
     {
-
+        return 0;
     }
 
     //影响属性
@@ -493,9 +498,9 @@ public class FishtailingSkill_Buff_LowDefenes : Buff
 
 
     //造成伤害
-    public override void Damage(Person p)
+    public override int Damage(Person p)
     {
-
+        return 0;
     }
 
     //影响属性
@@ -532,9 +537,9 @@ public class SlamSkill_Buff_Dizziness : Buff
     }
 
     //造成伤害
-    public override void Damage(Person p)
+    public override int Damage(Person p)
     {
-
+        return 0;
     }
 
     //影响属性
@@ -576,7 +581,7 @@ public class RecoveryPotion_Buff_CureBlood : Buff
     }
 
     //造成伤害
-    public override void Damage(Person p)
+    public override int Damage(Person p)
     {
         int cureBlood = (int)(p.BloodMax * this.FixedBuffdamage / 100);
         if (cureBlood + p.Blood > p.BloodMax)
@@ -589,6 +594,8 @@ public class RecoveryPotion_Buff_CureBlood : Buff
         }
         this.Time--;
         this.IsEffective = false;
+ 
+        return cureBlood;
     }
 
     //影响属性
@@ -619,7 +626,7 @@ public class ConcentrateGather_Buff_CureBlue : Buff
     }
 
     //造成伤害
-    public override void Damage(Person p)
+    public override int Damage(Person p)
     {
         int cureBlue = (int)(p.BlueMax * this.FixedBuffdamage / 100);
         if (cureBlue + p.Blue > p.BlueMax)
@@ -632,6 +639,8 @@ public class ConcentrateGather_Buff_CureBlue : Buff
         }
         this.Time--;
         this.IsEffective = false;
+ 
+        return cureBlue;
     }
 
     //影响属性
@@ -662,9 +671,9 @@ public class ToughPotions_Buff_UpDefenes : Buff
     }
 
     //造成伤害
-    public override void Damage(Person p)
+    public override int Damage(Person p)
     {
-
+        return 0;
     }
 
     //影响属性
@@ -701,9 +710,9 @@ public class Amethyst_Buff_UpSpeed : Buff
     }
 
     //造成伤害
-    public override void Damage(Person p)
+    public override int Damage(Person p)
     {
-
+        return 0;
     }
 
     //影响属性
@@ -738,9 +747,9 @@ public class CourageHorn_Buff_UpAttack : Buff
     }
 
     //造成伤害
-    public override void Damage(Person p)
+    public override int Damage(Person p)
     {
-
+        return 0;
     }
 
     //影响属性
