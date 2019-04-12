@@ -66,19 +66,19 @@ public class Good{
 }
 
 //装备ID    类名         装备名称       部位       特攻      物攻      速度      物防      特防     血量      蓝量      装备等级        装备信息
-//5001    Chael_de_fer     铁盔         Head        0         0         0        30         0       100         0           1               ...
+//5001    Chael_de_fer     铁盔         Heads        0         0         0        30         0       100         0           1               ...
 //5002    GhostSword      伏魔刀       Weapon       0         80        10       10         0        50         0           1
 //5003     BladeMail       刃甲         Top         0         20        0        100        0       100         0           1
 //5004   GoldenCrowCuish 金乌腿甲     Bottom        0         0         10       60         0        30         0           1
 //5005  SilverWristbands 白银护腕      Armor        0         20        5        10         0        10         0           1
 //5006    CedarwoodRing  杉木戒指    Accessorie     0         0         0        30         30       30         30          1  
-//5007    PsionicScarf   灵能头巾      Head         0         5         10       5          0        10         0           1
+//5007    PsionicScarf   灵能头巾      Heads         0         5         10       5          0        10         0           1
 //5008    LightSaber      光剑        Weapon        0         30        15       0          0        50         0           1
 //5009 ColouredGlazeVest 琉璃背心      Top          0         0         10       30         30       40         20          1
 //5010  SpiritWindPants   灵风裤      Bottom        0         0         20       20         0        20         0           1
 //5011 RubyKneeProtector 红宝石护膝    Armor        0         5         15       10         0        10         0           1
 //5012   AmberEssence    琥珀精华   Accessorie      0         0         30       0          0         0         0           1
-//5013   ArchmagesHat   大法师之帽     Head         50        0         0        0          0         0         100         1
+//5013   ArchmagesHat   大法师之帽     Heads         50        0         0        0          0         0         100         1
 //5014    FireDorje      火灵杖       Weapon        100       0         0        0          0         0         30          1
 //5015   WisdomCloak     智慧披风      Top          10        0         0        0          20        30        30          1
 //5016    SilkPants      蚕丝裤      Bottom         0         0         0        60         60        0         0           1
@@ -454,11 +454,11 @@ public class Chael_de_fer : Equipment
         this.Blood = 100;
         this.Blue = 0;
         this.Lv = 1;
-        this.Position = "Head";
+        this.Position = "Heads";
         this.ImagePath = "Res/equipment/5001.png";
         this.EquipmentInfo = @" 【装备名称】: 铁盔
                                 【装备等级】: 1
-                                【部位】: Head
+                                【部位】: Heads
                                 【物防】: +30
                                 【血量】: +100";
     }
@@ -619,10 +619,10 @@ public class PsionicScarf : Equipment
         this.Blue = 0;
         this.Lv = 1;
         this.ImagePath = "Res/equipment/5007.png";
-        this.Position = "Head";
+        this.Position = "Heads";
         this.EquipmentInfo = @" 【装备名称】: 灵能头巾
                                 【装备等级】: 1
-                                【部位】: Head
+                                【部位】: Heads
                                 【物攻】: +5
                                 【速度】: +10
                                 【物防】: +5
@@ -783,10 +783,10 @@ public class ArchmagesHat : Equipment
         this.Blue = 100;
         this.Lv = 1;
         this.ImagePath = "Res/equipment/5013.png";
-        this.Position = "Head";
+        this.Position = "Heads";
         this.EquipmentInfo = @" 【装备名称】: 大法师之帽
                                 【装备等级】: 1
-                                【部位】: Head
+                                【部位】: Heads
                                 【特攻】: +50
                                 【蓝量】: +100";
     }
@@ -1084,23 +1084,30 @@ public class FleshPill : Product
     public override int UseItem(Person target)
     {
         //对应的效果
-        int cureBlood = (int)(target.BloodMax * 0.3);
-        if(cureBlood + target.Blood > target.BloodMax)
+        if (this.GoodNumber == 0)
         {
-            target.Blood = target.BloodMax;
+            Debug.Log("数量不足哦");
+            return 0;
         }
         else
         {
-            target.Blood += cureBlood;
+            int cureBlood = (int)(target.BloodMax * 0.3);
+            if (cureBlood + target.Blood > target.BloodMax)
+            {
+                target.Blood = target.BloodMax;
+            }
+            else
+            {
+                target.Blood += cureBlood;
+            }
+            this.GoodNumber--;
+            return cureBlood;
         }
-        this.GoodNumber--;
-        return cureBlood;
     }
 
     public override int Use(Person caster, Person target)
     {
         
-        this.GoodNumber--;
         return UseItem(target);
     }
 }
@@ -1124,23 +1131,30 @@ public class SparklingDew : Product
     public override int UseItem(Person target)
     {
         //对应的效果
-        int cureBlue = (int)(target.BlueMax * 0.3);
-        if (cureBlue + target.Blue > target.BlueMax)
+        if (this.GoodNumber == 0)
         {
-            target.Blue = target.BlueMax;
+            Debug.Log("数量不足哦");
+            return 0;
         }
         else
         {
-            target.Blue += cureBlue;
+            int cureBlue = (int)(target.BlueMax * 0.3);
+            if (cureBlue + target.Blue > target.BlueMax)
+            {
+                target.Blue = target.BlueMax;
+            }
+            else
+            {
+                target.Blue += cureBlue;
+            }
+            this.GoodNumber--;
+            return cureBlue;
         }
-        this.GoodNumber--;
-        return cureBlue;
     }
 
     public override int Use(Person caster, Person target)
     {
         
-        this.GoodNumber--;
         return UseItem(target);
     }
 }
@@ -1169,8 +1183,15 @@ public class RecoveryPotion : Product
 
     public override int Use(Person caster, Person target)
     {
-        target.AddBuff(target.buffFactory.CreateBuff("恢复药水buff-生命恢复"));
-        this.GoodNumber--;
+        if (this.GoodNumber == 0)
+        {
+            Debug.Log("数量不足哦");
+        }
+        else
+        {
+            target.AddBuff(target.buffFactory.CreateBuff("恢复药水buff-生命恢复"));
+            this.GoodNumber--;
+        }
         return 0;
     }
 }
@@ -1199,8 +1220,15 @@ public class ConcentrateGather : Product
 
     public override int Use(Person caster, Person target)
     {
-        target.AddBuff(target.buffFactory.CreateBuff("凝神聚气散buff-魔法恢复"));
-        this.GoodNumber--;
+        if (this.GoodNumber == 0)
+        {
+            Debug.Log("数量不足哦");
+        }
+        else
+        {
+            target.AddBuff(target.buffFactory.CreateBuff("凝神聚气散buff-魔法恢复"));
+            this.GoodNumber--;
+        }
         return 0;
     }
 }
@@ -1229,8 +1257,16 @@ public class ToughPotions : Product
 
     public override int Use(Person caster, Person target)
     {
-        target.AddBuff(target.buffFactory.CreateBuff("坚韧药水buff-双抗提升"));
-        this.GoodNumber--;
+        if (this.GoodNumber == 0)
+        {
+            Debug.Log("数量不足哦");
+        }
+        else
+        {
+            target.AddBuff(target.buffFactory.CreateBuff("坚韧药水buff-双抗提升"));
+            this.GoodNumber--;
+        }
+
         return 0;
     }
 }
@@ -1259,8 +1295,15 @@ public class Amethyst : Product
 
     public override int Use(Person caster, Person target)
     {
-        target.AddBuff(target.buffFactory.CreateBuff("神行符buff-速度提升"));
-        this.GoodNumber--;
+        if (this.GoodNumber == 0)
+        {
+            Debug.Log("数量不足哦");
+        }
+        else
+        {
+            target.AddBuff(target.buffFactory.CreateBuff("神行符buff-速度提升"));
+            this.GoodNumber--;
+        }
         return 0;
     }
 }
@@ -1289,8 +1332,16 @@ public class CourageHorn : Product
 
     public override int Use(Person caster, Person target)
     {
-        target.AddBuff(target.buffFactory.CreateBuff("勇气号角buff-双攻提升"));
-        this.GoodNumber--;
+        
+        if (this.GoodNumber == 0)
+        {
+            Debug.Log("数量不足哦");
+        }
+        else
+        {
+            this.GoodNumber--;
+            target.AddBuff(target.buffFactory.CreateBuff("勇气号角buff-双攻提升"));
+        }
         return 0;
     }
 }

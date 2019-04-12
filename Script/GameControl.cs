@@ -153,7 +153,7 @@ public class GameControl{
         List<int> enemyIDList = gameSence.PersonAlivePersonIDList(-1);
         List<int> playerIDAliveList = gameSence.PersonAlivePersonIDList(1);
         List<int> targetIDList = null;
-        SkillUseStruct order = null;
+        Order order = null;
         //大于等于1000的就是技能
         if (objID >= 1000)
         {
@@ -167,8 +167,9 @@ public class GameControl{
         else
         {
             //是道具
+            targetIDList = new List<int> { };
             targetIDList.Add(targetID);
-            order = new SkillUseStruct(casterID, objID, targetIDList);
+            order = new ProductUseStruct(casterID, objID, targetIDList);
         }
 
         this.orderList.Add(order);
