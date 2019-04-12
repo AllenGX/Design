@@ -4,23 +4,25 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class FlyBlood : MonoBehaviour {
-
-    public GUIStyle thestyle;
-
     public GameObject gameObject;
 
-    public GameObject game;
+    public GameObject games;
 
     private Vector3 target;
-
     private Text t;
+    private GameObject game;
 
     // Use this for initialization
     void Start () {
-        game.transform.position.Set(gameObject.transform.position.x, gameObject.transform.position.y + 30, gameObject.transform.position.z);
+        game = Instantiate(games);
+
+        game.transform.parent = GameObject.Find("Canvas/Image").gameObject.transform;
+        game.transform.localPosition = new Vector3(0, 30, 0);
         target = new Vector3(game.transform.position.x, game.transform.position.y + 10, game.transform.position.z);
         t = game.GetComponent<Text>();
+        t.color = new Color(255, 0, 0, 0);
         StartCoroutine(FadeOut());
+        StartCoroutine(UP());
 
     }
 
@@ -35,11 +37,22 @@ public class FlyBlood : MonoBehaviour {
         StopCoroutine(FadeOut());
     }
 
+    IEnumerator UP()
+    {
+        for (int i = 0; i<=10; i++)
+        {
+            game.transform.localPosition = new Vector3(0, 30+i, 0);
+            yield return new WaitForSeconds(0.1f);
+        }
+        StopCoroutine(UP());
+    }
+
+
 
     // Update is called once per frame
     void Update () {
-        if ((target.y - game.transform.position.y)>= 1){
-            game.transform.position = Vector3.Lerp(game.transform.position, target, Time.deltaTime * 1);
-        }
+        //if ((target.y - game.transform.position.y)>= 1){
+        //    game.transform.position = Vector3.Lerp(game.transform.position, target, Time.deltaTime * 1);
+        //}
     }
 }

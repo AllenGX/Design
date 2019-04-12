@@ -88,7 +88,7 @@ public class BackPack{
     {
         for(int i = 0; i < this.capacity; i++)
         {
-            if (this.goods[i].GoodNumber <= 0)
+            if (this.goods[i] != null && this.goods[i].GoodNumber <= 0)
             {
                 this.goods[i] = null;
             }
