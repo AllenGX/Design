@@ -5,31 +5,41 @@ using UnityEngine.UI;
 
 public class AniTest : MonoBehaviour {
 
-    public Image image;
+    public GameObject game;
 
-	// Use this for initialization
-	void Start () {
-        Debug.Log(image.sprite);
-        StartCoroutine(playerAni(9));
-    }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    //   public Image image;
 
-    IEnumerator playerAni(int count)
+    //// Use this for initialization
+    //void Start () {
+    //       Debug.Log(image.sprite);
+    //       StartCoroutine(playerAni(9));
+    //   }
+
+    //// Update is called once per frame
+    //void Update () {
+
+    //}
+
+    //   IEnumerator playerAni(int count)
+    //   {
+    //       for (int i = 1; i < count; i++)
+    //       {
+    //           image.sprite = Resources.Load<Sprite>("Res/pic/临危不惧/临危不惧/临危不惧_"+i);
+    //           yield return new WaitForSeconds(0.05f);
+    //           //设置循环播放
+    //           //if (i == 8)
+    //           //{
+    //           //    i = 0;
+    //           //}
+    //       }
+    //       StopCoroutine(playerAni(count));
+    //   }
+
+    
+    void Start()
     {
-        for (int i = 1; i < count; i++)
-        {
-            image.sprite = Resources.Load<Sprite>("Res/pic/临危不惧/临危不惧/临危不惧_"+i);
-            yield return new WaitForSeconds(0.05f);
-            //设置循环播放
-            //if (i == 8)
-            //{
-            //    i = 0;
-            //}
-        }
-        StopCoroutine(playerAni(count));
+
+        game.GetComponent<PlayAni>().PlayerAniObj("Image", "Image1", "临危不惧攻击");
     }
+    
 }
