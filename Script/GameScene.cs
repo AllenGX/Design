@@ -22,31 +22,31 @@ public class GameScene{
 
     //初始化物体
 	public void Init(){
-        //Person p1 = new Person(1,"小黑", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1,"");
-        //p1.AddSkill(p1.skillFactory.CreateSkill("无限剑制"));
-        //p1.AddSkill(p1.skillFactory.CreateSkill("六脉神剑"));
-        //p1.AddSkill(p1.skillFactory.CreateSkill("八荒六合"));
-        //Person p2 =new Person(2,"小绿", 1000, 200, 20, 30, 12, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "");
-        //p2.AddSkill(p2.skillFactory.CreateSkill("大火球"));
-        //p2.AddSkill(p2.skillFactory.CreateSkill("岩浆爆破"));
-        //p2.AddSkill(p2.skillFactory.CreateSkill("烈焰风暴"));
-        //Person p3=new Person(3,"小蓝", 1000, 200, 20, 30, 51, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "");
-        //p3.AddSkill(p3.skillFactory.CreateSkill("瞬劈"));
-        //p3.AddSkill(p3.skillFactory.CreateSkill("生死不觉"));
-        //p3.AddSkill(p3.skillFactory.CreateSkill("临危不惧"));
-        Person p1 = CPlayerData.pd.p1;
-        Person p2 = CPlayerData.pd.p2;
-        Person p3 = CPlayerData.pd.p3;
-        playerList = new List<Person>{ p1, p2, p3 };
-		Person p4=new Person(4,"aaa", 1000, 200, 20, 30, 21, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "");
+        Person p1 = new Person(1, "小黑", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "",1);
+        p1.AddSkill(p1.skillFactory.CreateSkill("无限剑制"));
+        p1.AddSkill(p1.skillFactory.CreateSkill("六脉神剑"));
+        p1.AddSkill(p1.skillFactory.CreateSkill("八荒六合"));
+        Person p2 = new Person(2, "小绿", 1000, 200, 20, 30, 12, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "", 1);
+        p2.AddSkill(p2.skillFactory.CreateSkill("大火球"));
+        p2.AddSkill(p2.skillFactory.CreateSkill("岩浆爆破"));
+        p2.AddSkill(p2.skillFactory.CreateSkill("烈焰风暴"));
+        Person p3 = new Person(3, "小蓝", 1000, 200, 20, 30, 51, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "", 1);
+        p3.AddSkill(p3.skillFactory.CreateSkill("瞬劈"));
+        p3.AddSkill(p3.skillFactory.CreateSkill("生死不觉"));
+        p3.AddSkill(p3.skillFactory.CreateSkill("临危不惧"));
+        //Person p1 = CPlayerData.pd.p1;
+        //Person p2 = CPlayerData.pd.p2;
+        //Person p3 = CPlayerData.pd.p3;
+        playerList = new List<Person> { p1, p2, p3 };
+        Person p4 =new Person(4,"aaa", 1000, 200, 20, 30, 21, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "", 1);
         p4.AddSkill(p4.skillFactory.CreateSkill("撕咬"));
         p4.AddSkill(p4.skillFactory.CreateSkill("摆尾"));
         p4.AddSkill(p4.skillFactory.CreateSkill("野蛮冲撞"));
-        Person p5=new Person(5,"bbb", 1000, 200, 20, 30, 35, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "");
+        Person p5=new Person(5,"bbb", 1000, 200, 20, 30, 35, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "", 1);
         p5.AddSkill(p5.skillFactory.CreateSkill("撕咬"));
         p5.AddSkill(p5.skillFactory.CreateSkill("摆尾"));
         p5.AddSkill(p5.skillFactory.CreateSkill("野蛮冲撞"));
-        Person p6=new Person(6,"ccc", 1000, 200, 20, 30, 31, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "");
+        Person p6=new Person(6,"ccc", 1000, 200, 20, 30, 31, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "", 1);
         p6.AddSkill(p6.skillFactory.CreateSkill("撕咬"));
         p6.AddSkill(p6.skillFactory.CreateSkill("摆尾"));
         p6.AddSkill(p6.skillFactory.CreateSkill("野蛮冲撞"));
@@ -65,7 +65,7 @@ public class GameScene{
         //{
         //    enemyPositionDict[i] = null;
         //}
-        backPack = CPlayerData.pd.bag;
+        //backPack = CPlayerData.pd.bag;
     }
 
 

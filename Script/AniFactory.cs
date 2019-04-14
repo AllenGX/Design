@@ -13,7 +13,7 @@ public class AniFactory
             {"临危不惧",new AniInfo(1,1,9,this.rootPath+"临危不惧") },
             {"临危不惧攻击",new AniInfo(0,2,10,this.rootPath+"临危不惧攻击") },
             {"六脉神剑",new AniInfo(0,4,9,this.rootPath+ "六脉神剑") },
-            {"大火球",new AniInfo(1,5,5,this.rootPath+ "大火球")  },
+            {"大火球",new AniInfo(1,5,5,this.rootPath+ "大火球",1)},
             {"大火球受击",new AniInfo(0,6,5,this.rootPath+ "大火球受击") },
             {"岩浆爆破",new AniInfo(0,7,9,this.rootPath+ "岩浆爆破")  },
             {"摆尾",new AniInfo(0,8,8,this.rootPath+ "摆尾") },
@@ -42,14 +42,16 @@ public class AniInfo
     private int aniID;      //aniID
     private int aniCount;   //图片帧数
     private string aniPath; //图片路径
+    private int moveType;   //是否移动
 
 
-    public AniInfo(int aniType, int aniID, int aniCount, string aniPath)
+    public AniInfo(int aniType, int aniID, int aniCount, string aniPath,int moveType=0)
     {
         this.aniType = aniType;
         this.aniID = aniID;
         this.aniCount = aniCount;
         this.aniPath = aniPath;
+        this.moveType = moveType;
     }
 
 
@@ -105,4 +107,18 @@ public class AniInfo
             aniType = value;
         }
     }
+
+    public int MoveType
+    {
+        get
+        {
+            return moveType;
+        }
+
+        set
+        {
+            moveType = value;
+        }
+    }
+    
 }

@@ -33,6 +33,7 @@ public class Person{
     public BuffFactory buffFactory;         //buff工厂
     public SkillFactory skillFactory;       //技能工厂
     private bool attackIsOk=true;           //是否能进行攻击
+    private int imageType;                  //人物图类型 1：1比1 2：2比3
 
     private Dictionary<string, Equipment> inventory; //装备栏
                                                      // 头部，上装，下装，武器，防具，饰品
@@ -44,7 +45,7 @@ public class Person{
 
 
     //初始化
-    public Person(int personID,string personName,int blood,int blue, int specialAttack,int physicsAttack,int speed,int physicsDefense,int specialDefense,int lv,int currentExperience,int bloodGrowth,int specialAttackGrowth,int physicsAttackGrowth,int speedGrowth,int physicsDefenseGrowth,int specialDefenseGrowth,int blueGrowth,string attackAniPath)
+    public Person(int personID,string personName,int blood,int blue, int specialAttack,int physicsAttack,int speed,int physicsDefense,int specialDefense,int lv,int currentExperience,int bloodGrowth,int specialAttackGrowth,int physicsAttackGrowth,int speedGrowth,int physicsDefenseGrowth,int specialDefenseGrowth,int blueGrowth,string attackAniPath,int imageType)
     {
         //buffs
         this.buffs = new List<Buff> { };
@@ -71,6 +72,7 @@ public class Person{
         this.currentExperience = currentExperience;
         this.experienceMax = CalculateExperienceMax();      //级经验上限公式待定....
         this.attackAniPath = attackAniPath;
+        this.imageType = imageType;
         this.buffFactory = new BuffFactory();
         this.skillFactory = new SkillFactory();
         // 添加技能
@@ -642,5 +644,16 @@ public class Person{
         }
     }
 
+    public int ImageType
+    {
+        get
+        {
+            return imageType;
+        }
+        set
+        {
+            imageType = value;
+        }
+    }
 
 }
