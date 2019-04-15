@@ -79,7 +79,6 @@ public class Person{
         this.skills.Add(this.skillFactory.CreateSkill("普通攻击"));
         this.skills.Add(this.skillFactory.CreateSkill("无操作"));
 
-
         //初始化装备
         this.inventory = new Dictionary<string, Equipment> {
             { "Heads",null },
@@ -90,6 +89,12 @@ public class Person{
             { "Accessorie",null },};
 
         //待添加...
+    }
+
+    // 拷贝
+    public Person Clone()
+    {
+        return this.MemberwiseClone() as Person;
     }
 
     //防御
