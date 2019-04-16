@@ -2,72 +2,154 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Monster{
-    private Dictionary<int, Person> monsterDict;
-
-    public Monster()
-    {
-        
-        monsterDict = new Dictionary<int, Person>
-        {
-            {1,new Person(1, "男主一", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "020-Hunter01",1) },
-            {2,new Person(2, "女主一", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "040-Mage08",1) },
-            {3,new Person(3, "女主二", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "007-Fighter07",1) },
-            {4,new Person(4, "野猪", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "155-Animal05",1) },
-            {5,new Person(5, "黑野猪", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "155-Animal05",1) },
-            {6,new Person(6, "幽灵", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "051-Undead01.png",1) },
-            {7,new Person(7, "小恶魔", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "075-Devil01",1) },
-            {8,new Person(8, "士兵甲", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "049-Soldier01",1) },
-            {9,new Person(9, "士兵乙", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "050-Soldier02",1) },
-            {10,new Person(10, "将军", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "003-Fighter03",1) },
-            {11,new Person(11, "魔狼", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "063-Beast01",1) },
-            {12,new Person(12, "龙", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "099-Monster13",1) },
-            {13,new Person(13, "精灵", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "080-Angel02",1) },
-        };
-    }
-
-    public Person GetPerson(int personID)
-    {
-        return monsterDict[personID];
-    }
-
-    public Dictionary<int, Person> MonsterDict
-    {
-        get
-        {
-            return monsterDict;
-        }
-
-        set
-        {
-            monsterDict = value;
-        }
-    }
-}
-
-
 public class FightMonster
 {
-    private Dictionary<int, List<Person>> fightDict;
 
-    public FightMonster()
+    public List<Person> FightMonsterFactory(int fightNumber)
     {
-        fightDict = new Dictionary<int, List<Person>> {
-            { 1,new List<Person>{ } },
+        List<Person> monsterList = null;
+        //野猪(2-4)
+        if (fightNumber == 1)
+        {
+            int monsterNumber = Random.Range(2, 4);
+            for (int i = 0; i < monsterNumber; i++)
+            {
+                monsterList.Add(MonsterFactory(fightNumber*100+i,4));
+            }
 
-        };
+        }//黑野猪(2-4)
+        else if(fightNumber == 2)
+        {
+            int monsterNumber = Random.Range(2, 4);
+            for (int i = 0; i < monsterNumber; i++)
+            {
+                monsterList.Add(MonsterFactory(fightNumber * 100 + i, 5));
+            }
+        }//劲敌
+        else if (fightNumber == 3)
+        {
+
+        }//幽灵(2-4)
+        else if (fightNumber == 4)
+        {
+            int monsterNumber = Random.Range(2, 4);
+            for (int i = 0; i < monsterNumber; i++)
+            {
+                monsterList.Add(MonsterFactory(fightNumber * 100 + i,6));
+            }
+        }//小恶魔(2-4)
+        else if (fightNumber == 5)
+        {
+            int monsterNumber = Random.Range(2, 4);
+            for (int i = 0; i < monsterNumber; i++)
+            {
+                monsterList.Add(MonsterFactory(fightNumber * 100 + i, 7));
+            }
+        }//士兵甲、乙(2-4)
+        else if (fightNumber == 7)
+        {
+            for(int j = 0; j < 2; j++)
+            {
+                int monsterNumber = Random.Range(1, 2);
+                for (int i = 0; i < monsterNumber; i++)
+                {
+                    monsterList.Add(MonsterFactory(fightNumber * 100 + i+j, 8+j));
+                }
+            }
+        }//士兵4、将军
+        else if (fightNumber == 8)
+        {
+            monsterList.Add(MonsterFactory(fightNumber * 100, 10));
+
+            for (int i = 0; i < 4; i++)
+            {
+                monsterList.Add(MonsterFactory(fightNumber * 100 + i+1 , 9));
+            }
+        }//魔狼（2-4）
+        else if (fightNumber == 9)
+        {
+            int monsterNumber = Random.Range(2, 4);
+            for (int i = 0; i < monsterNumber; i++)
+            {
+                monsterList.Add(MonsterFactory(fightNumber * 100 + i , 11));
+            }
+        }//魔狼（2-4）龙1
+        else if (fightNumber == 10)
+        {
+            int monsterNumber = Random.Range(2, 4);
+            for (int i = 0; i < monsterNumber; i++)
+            {
+                monsterList.Add(MonsterFactory(fightNumber * 100 + i, 11));
+            }
+            monsterList.Add(MonsterFactory(fightNumber * 105, 12));
+        }//精灵4
+        else if (fightNumber == 11)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                monsterList.Add(MonsterFactory(fightNumber * 100 + i, 13));
+            }
+        }
+        return monsterList;
     }
 
-    public Dictionary<int, List<Person>> FightDict
+    public Person MonsterFactory(int ID,int type)
     {
-        get
-        {
-            return fightDict;
-        }
+        Person person = null;
 
-        set
+        if (type == 1)
         {
-            fightDict = value;
+            person = new Person(ID, "男主一", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "020-Hunter01", 1);
         }
+        else if(type == 2)
+        {
+            person = new Person(ID, "女主一", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "040-Mage08", 1);
+        }else if(type == 3)
+        {
+            person = new Person(ID, "女主二", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "007-Fighter07", 1);
+        }
+        else if (type == 4)
+        {
+            person = new Person(ID, "野猪", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "155-Animal05", 1);
+        }
+        else if (type == 5)
+        {
+            person = new Person(ID, "黑野猪", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "155-Animal05", 1);
+        }
+        else if (type == 6)
+        {
+            person = new Person(ID, "幽灵", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "051-Undead01.png", 1);
+        }
+        else if (type == 7)
+        {
+            person = new Person(ID, "小恶魔", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "075-Devil01", 1);
+        }
+        else if (type == 8)
+        {
+            person = new Person(ID, "士兵甲", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "049-Soldier01", 1);
+        }
+        else if (type == 9)
+        {
+            person = new Person(ID, "士兵乙", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "050-Soldier02", 1);
+        }
+        else if (type == 10)
+        {
+            person = new Person(ID, "将军", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "003-Fighter03", 1);
+        }
+        else if (type == 11)
+        {
+            person = new Person(ID, "魔狼", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "063-Beast01", 1);
+        }
+        else if (type == 12)
+        {
+            person = new Person(ID, "龙", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "099-Monster13", 1);
+        }
+        else if (type == 13)
+        {
+            person = new Person(ID, "精灵", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "080-Angel02", 1);
+        }
+        return person;
     }
+
+   
 }

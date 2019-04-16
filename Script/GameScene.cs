@@ -14,46 +14,67 @@ public class GameScene{
 	public Dictionary<int, Person> allDict;	//用来存放信息
     public BackPack backPack;
     public Dictionary<int, Person> personPositionDict;    //  站位信息
+    public FightMonster fightMonster;
 
+    public GameScene(int fightNumber)
+    {
+        this.fightMonster = new FightMonster();
 
-    public GameScene(){
-		Init();
+        Init(fightNumber);
 	}
 
     //初始化物体
-	public void Init(){
-        Person p1 = new Person(1, "小黑", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "",1);
-        p1.AddSkill(p1.skillFactory.CreateSkill("无限剑制"));
-        p1.AddSkill(p1.skillFactory.CreateSkill("六脉神剑"));
-        p1.AddSkill(p1.skillFactory.CreateSkill("八荒六合"));
-        Person p2 = new Person(2, "小绿", 1000, 200, 20, 30, 12, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "", 1);
-        p2.AddSkill(p2.skillFactory.CreateSkill("大火球"));
-        p2.AddSkill(p2.skillFactory.CreateSkill("岩浆爆破"));
-        p2.AddSkill(p2.skillFactory.CreateSkill("烈焰风暴"));
-        Person p3 = new Person(3, "小蓝", 1000, 200, 20, 30, 51, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "", 1);
-        p3.AddSkill(p3.skillFactory.CreateSkill("瞬劈"));
-        p3.AddSkill(p3.skillFactory.CreateSkill("生死不觉"));
-        p3.AddSkill(p3.skillFactory.CreateSkill("临危不惧"));
-        //Person p1 = CPlayerData.pd.p1;
-        //Person p2 = CPlayerData.pd.p2;
-        //Person p3 = CPlayerData.pd.p3;
+	public void Init(int fightNumber)
+    {
+        //Person p1 = new Person(1, "小黑", 1000, 200, 20, 30, 11, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "",1);
+        //p1.AddSkill(p1.skillFactory.CreateSkill("无限剑制"));
+        //p1.AddSkill(p1.skillFactory.CreateSkill("六脉神剑"));
+        //p1.AddSkill(p1.skillFactory.CreateSkill("八荒六合"));
+        //Person p2 = new Person(2, "小绿", 1000, 200, 20, 30, 12, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "", 1);
+        //p2.AddSkill(p2.skillFactory.CreateSkill("大火球"));
+        //p2.AddSkill(p2.skillFactory.CreateSkill("岩浆爆破"));
+        //p2.AddSkill(p2.skillFactory.CreateSkill("烈焰风暴"));
+        //Person p3 = new Person(3, "小蓝", 1000, 200, 20, 30, 51, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "", 1);
+        //p3.AddSkill(p3.skillFactory.CreateSkill("瞬劈"));
+        //p3.AddSkill(p3.skillFactory.CreateSkill("生死不觉"));
+        //p3.AddSkill(p3.skillFactory.CreateSkill("临危不惧"));
+        Person p1 = CPlayerData.pd.p1;
+        Person p2 = CPlayerData.pd.p2;
+        Person p3 = CPlayerData.pd.p3;
         playerList = new List<Person> { p1, p2, p3 };
-        Person p4 =new Person(4,"aaa", 1000, 200, 20, 30, 21, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "", 1);
-        p4.AddSkill(p4.skillFactory.CreateSkill("撕咬"));
-        p4.AddSkill(p4.skillFactory.CreateSkill("摆尾"));
-        p4.AddSkill(p4.skillFactory.CreateSkill("野蛮冲撞"));
-        Person p5=new Person(5,"bbb", 1000, 200, 20, 30, 35, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "", 1);
-        p5.AddSkill(p5.skillFactory.CreateSkill("撕咬"));
-        p5.AddSkill(p5.skillFactory.CreateSkill("摆尾"));
-        p5.AddSkill(p5.skillFactory.CreateSkill("野蛮冲撞"));
-        Person p6=new Person(6,"ccc", 1000, 200, 20, 30, 31, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "", 1);
-        p6.AddSkill(p6.skillFactory.CreateSkill("撕咬"));
-        p6.AddSkill(p6.skillFactory.CreateSkill("摆尾"));
-        p6.AddSkill(p6.skillFactory.CreateSkill("野蛮冲撞"));
-        enemyList = new List<Person>{ p4, p5, p6 };
-		allList=new List<Person>{ p1,p2,p3,p4, p5, p6 };
-		allDict = new Dictionary<int, Person>{{p1.PersonID,p1},{p2.PersonID,p2},{p3.PersonID,p3},{p4.PersonID,p4},{p5.PersonID,p5},{p6.PersonID,p6}};
-        speedList = new List<Person>{ p1,p2,p3,p4, p5, p6 };
+        //Person p4 =new Person(4,"aaa", 1000, 200, 20, 30, 21, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "", 1);
+        //p4.AddSkill(p4.skillFactory.CreateSkill("撕咬"));
+        //p4.AddSkill(p4.skillFactory.CreateSkill("摆尾"));
+        //p4.AddSkill(p4.skillFactory.CreateSkill("野蛮冲撞"));
+        //Person p5=new Person(5,"bbb", 1000, 200, 20, 30, 35, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "", 1);
+        //p5.AddSkill(p5.skillFactory.CreateSkill("撕咬"));
+        //p5.AddSkill(p5.skillFactory.CreateSkill("摆尾"));
+        //p5.AddSkill(p5.skillFactory.CreateSkill("野蛮冲撞"));
+        //Person p6=new Person(6,"ccc", 1000, 200, 20, 30, 31, 18, 8, 1, 0, 3, 2, 2, 3, 4, 1, 1, "", 1);
+        //p6.AddSkill(p6.skillFactory.CreateSkill("撕咬"));
+        //p6.AddSkill(p6.skillFactory.CreateSkill("摆尾"));
+        //p6.AddSkill(p6.skillFactory.CreateSkill("野蛮冲撞"));
+        //enemyList = new List<Person>{ p4, p5, p6 };
+        enemyList = fightMonster.FightMonsterFactory(fightNumber);
+        if (enemyList == null)
+        {
+            Person p5 = p1.Clone();
+            p5.PersonID = 1001;
+            Person p6 = p2.Clone();
+            p6.PersonID = 1002;
+            Person p7 = p3.Clone();
+            p7.PersonID = 1003;
+            enemyList = new List<Person> { p5,p6,p7};
+        }
+
+        allList = enemyList.Except(playerList).ToList();
+        allDict = new Dictionary<int, Person> { };
+        foreach (var person in allList)
+        {
+            allDict[person.PersonID] = person;
+        }
+
+        speedList = allList;
         speedList.Sort(CompareSpeed);	//速度排序的任务列表
 
         personPositionDict = new Dictionary<int, Person> { { 10, p1 }, { 11, p2 }, { 12, p3 } };

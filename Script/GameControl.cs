@@ -2,24 +2,94 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+
+public class Reward
+{
+    private int money;          //金钱
+    private int experience;     //经验
+    private int goods;          //奖励道具数量
+
+    public Reward(int money, int experience, int goods)
+    {
+        this.money = money;
+        this.experience = experience;
+        this.goods = goods;
+    }
+
+    public int Money
+    {
+        get
+        {
+            return money;
+        }
+
+        set
+        {
+            money = value;
+        }
+    }
+
+    public int Experience
+    {
+        get
+        {
+            return experience;
+        }
+
+        set
+        {
+            experience = value;
+        }
+    }
+
+    public int Goods
+    {
+        get
+        {
+            return goods;
+        }
+
+        set
+        {
+            goods = value;
+        }
+    }
+}
+
 public class GameControl{
     private int round;
 	private int resultType;
 	private GameScene gameSence;
 	private List<Order> orderList;
     public List<GameInfo> gameInfo;
+    public Reward reward;
 
     public GameControl()
     {
         this.orderList = new List<Order> { }; //初始化指令列表
         this.round=1;		//第一回合
 		this.resultType=0;	//游戏未结束
-		this.gameSence=new GameScene();	//创建场景
+		this.gameSence=new GameScene(3);	//创建场景(3代表和劲敌战斗)
+        this.CalculateReward();     //计算结算奖励
         this.gameInfo = new List<GameInfo> { }; //初始化战斗信息
-}
+    }
+
+    public void CalculateReward()
+    {
+
+        int money = 0;
+        int experience = 0;
+        foreach (var enemy in this.GameSence.enemyList)
+        {
+            money += enemy.Money;
+            experience += enemy.Experience;
+        }
+        int goods = (int)(Random.Range(0f, 1f) * this.GameSence.enemyList.Count);
+        reward = new Reward(money, experience, goods);
+    }
 
 
-	public int GameStart(ref float startTime)
+    public int GameStart(ref float startTime)
     {
         this.gameInfo = new List<GameInfo> { };             //初始化战斗信息
         startTime = Time.time;                              //设置计时定时调用
