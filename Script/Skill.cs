@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 // ID  :技能名称        方法名                          技能类型      固伤     倍率    耗蓝      攻击个数        攻击段数      buff
-// 1011  :防御            DefenedSkill                       -1           0       0f      0           0               0           防御提升buff
+// 1011:防御            DefenedSkill                       -1           0       0f      0           0               0           防御提升buff
 // 1000:无操作          InactionSkill                      -1           0       0f      0           0               0           无
 // 1001:普通攻击        NormalAttackSkill                   1           0       1f      0           1               1           无   
 // 1002:无限剑制        UnlimitedBladeWorksSkill            1           0       1.3f    30          4               1           减速buff
