@@ -39,7 +39,7 @@ public class AniTest : MonoBehaviour {
     void Start()
     {
 
-        game.GetComponent<PlayAni>().PlayerAniObj("Image", "Image1", "临危不惧攻击");
+        game.GetComponent<PlayAni>().PlayerAniObj("Image", "Image1", "临危不惧攻击",0);
     }
     
 }

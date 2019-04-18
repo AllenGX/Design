@@ -6,7 +6,7 @@ using UnityEngine;
 //人物
 public class Person{
 
-
+    private ExperienceList experienceList;      //经验列表
     public List<Buff> buffs;                //buff 数据 {buff1,buff2,buff3....}
     private int personID;					//ID
     private string personName;              //人物名称
@@ -30,9 +30,12 @@ public class Person{
 	private int specialDefenseGrowth;		//特防成长
 	private int bloodGrowth;                //血量成长
     private int blueGrowth;                 //蓝量成长
+    private int experience;                 //经验
+    private int money;                      //金钱
     public BuffFactory buffFactory;         //buff工厂
     public SkillFactory skillFactory;       //技能工厂
     private bool attackIsOk=true;           //是否能进行攻击
+    private int imageType;                  //人物图类型 1：1比1 2：2比3
 
     private Dictionary<string, Equipment> inventory; //装备栏
                                                      // 头部，上装，下装，武器，防具，饰品
@@ -44,7 +47,7 @@ public class Person{
 
 
     //初始化
-    public Person(int personID,string personName,int blood,int blue, int specialAttack,int physicsAttack,int speed,int physicsDefense,int specialDefense,int lv,int currentExperience,int bloodGrowth,int specialAttackGrowth,int physicsAttackGrowth,int speedGrowth,int physicsDefenseGrowth,int specialDefenseGrowth,int blueGrowth,string attackAniPath)
+    public Person(int personID,string personName,int blood,int blue, int specialAttack,int physicsAttack,int speed,int physicsDefense,int specialDefense,int lv,int currentExperience,int bloodGrowth,int specialAttackGrowth,int physicsAttackGrowth,int speedGrowth,int physicsDefenseGrowth,int specialDefenseGrowth,int blueGrowth,string attackAniPath,int imageType,int experience,int money)
     {
         //buffs
         this.buffs = new List<Buff> { };
@@ -71,12 +74,15 @@ public class Person{
         this.currentExperience = currentExperience;
         this.experienceMax = CalculateExperienceMax();      //级经验上限公式待定....
         this.attackAniPath = attackAniPath;
+        this.imageType = imageType;
+        this.experience = experience;
+        this.money = money;
         this.buffFactory = new BuffFactory();
         this.skillFactory = new SkillFactory();
+        this.experienceList = new ExperienceList();
         // 添加技能
         this.skills.Add(this.skillFactory.CreateSkill("普通攻击"));
         this.skills.Add(this.skillFactory.CreateSkill("无操作"));
-
 
         //初始化装备
         this.inventory = new Dictionary<string, Equipment> {
@@ -88,6 +94,12 @@ public class Person{
             { "Accessorie",null },};
 
         //待添加...
+    }
+
+    // 拷贝
+    public Person Clone()
+    {
+        return this.MemberwiseClone() as Person;
     }
 
     //防御
@@ -147,7 +159,7 @@ public class Person{
     {
         //公式待定
         //....
-        return 1;
+        return this.experienceList.GetCurrentExperience(this.Lv);
     }
 
     // 升级
@@ -169,6 +181,10 @@ public class Person{
         this.currentExperience -= this.experienceMax;
         this.lv += 1;
         this.experienceMax = CalculateExperienceMax();//级,算当前级经验上限
+        if (this.currentExperience>= this.experienceMax)
+        {
+            this.LvUp();
+        }
 
         //其他huo得物品:
         // 新技能
@@ -642,5 +658,41 @@ public class Person{
         }
     }
 
+    public int ImageType
+    {
+        get
+        {
+            return imageType;
+        }
+        set
+        {
+            imageType = value;
+        }
+    }
 
+    public int Experience
+    {
+        get
+        {
+            return experience;
+        }
+
+        set
+        {
+            experience = value;
+        }
+    }
+
+    public int Money
+    {
+        get
+        {
+            return money;
+        }
+
+        set
+        {
+            money = value;
+        }
+    }
 }
