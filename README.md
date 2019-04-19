@@ -1,2 +1,3 @@
 # Design
-class Design about a turn-based game
+关于回合制游戏的设计
+最后的阿卡西斯勇者
