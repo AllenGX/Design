@@ -35,19 +35,18 @@ public class NFlyBlood : MonoBehaviour {
             yield return new WaitForSeconds(0.001f);
         }
         StopCoroutine(FadeOut());
-        Destroy(game);
-
-
     }
 
     IEnumerator UP()
     {
+        StartCoroutine(FadeOut());
         for (int i = 0; i<=10; i++)
         {
             game.transform.localPosition = new Vector3(0, 30+i, 0);
             yield return new WaitForSeconds(0.1f);
         }
         StopCoroutine(UP());
+        Destroy(game);
     }
 
 
@@ -70,7 +69,8 @@ public class NFlyBlood : MonoBehaviour {
         t = game.GetComponent<Text>();
         t.text = Dmg.ToString();
         t.color = new Color(255, 0, 0, 0);
-        StartCoroutine(FadeOut());
         StartCoroutine(UP());
+        
+        //
     }
 }
