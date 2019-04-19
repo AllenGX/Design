@@ -122,16 +122,16 @@
     <Compile Include="Assets\Fantasy Wooden GUI  Free\Script\Script\Task.cs" />
     <Compile Include="Assets\Fantasy Wooden GUI  Free\Script\SenceBack\CSenceBack.cs" />
     <Reference Include="UnityEditor.StandardEvents">
-      <HintPath>D:/DesignCopy/Design/Test6/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+      <HintPath>D:/DesignCopy-2019-4-18/Design/Test6/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>D:/DesignCopy/Design/Test6/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>D:/DesignCopy-2019-4-18/Design/Test6/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>D:/DesignCopy/Design/Test6/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>D:/DesignCopy-2019-4-18/Design/Test6/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>D:/DesignCopy/Design/Test6/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>D:/DesignCopy-2019-4-18/Design/Test6/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>F:/软件目录/Unity3D/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
