@@ -457,10 +457,10 @@ public class Chael_de_fer : Equipment
         this.Position = "Heads";
         this.ImagePath = "Res/equipment/5001.png";
         this.EquipmentInfo = @" 【装备名称】: 铁盔
-                                【装备等级】: 1
-                                【部位】: Heads
-                                【物防】: +30
-                                【血量】: +100";
+【装备等级】: 1
+【部位】: Heads
+【物防】: +30
+【血量】: +100";
     }
 }
 
@@ -483,13 +483,13 @@ public class GhostSword : Equipment
         this.ImagePath = "Res/equipment/5002.png";
         this.Position = "Weapon";
         this.EquipmentInfo = @" 【装备名称】: 伏魔刀
-                                【装备等级】: 1
-                                【部位】: Weapon
-                                【物攻】: +80
-                                【速度】: +10
-                                【物防】: +10
-                                【血量】: +50";
-    }
+【装备等级】: 1
+【部位】: Weapon
+【物攻】: +80
+【速度】: +10
+【物防】: +10
+【血量】: +50";
+}
 }
 
 //男一上装
@@ -511,11 +511,11 @@ public class BladeMail : Equipment
         this.ImagePath = "Res/equipment/5003.png";
         this.Position = "Top";
         this.EquipmentInfo = @" 【装备名称】: 刃甲
-                                【装备等级】: 1
-                                【部位】: Top
-                                【物攻】: +20
-                                【物防】: +100
-                                【血量】: +100";
+【装备等级】: 1
+【部位】: Top
+【物攻】: +20
+【物防】: +100
+【血量】: +100";
     }
 }
 
@@ -538,12 +538,12 @@ public class GoldenCrowCuish: Equipment
         this.ImagePath = "Res/equipment/5004.png";
         this.Position = "Bottom";
         this.EquipmentInfo = @" 【装备名称】: 金乌腿甲
-                                【装备等级】: 1
-                                【部位】: Bottom
-                                【速度】: +10
-                                【物防】: +60
-                                【血量】: +30";
-    }
+【装备等级】: 1
+【部位】: Bottom
+【速度】: +10
+【物防】: +60
+【血量】: +30";
+}
 }
 
 //男主一防具
@@ -565,13 +565,13 @@ public class SilverWristbands : Equipment
         this.ImagePath = "Res/equipment/5005.png";
         this.Position = "Armor";
         this.EquipmentInfo = @" 【装备名称】: 白银护腕
-                                【装备等级】: 1
-                                【部位】: Armor
-                                【物攻】: +20
-                                【速度】: +5
-                                【物防】: +10
-                                【血量】: +10";
-    }
+【装备等级】: 1
+【部位】: Armor
+【物攻】: +20
+【速度】: +5
+【物防】: +10
+【血量】: +10";
+}
 }
 
 //男一饰品
@@ -593,12 +593,12 @@ public class CedarwoodRing : Equipment
         this.ImagePath = "Res/equipment/5006.png";
         this.Position = "Accessorie";
         this.EquipmentInfo = @" 【装备名称】: 杉木戒指
-                                【装备等级】: 1
-                                【部位】: Accessorie
-                                【物防】: +30
-                                【法防】: +30
-                                【血量】: +30
-                                【蓝量】: +30";
+【装备等级】: 1
+【部位】: Accessorie
+【物防】: +30
+【法防】: +30
+【血量】: +30
+【蓝量】: +30";
     }
 }
 
@@ -621,12 +621,12 @@ public class PsionicScarf : Equipment
         this.ImagePath = "Res/equipment/5007.png";
         this.Position = "Heads";
         this.EquipmentInfo = @" 【装备名称】: 灵能头巾
-                                【装备等级】: 1
-                                【部位】: Heads
-                                【物攻】: +5
-                                【速度】: +10
-                                【物防】: +5
-                                【血量】: +10";
+【装备等级】: 1
+【部位】: Heads
+【物攻】: +5
+【速度】: +10
+【物防】: +5
+【血量】: +10";
     }
 }
 
@@ -649,11 +649,11 @@ public class LightSaber : Equipment
         this.ImagePath = "Res/equipment/5008.png";
         this.Position = "Weapon";
         this.EquipmentInfo = @" 【装备名称】: 光剑
-                                【装备等级】: 1
-                                【部位】: Weapon
-                                【物攻】: +30
-                                【速度】: +15
-                                【血量】: +50";
+【装备等级】: 1
+【部位】: Weapon
+【物攻】: +30
+【速度】: +15
+【血量】: +50";
     }
 }
 
@@ -676,13 +676,13 @@ public class ColouredGlazeVest : Equipment
         this.ImagePath = "Res/equipment/5009.png";
         this.Position = "Top";
         this.EquipmentInfo = @" 【装备名称】: 琉璃背心
-                                【装备等级】: 1
-                                【部位】: Top
-                                【速度】: +10
-                                【物防】: +30
-                                【法防】: +30
-                                【血量】: +40
-                                【蓝量】: +20";
+【装备等级】: 1
+【部位】: Top
+【速度】: +10
+【物防】: +30
+【法防】: +30
+【血量】: +40
+【蓝量】: +20";
     }
 }
 
@@ -705,11 +705,11 @@ public class SpiritWindPants : Equipment
         this.ImagePath = "Res/equipment/5010.png";
         this.Position = "Bottom";
         this.EquipmentInfo = @" 【装备名称】: 灵风裤
-                                【装备等级】: 1
-                                【部位】: Bottom
-                                【速度】: +20
-                                【物防】: +20
-                                【血量】: +30";
+【装备等级】: 1
+【部位】: Bottom
+【速度】: +20
+【物防】: +20
+【血量】: +30";
     }
 }
 
@@ -732,12 +732,12 @@ public class RubyKneeProtector : Equipment
         this.ImagePath = "Res/equipment/5011.png";
         this.Position = "Armor";
         this.EquipmentInfo = @" 【装备名称】: 红宝石护膝
-                                【装备等级】: 1
-                                【部位】: Armor
-                                【物攻】: +5
-                                【速度】: +15
-                                【物防】: +10
-                                【血量】: +10";
+【装备等级】: 1
+【部位】: Armor
+【物攻】: +5
+【速度】: +15
+【物防】: +10
+【血量】: +10";
     }
 }
 
@@ -760,9 +760,9 @@ public class AmberEssence : Equipment
         this.ImagePath = "Res/equipment/5012.png";
         this.Position = "Accessorie";
         this.EquipmentInfo = @" 【装备名称】: 琥珀精华
-                                【装备等级】: 1
-                                【部位】: Accessorie
-                                【速度】: +30";
+【装备等级】: 1
+【部位】: Accessorie
+【速度】: +30";
     }
 }
 
@@ -785,10 +785,10 @@ public class ArchmagesHat : Equipment
         this.ImagePath = "Res/equipment/5013.png";
         this.Position = "Heads";
         this.EquipmentInfo = @" 【装备名称】: 大法师之帽
-                                【装备等级】: 1
-                                【部位】: Heads
-                                【特攻】: +50
-                                【蓝量】: +100";
+【装备等级】: 1
+【部位】: Heads
+【特攻】: +50
+【蓝量】: +100";
     }
 }
 
@@ -811,10 +811,10 @@ public class FireDorje : Equipment
         this.ImagePath = "Res/equipment/5014.png";
         this.Position = "Weapon";
         this.EquipmentInfo = @" 【装备名称】: 火灵杖
-                                【装备等级】: 1
-                                【部位】: Weapon
-                                【特攻】: +100
-                                【蓝量】: +30";
+【装备等级】: 1
+【部位】: Weapon
+【特攻】: +100
+【蓝量】: +30";
     }
 }
 
@@ -837,12 +837,12 @@ public class WisdomCloak : Equipment
         this.ImagePath = "Res/equipment/5015.png";
         this.Position = "Top";
         this.EquipmentInfo = @" 【装备名称】: 智慧披风
-                                【装备等级】: 1
-                                【部位】: Top
-                                【特攻】: +10
-                                【特防】: +20
-                                【血量】: +30
-                                【蓝量】: +30";
+【装备等级】: 1
+【部位】: Top
+【特攻】: +10
+【特防】: +20
+【血量】: +30
+【蓝量】: +30";
     }
 }
 
@@ -865,10 +865,10 @@ public class SilkPants : Equipment
         this.ImagePath = "Res/equipment/5016.png";
         this.Position = "Bottom";
         this.EquipmentInfo = @" 【装备名称】: 蚕丝裤
-                                【装备等级】: 1
-                                【部位】: Bottom
-                                【物防】: +60
-                                【特防】: +60";
+【装备等级】: 1
+【部位】: Bottom
+【物防】: +60
+【特防】: +60";
     }
 }
 
@@ -891,10 +891,10 @@ public class SirenCloak : Equipment
         this.ImagePath = "Res/equipment/5017.png";
         this.Position = "Armor";
         this.EquipmentInfo = @" 【装备名称】: 魔女斗篷
-                                【装备等级】: 1
-                                【部位】: Armor
-                                【血量】: +80
-                                【蓝量】: +80";
+【装备等级】: 1
+【部位】: Armor
+【血量】: +80
+【蓝量】: +80";
     }
 }
 
@@ -917,15 +917,15 @@ public class StoneSage : Equipment
         this.ImagePath = "Res/equipment/5018.png";
         this.Position = "Accessorie";
         this.EquipmentInfo = @" 【装备名称】: 贤者之石
-                                【装备等级】: 1
-                                【部位】: Accessorie
-                                【特攻】: +10
-                                【物攻】: +10
-                                【速度】: +10
-                                【物防】: +10
-                                【特防】: +10
-                                【血量】: +10
-                                【蓝量】: +10";
+【装备等级】: 1
+【部位】: Accessorie
+【特攻】: +10
+【物攻】: +10
+【速度】: +10
+【物防】: +10
+【特防】: +10
+【血量】: +10
+【蓝量】: +10";
     }
 }
 
@@ -1077,7 +1077,7 @@ public class FleshPill : Product
         this.ImagePath = "Res/product/6001.png";
         this.ProductName = "血气丸";
         this.ProductInfo = @"【道具名称】: 血气丸
-                             【道具效果】: 为人物回复30%最大生命值 ";
+【道具效果】: 为人物回复30%最大生命值 ";
 
     }
 
@@ -1124,7 +1124,7 @@ public class SparklingDew : Product
         this.ImagePath = "Res/product/6002.png";
         this.ProductName = "凝神露";
         this.ProductInfo = @"【道具名称】: 凝神露
-                             【道具效果】: 为人物回复30%最大魔法值 ";
+【道具效果】: 为人物回复30%最大魔法值 ";
 
     }
 
@@ -1171,7 +1171,7 @@ public class RecoveryPotion : Product
         this.ImagePath = "Res/product/6003.png";
         this.ProductName = "恢复药水";
         this.ProductInfo = @"【道具名称】: 恢复药水
-                             【道具效果】: 每回合为人物回复15%最大生命值，持续3回合 ";
+【道具效果】: 每回合为人物回复15%最大生命值，持续3回合 ";
 
     }
 
@@ -1208,7 +1208,7 @@ public class ConcentrateGather : Product
         this.ImagePath = "Res/product/6004.png";
         this.ProductName = "凝神聚气散";
         this.ProductInfo = @"【道具名称】: 凝神聚气散
-                             【道具效果】: 每回合为人物回复15%最大魔法值，持续3回合 ";
+【道具效果】: 每回合为人物回复15%最大魔法值，持续3回合 ";
 
     }
 
@@ -1245,7 +1245,7 @@ public class ToughPotions : Product
         this.GoodLimitedNumber = 50;
         this.ProductName = "坚韧药水";
         this.ProductInfo = @"【道具名称】: 坚韧药水
-                             【道具效果】: 双抗提升50，持续2回合 ";
+【道具效果】: 双抗提升50，持续2回合 ";
 
     }
 
@@ -1283,7 +1283,7 @@ public class Amethyst : Product
         this.ImagePath = "Res/product/6006.png";
         this.ProductName = "神行符";
         this.ProductInfo = @"【道具名称】: 神行符
-                             【道具效果】: 速度20，持续2回合 ";
+【道具效果】: 速度20，持续2回合 ";
 
     }
 
@@ -1320,7 +1320,7 @@ public class CourageHorn : Product
         this.ImagePath = "Res/product/6007.png";
         this.ProductName = "勇气号角";
         this.ProductInfo = @"【道具名称】: 勇气号角
-                             【道具效果】: 双攻50，持续2回合 ";
+【道具效果】: 双攻50，持续2回合 ";
 
     }
 

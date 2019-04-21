@@ -227,14 +227,23 @@ public class GameControl{
         //大于等于1000的就是技能
         if (objID >= 1000)
         {
-            Debug.Log("______________"+ casterID.ToString()+" "+objID.ToString()+" "+ targetID.ToString());
+            Debug.Log("______________" + casterID.ToString() + " " + objID.ToString() + " " + targetID.ToString());
             Debug.Log(gameSence.allDict[casterID]);
-            Skill skill = gameSence.allDict[casterID].GetSkill(objID);
+            //是防御
+            if (objID == 1011)
+            {
+                order = new SkillUseStruct(casterID, objID, null);
+            }
+            else
+            {
+                Skill skill = gameSence.allDict[casterID].GetSkill(objID);
 
-            enemyIDList.Remove(targetID);
-            targetIDList = gameSence.GetRandomList(enemyIDList, skill.AttackCount - 1);
-            targetIDList.Insert(0, targetID);
-            order = new SkillUseStruct(casterID, skill.SkillID, targetIDList);
+                enemyIDList.Remove(targetID);
+                targetIDList = gameSence.GetRandomList(enemyIDList, skill.AttackCount - 1);
+                targetIDList.Insert(0, targetID);
+                order = new SkillUseStruct(casterID, skill.SkillID, targetIDList);
+            }
+            
         }
         else
         {

@@ -11,7 +11,7 @@ public class FightMonster
         //野猪(2-4)
         if (fightNumber == 1)
         {
-            int monsterNumber = Random.Range(2, 4);
+            int monsterNumber = Random.Range(2, 5);
             for (int i = 0; i < monsterNumber; i++)
             {
                 monsterList.Add(MonsterFactory(fightNumber*100+i,4));
@@ -20,7 +20,7 @@ public class FightMonster
         }//黑野猪(2-4)
         else if(fightNumber == 2)
         {
-            int monsterNumber = Random.Range(2, 4);
+            int monsterNumber = Random.Range(2, 5);
             for (int i = 0; i < monsterNumber; i++)
             {
                 monsterList.Add(MonsterFactory(fightNumber * 100 + i, 5));
@@ -32,7 +32,7 @@ public class FightMonster
         }//幽灵(2-4)
         else if (fightNumber == 4)
         {
-            int monsterNumber = Random.Range(2, 4);
+            int monsterNumber = Random.Range(2, 5);
             for (int i = 0; i < monsterNumber; i++)
             {
                 monsterList.Add(MonsterFactory(fightNumber * 100 + i,6));
@@ -40,7 +40,7 @@ public class FightMonster
         }//小恶魔(2-4)
         else if (fightNumber == 5)
         {
-            int monsterNumber = Random.Range(2, 4);
+            int monsterNumber = Random.Range(2, 5);
             for (int i = 0; i < monsterNumber; i++)
             {
                 monsterList.Add(MonsterFactory(fightNumber * 100 + i, 7));
@@ -50,7 +50,7 @@ public class FightMonster
         {
             for(int j = 0; j < 2; j++)
             {
-                int monsterNumber = Random.Range(1, 2);
+                int monsterNumber = Random.Range(1, 3);
                 for (int i = 0; i < monsterNumber; i++)
                 {
                     monsterList.Add(MonsterFactory(fightNumber * 100 + i+j, 8+j));
@@ -68,7 +68,7 @@ public class FightMonster
         }//魔狼（2-4）
         else if (fightNumber == 9)
         {
-            int monsterNumber = Random.Range(2, 4);
+            int monsterNumber = Random.Range(2, 5);
             for (int i = 0; i < monsterNumber; i++)
             {
                 monsterList.Add(MonsterFactory(fightNumber * 100 + i , 11));
@@ -76,7 +76,7 @@ public class FightMonster
         }//魔狼（2-4）龙1
         else if (fightNumber == 10)
         {
-            int monsterNumber = Random.Range(2, 4);
+            int monsterNumber = Random.Range(2, 5);
             for (int i = 0; i < monsterNumber; i++)
             {
                 monsterList.Add(MonsterFactory(fightNumber * 100 + i, 11));
