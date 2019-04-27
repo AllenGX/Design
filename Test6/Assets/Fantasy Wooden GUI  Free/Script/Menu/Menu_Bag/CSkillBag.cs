@@ -27,6 +27,7 @@ public class CSkillBag : MonoBehaviour
         {
             m_skills[nowi].SetActive(true);
             m_skills[nowi].GetComponent<CSkillUI>().m_skill = skill;
+            //Debug.Log(skill);
             m_skills[nowi].GetComponent<CSkillUI>().m_Icon.sprite = Resources.Load<Sprite>(skill.ImagePath.Split('.')[0]);
             nowi++;
             if (nowi == 18)

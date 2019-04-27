@@ -106,7 +106,7 @@ public class GameControl{
         
         this.round++;                                       //回合数+1
         startTime = Time.time;                              // 战斗回合结束重置计时
-        Debug.Log("this.startTime:" + startTime);
+        //Debug.Log("this.startTime:" + startTime);
         return 0;
 
         //for (int i = 0; i < this.gameInfo.Count; i++)
@@ -228,7 +228,7 @@ public class GameControl{
         if (objID >= 1000)
         {
             Debug.Log("______________" + casterID.ToString() + " " + objID.ToString() + " " + targetID.ToString());
-            Debug.Log(gameSence.allDict[casterID]);
+            //Debug.Log(gameSence.allDict[casterID]);
             //是防御
             if (objID == 1011)
             {
@@ -239,7 +239,7 @@ public class GameControl{
                 Skill skill = gameSence.allDict[casterID].GetSkill(objID);
 
                 enemyIDList.Remove(targetID);
-                targetIDList = gameSence.GetRandomList(enemyIDList, skill.AttackCount - 1);
+                targetIDList = gameSence.GetRandomList(enemyIDList, skill.TargetNumber - 1);
                 targetIDList.Insert(0, targetID);
                 order = new SkillUseStruct(casterID, skill.SkillID, targetIDList);
             }
@@ -288,9 +288,10 @@ public class GameControl{
 
     //执行指令列表
     public void ExcuteOrderList(){
-		//防御生效（效果是增加一个加防buff）
-		foreach(var order in this.orderList){	
-			if(order is SkillUseStruct)
+        //防御生效（效果是增加一个加防buff）
+        foreach (var order in this.orderList)
+        {
+            if (order is SkillUseStruct)
             {   //1011是防御
                 if (((SkillUseStruct)order).SkillID == 1011)
                 {
@@ -300,10 +301,10 @@ public class GameControl{
                     }
                 }
             }
-		}
+        }
 
-		//影响属性的buff优先生效
-		foreach(var order in orderList){
+        //影响属性的buff优先生效
+        foreach (var order in orderList){
 			if(!gameSence.allDict[order.CasterID].IsDie()){
 				gameSence.allDict[order.CasterID].EffectBuff(0);
 			}
@@ -314,59 +315,76 @@ public class GameControl{
 			if(!gameSence.allDict[person.PersonID].IsDie()){
                 //优先判定状态buff
                 Dictionary<int, int> injury=gameSence.allDict[person.PersonID].EffectBuff(1);
-                
+                List<List<GameInjury>> gameInjuries = new List<List<GameInjury>> { };
                 //存储buff伤害
                 //数据类型 casterPos    buffID  {{taegetPos,injury},只有一个}
-                foreach(int key in injury.Keys)
+                foreach (int key in injury.Keys)
                 {
-                    List<GameInjury> gameInjuries = new List<GameInjury> { };
+                    List<GameInjury> injuries = new List<GameInjury> { };
                     GameInjury gameInjury = new GameInjury(this.gameSence.GetPos(person.PersonID), injury[key]);
-                    gameInjuries.Add(gameInjury);
+                    injuries.Add(gameInjury);
+                    gameInjuries.Add(injuries);
                     this.SaveInfo(person.PersonID, key, gameInjuries);
                 }
                 
 
             }
             Order order =GetOrder(person.PersonID);
-			//执行指令
-			if(order!=null){
+            
+            //执行指令
+            if (order!=null){
 
                 int key=-1;
-                //执行目标集合存在死者	从新选定对象
-                if (!gameSence.IsAllAlive(order.TargetsIDList)){
-					order.TargetsIDList=gameSence.ReplaceMultipleTarget(order.TargetsIDList);
-				}
+
 				//执行攻击
 				if(!gameSence.allDict[order.CasterID].IsDie()){
 
-                    List<GameInjury> gameInjuries = new List<GameInjury> { };
+                    List<List<GameInjury>> gameInjuries = new List<List<GameInjury>> { };
+
                     if (order is SkillUseStruct) //如果是技能  便施放
-                    {   
-                        Skill skill = person.GetSkill(((SkillUseStruct)order).SkillID);
-                        key = skill.SkillID;
-                        for (int i = 0; i < skill.AttackCount; i++)
+                    {
+                        //不是防御的话
+                        if (((SkillUseStruct)order).SkillID != 1011)
                         {
-                            foreach (var targetID in order.TargetsIDList)
+                            //执行目标集合存在死者	从新选定对象
+                            if (!gameSence.IsAllAlive(order.TargetsIDList))
                             {
-                                int injury=gameSence.allDict[order.CasterID].UseSkill(((SkillUseStruct)order).SkillID, gameSence.allDict[targetID]);
-                                if (injury != 0)
+                                order.TargetsIDList = gameSence.ReplaceMultipleTarget(order.TargetsIDList);
+                            }
+                            Skill skill = person.GetSkill(((SkillUseStruct)order).SkillID);
+                            key = skill.SkillID;
+                            for (int i = 0; i < skill.AttackCount; i++)
+                            {
+                                List<GameInjury> injuries = new List<GameInjury> { };
+                                foreach (var targetID in order.TargetsIDList)
                                 {
-                                    GameInjury gameInjury = new GameInjury(this.gameSence.GetPos(targetID), injury);
-                                    gameInjuries.Add(gameInjury);
+                                    int injury = gameSence.allDict[order.CasterID].UseSkill(((SkillUseStruct)order).SkillID, gameSence.allDict[targetID]);
+                                    if (injury != 0)
+                                    {
+                                        GameInjury gameInjury = new GameInjury(this.gameSence.GetPos(targetID), injury);
+                                        injuries.Add(gameInjury);
+                                    }
                                 }
+                                gameInjuries.Add(injuries);
                             }
                         }
-                        
                     }
                     else if (order is ProductUseStruct)      //使用道具
                     {
+                        //执行目标集合存在死者	从新选定对象
+                        if (!gameSence.IsAllAlive(order.TargetsIDList))
+                        {
+                            order.TargetsIDList = gameSence.ReplaceMultipleTarget(order.TargetsIDList);
+                        }
                         key = ((ProductUseStruct)order).ProductPos;
+                        List<GameInjury> injuries = new List<GameInjury> { };
                         foreach (var targetID in order.TargetsIDList)
                         {
                             int injury=gameSence.allDict[order.CasterID].UseProduct((Product)this.gameSence.backPack.GetGood(key), gameSence.allDict[targetID]);
                             GameInjury gameInjury = new GameInjury(this.gameSence.GetPos(targetID), injury);
-                            gameInjuries.Add(gameInjury);
-                        }    
+                            injuries.Add(gameInjury);
+                        }
+                        gameInjuries.Add(injuries);
                     }
                     if (key != -1)
                     {
@@ -379,7 +397,7 @@ public class GameControl{
 
 
     //保存一条数据
-    public void SaveInfo(int casterID,int objID,List<GameInjury> injury)
+    public void SaveInfo(int casterID,int objID, List<List<GameInjury>> injury)
     {
         GameInfo gameInfo = new GameInfo();
         gameInfo.CasterPos =this.gameSence.GetPos(casterID);

@@ -34,12 +34,12 @@ public class CSenceBack : MonoBehaviour
     int GetNearNpcID()
     {
         int l = m_Npcs.Length;
-        Vector3 player_postion = m_Player.transform.position;
+        Vector3 player_postion = new Vector3(m_Player.transform.position.x, m_Player.transform.position.y, 0);
         float iMinDistance = 999999;
         int id = 0;
         for (int i = 0; i < l; i++)
         {
-            Vector3 npc_position = m_Npcs[i].transform.position;
+            Vector3 npc_position = new Vector3(m_Npcs[i].transform.position.x, m_Npcs[i].transform.position.y, 0);
             float dis = Vector3.Distance(player_postion, npc_position);
             if (dis < iMinDistance)
             {
@@ -57,8 +57,8 @@ public class CSenceBack : MonoBehaviour
         if (Input.GetKeyDown("j"))
         {
             int iID = GetNearNpcID();
-            Vector3 player_postion = m_Player.transform.position;
-            Vector3 npc_position = m_Npcs[iID].transform.position;
+            Vector3 player_postion = new Vector3(m_Player.transform.position.x, m_Player.transform.position.y, 0);
+            Vector3 npc_position = new Vector3(m_Npcs[iID].transform.position.x, m_Npcs[iID].transform.position.y, 0);
             //Debug.Log(Vector3.Distance(player_postion, npc_position));
             if (Vector3.Distance(player_postion, npc_position) < 1.5)               //最近距离1.5时对话
             {

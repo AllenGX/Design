@@ -89,7 +89,7 @@ public class GameScene{
         //{
         //    enemyPositionDict[i] = null;
         //}
-        //backPack = CPlayerData.pd.bag;
+        backPack = CPlayerData.pd.bag;
     }
 
 

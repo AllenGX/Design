@@ -52,6 +52,7 @@ public class PlayAni : MonoBehaviour {
 
     IEnumerator PlayerAni(AniInfo aniInfo,GameObject gameAni)
     {
+        //Debug.Log("bofangdonghua**********************************************************************");
         Image image= gameAni.GetComponent<Image>();
         for (int i = 1; i <= aniInfo.AniCount; i++)
         {

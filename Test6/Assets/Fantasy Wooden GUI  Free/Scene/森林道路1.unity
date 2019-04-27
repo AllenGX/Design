@@ -1527,6 +1527,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  m_Head: {fileID: 0}
 --- !u!114 &869492183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2349,7 +2350,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1314332457}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.89, y: -1.13, z: 1}
+  m_LocalPosition: {x: -1.73, y: -1.29, z: 1}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 1735432035}
@@ -3446,7 +3447,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 7.342621, y: 2.0812573}
+  m_Offset: {x: 7.190591, y: 2.0812573}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3457,7 +3458,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 9.272316, y: 8.831172}
+  m_Size: {x: 8.968256, y: 8.831172}
   m_EdgeRadius: 0
 --- !u!50 &1855774637
 Rigidbody2D:
@@ -3568,7 +3569,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 9.961707, y: 1.8883777}
+  m_Offset: {x: 9.837319, y: 1.8883777}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3579,7 +3580,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 14.5104885, y: 8.445413}
+  m_Size: {x: 14.759265, y: 8.445413}
   m_EdgeRadius: 0
 --- !u!50 &1957823041
 Rigidbody2D:
@@ -3858,6 +3859,8 @@ MonoBehaviour:
   m_HitDlgText: {fileID: 0}
   m_MenuButton: {fileID: 0}
   m_BagUI: {fileID: 0}
+  m_BattleUI: {fileID: 0}
+  m_ButtonMsg: {fileID: 0}
 --- !u!224 &2044707603
 RectTransform:
   m_ObjectHideFlags: 0

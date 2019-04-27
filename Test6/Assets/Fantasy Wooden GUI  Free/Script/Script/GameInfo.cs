@@ -46,7 +46,7 @@ public class GameInjury
 public class GameInfo {
     private int casterPos;
     private int objID;
-    private List<GameInjury> injuryInfo = new List<GameInjury> { };
+    private List<List<GameInjury>> injuryInfo = new List<List<GameInjury>> { };
     public GameInfo()
     {
     }
@@ -56,7 +56,10 @@ public class GameInfo {
         Debug.Log("casterPos  " + casterPos + "objID  " + objID);
         for(int i = 0; i < this.injuryInfo.Count; i++)
         {
-            Debug.Log("injuryInfo[i]  " + injuryInfo[i].TargetPos+"   "+ injuryInfo[i].Injuty);
+            for (int j = 0; j < this.injuryInfo[i].Count; j++)
+            {
+                Debug.Log("injuryInfo[i]  " + injuryInfo[i][j].TargetPos + "   " + injuryInfo[i][j].Injuty);
+            }
         }
     }
 
@@ -86,7 +89,7 @@ public class GameInfo {
         }
     }
 
-    public List<GameInjury> InjuryInfo
+    public List<List<GameInjury>> InjuryInfo
     {
         get
         {

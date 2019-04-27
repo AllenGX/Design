@@ -27,28 +27,45 @@ public class NFlyBlood : MonoBehaviour {
     }
 
 
-    IEnumerator FadeOut()
-    {
-        for (int i = 255; i > 0; i-=3)
-        {
-            t.color = new Color(1, 0, 0, ((float)i) / 255);
-            yield return new WaitForSeconds(0.001f);
-        }
-        StopCoroutine(FadeOut());
-    }
+    //IEnumerator FadeOut()
+    //{
+    //    for (int i = 255; i > 0; i-=3)
+    //    {
+    //        t.color = new Color(1, 0, 0, ((float)i) / 255);
+    //        yield return new WaitForSeconds(0.001f);
+    //    }
+    //    StopCoroutine(FadeOut());
+
+    //}
+
+    //IEnumerator UP()
+    //{
+
+    //    StartCoroutine(FadeOut());
+    //    t.color = new Color(1, 0, 0, 1);
+    //    for (int i = 0; i<=10; i++)
+    //    {
+    //        game.transform.localPosition = new Vector3(0, 30+i, 0);
+    //        yield return new WaitForSeconds(0.1f);
+    //    }
+    //    StopCoroutine(UP());
+    //    Destroy(game);
+    //}
+
 
     IEnumerator UP()
     {
-        StartCoroutine(FadeOut());
-        for (int i = 0; i<=10; i++)
+        float j = 0f;
+        for (int i = 255; i > 0; i -= 3)
         {
-            game.transform.localPosition = new Vector3(0, 30+i, 0);
-            yield return new WaitForSeconds(0.1f);
+            t.color = new Color(1, 0, 0, ((float)i) / 255);
+            j += 0.1f;
+            game.transform.localPosition = new Vector3(0, 30 + j, 0);
+            yield return new WaitForSeconds(0.001f);
         }
         StopCoroutine(UP());
         Destroy(game);
     }
-
 
 
     // Update is called once per frame
@@ -61,6 +78,7 @@ public class NFlyBlood : MonoBehaviour {
     //外部调用函数 传入伤害值即显示受伤血量
     public void Play(int Dmg)
     {
+        Debug.Log("Instantiate---------------------------------");
         game = Instantiate(games);
 
         game.transform.parent = gameObject.transform;
@@ -70,7 +88,5 @@ public class NFlyBlood : MonoBehaviour {
         t.text = Dmg.ToString();
         t.color = new Color(255, 0, 0, 0);
         StartCoroutine(UP());
-        
-        //
     }
 }

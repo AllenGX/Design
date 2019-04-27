@@ -145,33 +145,49 @@ public class CBattleUI : MonoBehaviour
                     m_AniPlay.Clear();
                     m_IsPlay = true;
                     float now = 0f;
-                    m_AniStartTime = Time.time;         
+                    m_AniStartTime = Time.time;
                     foreach (GameInfo info in gameControl.gameInfo)         //计算时间
                     {
-                        //info.PrintInfo();
-                        int ObjID = info.ObjID;
-
-                        int frame = GetFrame(ObjID);                        //技能帧数获得，还没有写
+                        info.PrintInfo();
+                        int ObjID = info.ObjID;              //技能帧数获得，还没有写
+                   
+                        AniFactory af = new AniFactory();
+                        //Debug.Log(af.ToString() + " " + ObjID);
+                        //Debug.Log(af.aniDicts.ToString());
+                        Dictionary<string, List<string>> nowSkillPlay = af.aniDicts[ObjID];
+                        
+                        //Debug.Log(nowSkillPlay);
+                        if (nowSkillPlay == null)
+                            continue;
+                        foreach (string skillpath in nowSkillPlay["我方"])
+                        {
+                            m_AniPlay.Add(now, new AniInfo(info.CasterPos, 0, skillpath));      //技能播放名字获得，还没有写
+                            now += 0.05f * 12;
+                        }
                         for (int i = 0; i < info.InjuryInfo.Count; i++)
                         {
-                            //Debug.Log("injuryInfo[i]  " + info.InjuryInfo[i].TargetPos + "   " + info.InjuryInfo[i].Injuty);
-                            if(i == 0)
+                            for (int j=0;j< info.InjuryInfo[i].Count; j++)
                             {
-                                m_AniPlay.Add(now, new AniInfo(info.CasterPos, info.InjuryInfo[i].TargetPos, "临危不惧"));      //技能播放名字获得，还没有写
-                                now += 0.05f * frame;
-
-                                m_AniPlay.Add(now, new AniInfo(info.CasterPos, info.InjuryInfo[i].TargetPos, "临危不惧攻击"));
-                                now += 0.05f * frame;
-                                
-                                m_FlyBloodPlay.Add(now, info.InjuryInfo[i]);
-                                now += 1f;
+                                foreach (string skillpath in af.aniDicts[ObjID]["敌方"])
+                                {
+                                    m_AniPlay.Add(now, new AniInfo(info.CasterPos, info.InjuryInfo[i][j].TargetPos, skillpath));      //技能播放名字获得，还没有写
+                                    now += 0.05f;
+                                }
+                                m_FlyBloodPlay.Add(now, info.InjuryInfo[i][j]);
                             }
-                            else
-                            {
-                                m_FlyBloodPlay.Add(now, info.InjuryInfo[i]);
-                                now += 1f;
-                            }
+                            now += 1.5f;
                         }
+                        now += 0.05f * 12;
+                        //for (int i = 0; i < info.InjuryInfo.Count; i++)
+                        //{
+                        //    for (int j = 0; j < info.InjuryInfo[i].Count; j++)
+                        //    {
+                        //        m_FlyBloodPlay.Add(now, info.InjuryInfo[i][j]);
+                        //        now += 0.05f;
+                        //    }
+                        //    now += 1f;
+                        //}
+                        //now += 1f;
                     }
                 }
             }
@@ -186,8 +202,8 @@ public class CBattleUI : MonoBehaviour
                 {
                     if(key < Time.time - m_AniStartTime)
                     {
-                        FlyBloodPlay(m_FlyBloodPlay[key].TargetPos, m_FlyBloodPlay[key].Injuty);
                         Debug.Log(m_FlyBloodPlay[key].TargetPos.ToString() + " " + m_FlyBloodPlay[key].Injuty.ToString());
+                        FlyBloodPlay(m_FlyBloodPlay[key].TargetPos, m_FlyBloodPlay[key].Injuty);
                         tamplist.Add(key);
                         
                     }
@@ -197,8 +213,8 @@ public class CBattleUI : MonoBehaviour
                 {
                     if (key < Time.time - m_AniStartTime)
                     {
+                        Debug.Log(m_AniPlay[key].Casterlocal.ToString() + " " + m_AniPlay[key].Targetlocal.ToString() + " " + m_AniPlay[key].AniName1.ToString());
                         PlayAni(m_AniPlay[key].Casterlocal, m_AniPlay[key].Targetlocal, m_AniPlay[key].AniName1);
-                        Debug.Log(m_AniPlay[key].Casterlocal.ToString()+" "+m_AniPlay[key].Targetlocal.ToString() + " " + m_AniPlay[key].AniName1.ToString());
                         tamplist.Add(key);
                     }
                 }
@@ -262,7 +278,7 @@ public class CBattleUI : MonoBehaviour
         }
         else if(iNum == 2)
         {
-            Debug.Log("NowPlayer" + m_NowPlayerID);
+            //Debug.Log("NowPlayer" + m_NowPlayerID);
             m_NowInputNum = 1;
             m_InputSkillUI.GetComponent<CSkillBag>().Refresh(m_NowPlayerID);
             m_InputTypeUI.SetActive(false);
@@ -321,7 +337,7 @@ public class CBattleUI : MonoBehaviour
         else if (iNum == 1)
         {
             Debug.Log(m_NowPlayerID + " def ");
-            return gameControl.GetInput(0, m_NowPlayerID, 0, ref startTime);
+            return gameControl.GetInput(1011, m_NowPlayerID, 0, ref startTime);
         }
         else if (iNum == 2)
         {
@@ -355,11 +371,6 @@ public class CBattleUI : MonoBehaviour
     {
         //Debug.Log("---------" + casterlocal.ToString() + "-----------" + targetlocal.ToString() + AniName);
         CDontDestroyObj3.dd.GetComponent<PlayAni>().PlayerAniObj(m_LocalPath[casterlocal], m_LocalPath[targetlocal], AniName, speed);
-    }
-
-    public int GetFrame(int objID)
-    {
-        return 9;
     }
 
     public void FlyBloodPlay(int iLocal, int iDmg)

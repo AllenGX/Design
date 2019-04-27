@@ -29,7 +29,7 @@ public class CTransferPoint : CNpc
     {
         //CMenuObject.mo.m_Dlg.]
         Debug.Log("Target");
-        CPlayerData.pd.player_position = Target.transform.position;
+        CPlayerData.pd.player_position = new Vector3(Target.transform.position.x, Target.transform.position.y, 0);
         Application.LoadLevelAsync(m_ToSenceName);
 
     }
