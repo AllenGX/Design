@@ -9,6 +9,8 @@ public class Person{
 
     public List<Buff> buffs;                //buff 数据 {buff1,buff2,buff3....}
     private int personID;					//ID
+    private string personName;              //人物名称
+    private string attackAniPath;           //战斗动画路径
 	private int specialAttack;				//特攻
 	private int physicsAttack;  			//物攻
 	private int speed;  					//速度
@@ -32,10 +34,9 @@ public class Person{
     public SkillFactory skillFactory;       //技能工厂
     private bool attackIsOk=true;           //是否能进行攻击
 
-
-    private Dictionary<string, Equipment> inventory; //装备,蓝
-                                                     // head , leftHand , rightHand , leftFoot , rightFoot , chest 胸部...
-                                                     // 数据 {{"head",equipment1},{"leftHand",equipment1},{"rightHand",equipment1},{"leftFoot",equipment1},{"rightFoot",equipment1}....}
+    private Dictionary<string, Equipment> inventory; //装备栏
+                                                     // 头部，上装，下装，武器，防具，饰品
+                                                     // 数据 {{"Heads",equipment1},{"Top",equipment1},{"Bottom",equipment1},{"Weapon",equipment1},{"Armor",equipment1},{"Accessorie",equipment1}}
 
     private List<Skill> skills;     //技能列表
                                     // 数据 {skill1,skill2,skill3...}
@@ -43,11 +44,13 @@ public class Person{
 
 
     //初始化
-    public Person(int personID,int blood,int blue, int specialAttack,int physicsAttack,int speed,int physicsDefense,int specialDefense,int lv,int currentExperience,int bloodGrowth,int specialAttackGrowth,int physicsAttackGrowth,int speedGrowth,int physicsDefenseGrowth,int specialDefenseGrowth,int blueGrowth){
+    public Person(int personID,string personName,int blood,int blue, int specialAttack,int physicsAttack,int speed,int physicsDefense,int specialDefense,int lv,int currentExperience,int bloodGrowth,int specialAttackGrowth,int physicsAttackGrowth,int speedGrowth,int physicsDefenseGrowth,int specialDefenseGrowth,int blueGrowth,string attackAniPath)
+    {
         //buffs
         this.buffs = new List<Buff> { };
         this.skills = new List<Skill> { };
         this.personID = personID;
+        this.personName = personName;
         this.blood = blood;
         this.bloodMax=blood;
         this.blue=blue;
@@ -67,6 +70,7 @@ public class Person{
         this.lv = lv;
         this.currentExperience = currentExperience;
         this.experienceMax = CalculateExperienceMax();      //级经验上限公式待定....
+        this.attackAniPath = attackAniPath;
         this.buffFactory = new BuffFactory();
         this.skillFactory = new SkillFactory();
         // 添加技能
@@ -76,21 +80,24 @@ public class Person{
 
         //初始化装备
         this.inventory = new Dictionary<string, Equipment> {
-            { "head",null },
-            { "leftHand",null },
-            { "rightHand",null },
-            { "leftFoot",null },
-            { "rightFoot",null },
-            { "chest",null },};
+            { "Heads",null },
+            { "Top",null },
+            { "Bottom",null },
+            { "Weapon",null },
+            { "Armor",null },
+            { "Accessorie",null },};
 
         //待添加...
     }
 
-
+    //防御
+    // 添加一个防御buff
     public void Defend(){
         this.AddBuff(this.buffFactory.CreateBuff("防御"));
     }
 
+    //添加buff
+    // params Buff : 需要添加的buff
     public void AddBuff(Buff buff){
         int len=this.buffs.Count;
         for(int i=0;i<len;i++){
@@ -102,8 +109,13 @@ public class Person{
         this.buffs.Add(buff);
     }
 
-    public void EffectBuff(int flag){
-        if(flag==0){
+    //buff生效      
+    //  0 影响状态的生效
+    //  1  照成伤害的生效
+    //  -1  全生效
+    public Dictionary<int, int> EffectBuff(int flag){
+        Dictionary<int, int> injuryInfo = new Dictionary<int, int> { };
+        if (flag==0){
             foreach(var buff in buffs){
                 if(!buff.IsEffective){
                     buff.InfluenceAttribute(this);
@@ -112,7 +124,11 @@ public class Person{
         }else if(flag==1){
             foreach(var buff in buffs){
                 if(!buff.IsEffective){
-                    buff.Damage(this);
+                    int injury = buff.Damage(this);
+                    if (injury != 0)
+                    {
+                        injuryInfo.Add(buff.BuffID, injury);
+                    }
                 }
             }
         }else if(flag==-1){
@@ -123,9 +139,10 @@ public class Person{
                 }
             }
         }
+        return injuryInfo;
     }
 
-    //级,算当前级经验上限
+    //计算当前级经验上限
     public int CalculateExperienceMax()
     {
         //公式待定
@@ -133,7 +150,9 @@ public class Person{
         return 1;
     }
 
-    //升级
+    // 升级
+    // 增加属性
+    // 结算经验
     public void LvUp()
     {
         //提升属性
@@ -164,6 +183,8 @@ public class Person{
     }
 
     //得到技能
+    // params skillID : 通过ID得到技能
+    // return Skill  : 技能对象
     public Skill GetSkill(int skillID)
     {
         foreach (var skill in this.skills)
@@ -179,17 +200,21 @@ public class Person{
     }
 
     //施放技能（普攻、防御都是技能）
-    public void UseSkill(int skillID,Person target)
+    // 执行技能得Use方法
+    //  params  skillID : 技能ID Person : 目标对象
+    public int UseSkill(int skillID,Person target)
     {
         Skill skill = this.GetSkill(skillID);
         if (skill != null)
         {
             //施放技能
-            skill.Use(this,target);
+            int injury= skill.Use(this, target);
+            return injury;
         }
         else
         {
             Debug.Log("UseSkill-----> no skill");
+            return 0;
         }
     }
 
@@ -234,24 +259,32 @@ public class Person{
     }
 
 
-
     //装备栏
     public Dictionary<string, Equipment> GetInventory()
     {
         return this.inventory;
     }
-    //装备物品
-    public void SetInventory(string pos, Equipment eq)
+
+    //装备物品（战斗外）
+    public Equipment SetInventory(Equipment eq)
     {
+        Equipment equipment = null;
         //等级达标
         if (eq.Lv <= this.lv)
         {
             //存在该部位装备槽
-            if (this.inventory.ContainsKey(pos))
+            if (this.inventory.ContainsKey(eq.Position))
             {
-                this.inventory[pos] = eq;
-                //更改属性
-                eq.Use(this);
+                //已经有物品了
+                if (this.inventory[eq.Position]!=null)
+                {   //卸下
+                    Equipment wearEQ = this.inventory[eq.Position];
+                    wearEQ.Discharge(this);
+                    equipment = wearEQ;
+                }
+                //装上
+                this.inventory[eq.Position] = eq;
+                eq.UseItem(this);
             }
             else
             {
@@ -262,26 +295,39 @@ public class Person{
         {
             Debug.Log("SetInventory-----> lv is low");
         }
+        return equipment;
     }
+
     //移除装备
     public Equipment RemoveInventory(string pos)
     {
+        Equipment eq = null;
         //存在该部位装备槽
         if (this.inventory.ContainsKey(pos))
         {
-            Equipment eq = this.inventory[pos];
+             eq= this.inventory[pos];
             //更改属性
             eq.Discharge(this);
             this.inventory[pos] = null;
-            return eq;
         }
         else
         {
             Debug.Log("RemoveInventory-----> no 装备物品");
-            return null;
         }
+        return eq;
     }
 
+    //使用道具(战斗外)
+    public void UseProduct(Product p)
+    {
+        p.UseItem(this);
+    }
+
+    //使用道具(战斗时)
+    public int UseProduct(Product p,Person target)
+    {
+        return p.Use(this, target);
+    }
 
 
     //属性的get，set
@@ -546,6 +592,30 @@ public class Person{
         }
     }
 
+    public string PersonName
+    {
+        get
+        {
+            return personName;
+        }
+        set
+        {
+            personName = value;
+        }
+    }
+
+    public string AttackAniPath
+    {
+        get
+        {
+            return attackAniPath;
+        }
+        set
+        {
+            attackAniPath = value;
+        }
+    }
+
     public bool AttackIsOk
     {
         get
@@ -559,14 +629,18 @@ public class Person{
         }
     }
 
+    public Dictionary<string, Equipment> Inventory
+    {
+        get
+        {
+            return inventory;
+        }
 
+        set
+        {
+            inventory = value;
+        }
+    }
 
-
-
-
-
-
-	
-	
 
 }

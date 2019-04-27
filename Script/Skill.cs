@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 // ID  :技能名称        方法名                          技能类型      固伤     倍率    耗蓝      攻击个数        攻击段数      buff
+// 1011  :防御            DefenedSkill                       -1           0       0f      0           0               0           防御提升buff
 // 1000:无操作          InactionSkill                      -1           0       0f      0           0               0           无
 // 1001:普通攻击        NormalAttackSkill                   1           0       1f      0           1               1           无   
 // 1002:无限剑制        UnlimitedBladeWorksSkill            1           0       1.3f    30          4               1           减速buff
@@ -36,6 +37,7 @@ public class SkillFactory{
             { "瞬劈",1008},
             { "生死不觉",1009},
             { "临危不惧",1010},
+            { "防御",1011},
             // 敌方技能
             { "撕咬",3001},
             { "摆尾",3002},
@@ -120,6 +122,7 @@ public class Skill{
     private int targetNumber;		    //目标数目
     private int attackCount;            //攻击次数
     private string skillInfo;           //技能信息
+    private string imagePath;           //图片路径
 
     public Skill()
     {
@@ -132,10 +135,12 @@ public class Skill{
         this.skillName = "技能基类";
         this.targetNumber = 0;
         this.attackCount = 0;
+        this.skillInfo = "无";
     }
     //技能施放
-    public virtual void Use(Person caster,Person target)
+    public virtual int Use(Person caster,Person target)
     {
+        return 0;
     }
 
     public int SkillType
@@ -254,6 +259,19 @@ public class Skill{
             skillInfo = value;
         }
     }
+
+    public string ImagePath
+    {
+        get
+        {
+            return imagePath;
+        }
+
+        set
+        {
+            imagePath = value;
+        }
+    }
 }
 
 //无操作
@@ -268,11 +286,37 @@ public class InactionSkill : Skill {
         this.SkillName = "无操作";
         this.TargetNumber = 0;
         this.AttackCount = 0;
+        this.SkillInfo = "不进行任何操作";
+        this.ImagePath = "";
     }
 
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
         // not do anything
+        return 0;
+    }
+}
+
+//防御
+public class DefenedSkill : Skill
+{
+    public DefenedSkill()
+    {
+        this.SkillType = -1;
+        this.SkillID = 1011;
+        this.Power = 0;
+        this.Multiple = 0;
+        this.CostBlue = 0;
+        this.SkillName = "防御";
+        this.TargetNumber = 0;
+        this.AttackCount = 0;
+        this.SkillInfo = "防御，防御提升";
+        this.ImagePath = "";
+    }
+    public override int Use(Person caster, Person target)
+    {
+        caster.Defend();
+        return 0;
     }
 }
 
@@ -287,10 +331,18 @@ public class NormalAttackSkill:Skill{
         this.SkillName = "普通攻击";
         this.TargetNumber = 1;
         this.AttackCount = 1;
+        this.ImagePath = "Res/skill/1001.png";
+        this.SkillInfo = @"【技能名称】: 普通攻击
+                           【技能蓝耗】: 0
+                           【技能加成】: 1.0
+                           【技能固伤】: 0
+                           【攻击数目】: 1
+                           【攻击段数】: 1
+                           【技能信息】: 进行一次普通攻击，造成少量物理伤害";
     }
 
     //技能施放
-    public override void Use(Person caster,Person target)
+    public override int Use(Person caster,Person target)
     {   
         int injury=Mathf.Max((int)(this.Multiple* caster.PhysicsAttack - (0.3 * target.PhysicsDefense)) + this.Power, 1);
         if (target.Blood > injury) {
@@ -300,6 +352,7 @@ public class NormalAttackSkill:Skill{
         {
             target.Blood = 0;
         }
+        return -injury;
     }
 }
 
@@ -316,15 +369,24 @@ public class UnlimitedBladeWorksSkill : Skill
         this.SkillName = "无限剑制";
         this.TargetNumber = 4;
         this.AttackCount = 1;
+        this.ImagePath = "Res/skill/1002.png";
+        this.SkillInfo = @"【技能名称】: 无限剑制
+                           【技能蓝耗】: 30
+                           【技能加成】: 1.3
+                           【技能固伤】: 0
+                           【攻击数目】: 4
+                           【攻击段数】: 1
+                           【技能信息】: 对敌方4个单位造成物理伤害,并减速1回合";
     }
 
     //技能施放
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
 
         if (caster.Blue < this.CostBlue)
         {
             Debug.Log("blue is not able");
+            return 0;
         }
         else
         {
@@ -339,6 +401,7 @@ public class UnlimitedBladeWorksSkill : Skill
             {
                 target.Blood = 0;
             }
+            return -injury;
         }
         
     }
@@ -350,22 +413,31 @@ public class SixPulseExcaliburSkill : Skill
     public SixPulseExcaliburSkill()
     {
         this.SkillType = 1;
-        this.SkillID = 1001;
+        this.SkillID = 1003;
         this.Power = 0;
         this.Multiple = 1.7f;
         this.CostBlue = 20;
         this.SkillName = "六脉神剑";
         this.TargetNumber = 2;
         this.AttackCount = 1;
+        this.ImagePath = "Res/skill/1003.png";
+        this.SkillInfo = @"【技能名称】: 无限剑制
+                           【技能蓝耗】: 20
+                           【技能加成】: 1.7
+                           【技能固伤】: 0
+                           【攻击数目】: 2
+                           【攻击段数】: 1
+                           【技能信息】: 对敌方两个单位造成较高物理伤害";
     }
 
     //技能施放
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
 
         if (caster.Blue < this.CostBlue)
         {
             Debug.Log("blue is not able");
+            return 0;
         }
         else
         {
@@ -379,6 +451,7 @@ public class SixPulseExcaliburSkill : Skill
             {
                 target.Blood = 0;
             }
+            return -injury;
         }
 
     }
@@ -397,15 +470,25 @@ public class EightDroughtLiuheSkill : Skill
         this.SkillName = "八荒六合";
         this.TargetNumber = 1;
         this.AttackCount = 1;
+        this.ImagePath = "Res/skill/1004.png";
+        this.SkillInfo = @"【技能名称】: 八荒六合
+                           【技能蓝耗】: 25
+                           【技能加成】: 2.5
+                           【技能固伤】: 0
+                           【攻击数目】: 1
+                           【攻击段数】: 1
+                           【技能信息】: 对敌方单体造成较高物理伤害";
+
     }
 
     //技能施放
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
 
         if (caster.Blue < this.CostBlue)
         {
             Debug.Log("blue is not able");
+            return 0;
         }
         else
         {
@@ -419,6 +502,7 @@ public class EightDroughtLiuheSkill : Skill
             {
                 target.Blood = 0;
             }
+            return -injury;
         }
 
     }
@@ -437,15 +521,24 @@ public class BigBallFireSkill : Skill
         this.SkillName = "大火球";
         this.TargetNumber = 1;
         this.AttackCount = 1;
+        this.ImagePath = "Res/skill/1005.png";
+        this.SkillInfo = @"【技能名称】: 大火球
+                           【技能蓝耗】: 15
+                           【技能加成】: 1.7
+                           【技能固伤】: 10
+                           【攻击数目】: 1
+                           【攻击段数】: 1
+                           【技能信息】: 对敌方单体造成较高魔法伤害";
     }
 
     //技能施放
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
 
         if (caster.Blue < this.CostBlue)
         {
             Debug.Log("blue is not able");
+            return 0;
         }
         else
         {
@@ -459,6 +552,7 @@ public class BigBallFireSkill : Skill
             {
                 target.Blood = 0;
             }
+            return -injury;
         }
 
     }
@@ -477,20 +571,29 @@ public class LavaBurstSkill : Skill
         this.SkillName = "岩浆爆破";
         this.TargetNumber = 1;
         this.AttackCount = 3;
+        this.ImagePath = "Res/skill/1006.png";
+        this.SkillInfo = @"【技能名称】: 岩浆爆破
+                           【技能蓝耗】: 60
+                           【技能加成】: 1.3
+                           【技能固伤】: 0
+                           【攻击数目】: 1
+                           【攻击段数】: 3
+                           【技能信息】: 消耗大量法力，对敌方单体造成3段较高魔法伤害";
     }
 
     //技能施放
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
 
         if (caster.Blue < this.CostBlue)
         {
             Debug.Log("blue is not able");
+            return 0;
         }
         else
         {
             caster.Blue -= this.CostBlue;
-            int injury = Mathf.Max((int)(this.Multiple * caster.SpecialAttack - (0.3 * target.SpecialDefense)) + this.Power, 1);
+            int injury = Mathf.Max((int)((this.Multiple * caster.SpecialAttack - (0.3 * target.SpecialDefense))) + this.Power, 1);
             if (target.Blood > injury)
             {
                 target.Blood -= injury;
@@ -499,6 +602,7 @@ public class LavaBurstSkill : Skill
             {
                 target.Blood = 0;
             }
+            return -injury;
         }
 
     }
@@ -517,15 +621,24 @@ public class FirestormSkill : Skill
         this.SkillName = "烈焰风暴";
         this.TargetNumber = 3;
         this.AttackCount = 1;
+        this.ImagePath = "Res/skill/1007.png";
+        this.SkillInfo = @"【技能名称】: 烈焰风暴
+                           【技能蓝耗】: 60
+                           【技能加成】: 2
+                           【技能固伤】: 0
+                           【攻击数目】: 3
+                           【攻击段数】: 1
+                           【技能信息】: 消耗大量法力，对敌方3个单位较高魔法伤害，并添加2回合灼烧buff";
     }
 
     //技能施放
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
 
         if (caster.Blue < this.CostBlue)
         {
             Debug.Log("blue is not able");
+            return 0;
         }
         else
         {
@@ -540,6 +653,7 @@ public class FirestormSkill : Skill
             {
                 target.Blood = 0;
             }
+            return -injury;
         }
 
     }
@@ -558,15 +672,24 @@ public class TransientChopSkill : Skill
         this.SkillName = "瞬劈";
         this.TargetNumber = 1;
         this.AttackCount = 1;
+        this.ImagePath = "Res/skill/1008.png";
+        this.SkillInfo = @"【技能名称】: 瞬劈
+                           【技能蓝耗】: 5
+                           【技能加成】: 1.5
+                           【技能固伤】: 0
+                           【攻击数目】: 1
+                           【攻击段数】: 1
+                           【技能信息】: 对敌方单体造成少量物理伤害";
     }
 
     //技能施放
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
 
         if (caster.Blue < this.CostBlue)
         {
             Debug.Log("blue is not able");
+            return 0;
         }
         else
         {
@@ -580,6 +703,7 @@ public class TransientChopSkill : Skill
             {
                 target.Blood = 0;
             }
+            return -injury;
         }
 
     }
@@ -598,15 +722,24 @@ public class UnknowDieSkill : Skill
         this.SkillName = "生死不觉";
         this.TargetNumber = 1;
         this.AttackCount = 1;
+        this.ImagePath = "Res/skill/1009.png";
+        this.SkillInfo = @"【技能名称】: 生死不觉
+                           【技能蓝耗】: 30
+                           【技能加成】: 6.0
+                           【技能固伤】: 0
+                           【攻击数目】: 1
+                           【攻击段数】: 1
+                           【技能信息】: 对敌方单体造成极高物理伤害，并使自身眩晕一回合，防御下降一回合";
     }
 
     //技能施放
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
 
         if (caster.Blue < this.CostBlue)
         {
             Debug.Log("blue is not able");
+            return 0;
         }
         else
         {
@@ -622,6 +755,7 @@ public class UnknowDieSkill : Skill
             {
                 target.Blood = 0;
             }
+            return -injury;
         }
 
     }
@@ -640,15 +774,24 @@ public class SangfroidSkill : Skill
         this.SkillName = "临危不惧";
         this.TargetNumber = 1;
         this.AttackCount = 1;
+        this.ImagePath = "Res/skill/1010.png";
+        this.SkillInfo = @"【技能名称】: 临危不惧
+                           【技能蓝耗】: 15
+                           【技能加成】: 1.2
+                           【技能固伤】: 0
+                           【攻击数目】: 1
+                           【攻击段数】: 1
+                           【技能信息】: 对敌方单体造成少量物理伤害，并使自身防御提升一回合";
     }
 
     //技能施放
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
 
         if (caster.Blue < this.CostBlue)
         {
             Debug.Log("blue is not able");
+            return 0;
         }
         else
         {
@@ -663,6 +806,7 @@ public class SangfroidSkill : Skill
             {
                 target.Blood = 0;
             }
+            return -injury;
         }
 
     }
@@ -684,12 +828,13 @@ public class WorrySkill : Skill
     }
 
     //技能施放
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
 
         if (caster.Blue < this.CostBlue)
         {
             Debug.Log("blue is not able");
+            return 0;
         }
         else
         {
@@ -703,6 +848,7 @@ public class WorrySkill : Skill
             {
                 target.Blood = 0;
             }
+            return -injury;
         }
 
     }
@@ -724,12 +870,13 @@ public class FishtailingSkill : Skill
     }
 
     //技能施放
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
 
         if (caster.Blue < this.CostBlue)
         {
             Debug.Log("blue is not able");
+            return 0;
         }
         else
         {
@@ -744,6 +891,7 @@ public class FishtailingSkill : Skill
             {
                 target.Blood = 0;
             }
+            return -injury;
         }
 
     }
@@ -765,12 +913,13 @@ public class SlamSkill : Skill
     }
 
     //技能施放
-    public override void Use(Person caster, Person target)
+    public override int Use(Person caster, Person target)
     {
 
         if (caster.Blue < this.CostBlue)
         {
             Debug.Log("blue is not able");
+            return 0;
         }
         else
         {
@@ -785,8 +934,8 @@ public class SlamSkill : Skill
             {
                 target.Blood = 0;
             }
+            return -injury;
         }
 
     }
 }
-
