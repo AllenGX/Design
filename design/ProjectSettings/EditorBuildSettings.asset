@@ -1,0 +1,110 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 0
+    path: Assets/Scenes/SampleScene.unity
+    guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Fantasy Wooden GUI  Free/Scene/start.unity
+    guid: 915d79bdd91a0724ea73b2bda3870548
+  - enabled: 1
+    path: Assets/Fantasy Wooden GUI  Free/Scene/MyDemo.unity
+    guid: d1b1de3b32b3a8d4d8d658531d504100
+  - enabled: 1
+    path: Assets/Fantasy Wooden GUI  Free/Scene/MyDemo2.unity
+    guid: 842c5edd3d1481f4aaba9e91f51f9774
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/\u6751\u5E841.unity"
+    guid: a5201d1b76dc2f74587e9bcb60e55cc3
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/\u6751\u5E842.unity"
+    guid: debf16273f82e8842b22566bfdc23797
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/\u68EE\u6797\u9053\u8DEF1.unity"
+    guid: 39e825865b1757a4ba8d5aa7182d9d30
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/\u68EE\u6797\u9053\u8DEF2.unity"
+    guid: d7cd3ff01007a224eb68685059778244
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/\u6751\u5E843.unity"
+    guid: 10bfdf99c44e40e468118c87c77b71d0
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/\u5DE5\u4F1A\u5185.unity"
+    guid: bb8411dc45cd53948a172e7c73ce60f8
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/\u68EE\u6797\u5DE6.unity"
+    guid: e4634655520ecc14c9d18ffcb929802a
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/\u68EE\u6797\u9053\u8DEF2-1.unity"
+    guid: b8cfea1c2bf4ba141b97c8941001f3ce
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/\u68EE\u6797\u9053\u8DEF2-2.unity"
+    guid: ff6a7f5cf44d11441b2e9c2b66f302a2
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/\u68EE\u6797\u9053\u8DEF3.unity"
+    guid: b9756b5693ccd3b46a66686ef894aa6b
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/\u9ED1\u6697\u68EE\u6797.unity"
+    guid: 77700e833c1f6cd4caf68ab1000a58ef
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/\u9B54\u754C2.unity"
+    guid: 6c2017c5dd2bf4648a31ce254c23b96b
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/\u9B54\u754C1.unity"
+    guid: b6fc94a3eb7b0c14d94ea21e88ca24ba
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/\u9ED1\u6697\u68EE\u67972.unity"
+    guid: de7c121464d6d0943abbfa178f1cf941
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/\u738B\u57CE\u5185.unity"
+    guid: 7c3c0781c59695c4cacb4c02440f5c39
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/\u6751\u5E84\u623F\u51851.unity"
+    guid: e5a052fed6cd62445bf0388f59c1602a
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/\u6751\u5E84\u623F\u51852.unity"
+    guid: de74c75f40a20a44f8906f139c8db34f
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/\u6751\u5E84\u623F\u51854.unity"
+    guid: 14f9fea3cc058d547ad415002b32f0b8
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/\u6751\u5E84\u623F\u51855.unity"
+    guid: 73ec5501b4a4e5e41b4abe2d84f1ed05
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/\u6751\u5E84\u623F\u51853.unity"
+    guid: ece31527de4b6024080828f3e14c90ca
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/\u738B\u57CE\u623F\u5185(\u5DE6\u4E0B).unity"
+    guid: 92a6585f57604334c9a3a73c922458fa
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/\u738B\u57CE\u5DE5\u4F1A\u5185.unity"
+    guid: 7168996798e36f74c8260e5d97893d67
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/\u7CBE\u7075\u5904.unity"
+    guid: 9536ebde4b623844d993e071e2cfc8d3
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/BOSS\u6218.unity"
+    guid: f80eb552cf793f540a9880da41e0a962
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/\u89D2\u6597\u573A.unity"
+    guid: 8316722f6abb5f84989adf74ab9deff6
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/\u89E3\u5BC6\u51731.unity"
+    guid: c7c6ad3876e798b42b7a1538c8bf2a10
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/\u89E3\u5BC6\u51732.unity"
+    guid: f99f58fc154f0a046b6a934ad5fe1800
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/\u738B\u57CE\u623F\u5185\u53F3\u4E0B1.unity"
+    guid: f33ac192539404942a68c673083306d5
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/\u738B\u57CE\u623F\u5185\u53F3\u4E0B2.unity"
+    guid: 96d0d46f36bce074fb454bbc8200d23c
+  - enabled: 1
+    path: "Assets/Fantasy Wooden GUI  Free/Scene/\u738B\u57CE\u623F\u5185\u5DE6\u4E0A.unity"
+    guid: 6b35a8cd14079ca40870ae0350bf79cd
+  m_configObjects: {}
